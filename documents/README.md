@@ -1,5 +1,5 @@
 # <div align="center">Meetings</div>
-## September, 25th, 2022
+## September, 24th, 2022
 ### Attenedees
 * Gilbert Martinez
 * Jon Brooks
