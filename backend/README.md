@@ -9,23 +9,21 @@ dependency conflicts. It's kind of like
 node_modules in Nodejs projects, but
 needs a little more setup across systems
 
-On windows:
 
-PS ...\backend> python3 -m venv .venv
-PS ...\backend> .\.venv\Scripts\activate
-(.venv) PS ...\backend> python3 -m pip install -r requirements.txt
+On windows:
+  python3 -m venv .venv
+  .\.venv\Scripts\activate
+  python3 -m pip install -r requirements.txt
 
 
 On Linux/MacOS:
-
-user@host$ python3 -m venv .venv
-user@host$ source .venv/bin/activate # zsh, csh, fish also supported
-(.venv) user@host$ python3 -m pip install -r requirements.txt
+  python3 -m venv .venv
+  source .venv/bin/activate # zsh, csh, fish also supported
+  python3 -m pip install -r requirements.txt
 
 
 check to see if it works:
-
-python3 -m flask --app api run
+  python3 -m flask --app api run
 
 
 after you're done, and don't want to be in the virtual env anymore
