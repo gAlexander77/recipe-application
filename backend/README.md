@@ -31,7 +31,7 @@ use the command "deactivate"
 ```
 
 # Folder Structure
-- ./doc: project documentation and meeting notes
+- ./documents: project documentation and meeting notes
 - ./src: python source code
 - ./db: database file and schema file location
 - ./README.md: you are here
