@@ -1,3 +1,41 @@
 # Backend Python API
-- Andrew Heckman
-- Jon Brooks
+Contributors: Andrew Heckman, Jon Brooks
+
+# Setup Development Environment
+```
+Python uses Virtual Environments to help make
+development easier and to better manage
+dependency conflicts. It's kind of like
+node_modules in Nodejs projects, but
+needs a little more setup across systems
+
+On windows:
+
+PS ...\backend> python3 -m venv .venv
+PS ...\backend> .\.venv\Scripts\activate
+(.venv) PS ...\backend> python3 -m pip install -r requirements.txt
+
+
+On Linux/MacOS:
+
+user@host$ python3 -m venv .venv
+user@host$ source .venv/bin/activate # zsh, csh, fish also supported
+(.venv) user@host$ python3 -m pip install -r requirements.txt
+
+
+check to see if it works:
+
+python3 -m flask --app api run
+
+
+after you're done, and don't want to be in the virtual env anymore
+use the command "deactivate"
+```
+
+# Folder Structure
+- ./doc: project documentation and meeting notes
+- ./src: python source code
+- ./db: database file and schema file location
+- ./README.md: you are here
+- ./requirements.txt: dependencies for python
+- ./api.py: main file
