@@ -9,15 +9,15 @@ node_modules in Nodejs projects, but
 needs a little more setup across systems
 ### On windows:
 ```
-  python3 -m venv .venv
-  .\.venv\Scripts\activate
-  python3 -m pip install -r requirements.txt
+> python3 -m venv .venv
+> .\.venv\Scripts\activate
+> python3 -m pip install -r requirements.txt
 ```
 ### On Linux/MacOS:
 ```
-  python3 -m venv .venv
-  source .venv/bin/activate # zsh, csh, fish also supported
-  python3 -m pip install -r requirements.txt
+$ python3 -m venv .venv
+$ source .venv/bin/activate # zsh, csh, fish also supported
+$ python3 -m pip install -r requirements.txt
 ```
 ### check to see if it works:
 `python3 -m flask --app api run`
