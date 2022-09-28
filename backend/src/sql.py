@@ -69,6 +69,6 @@ def insert_user(db: sqlite3.Connection, username: str, password: str) -> dict:
 # to this function, or have a specific funciton for querying a specific
 # user
 def select_users(db: sqlite3.Connection) -> dict:
-    return dict(db.execute("select id, username from users"))
+    return {"ok": True, "data": dict(db.execute("select id, username from users"))}
 
 # TODO: insert function wrapper for recipies
