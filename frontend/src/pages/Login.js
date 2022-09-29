@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import '../styles/LoginStyle.css'
+import {Link } from "react-router-dom";
 
 function Login () {
 
@@ -7,13 +8,18 @@ function Login () {
 
     function SignUp() {
         return (
-            <form>
-                <h1>Username</h1>
-                <input className="Username" type="text"></input>
-                <h1>Password</h1>
-                <input className="Password" type="password"></input>
-                <h1>Verify Password</h1>
-                <input className="Verify Password" type="password"></input>
+            <form className="need-validation">
+                <div className="form-group">
+                    <label>Username</label>
+                    <input className="Username" type="text"></input>
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input className="Password" type="password"></input>
+                    <label>Verify Password</label>
+                    <input className="Verify Password" type="password"></input>
+                    <button className="btn btn-primary">Create Account</button>
+                </div>      
             </form>
         );
     }
@@ -54,7 +60,11 @@ function Login () {
                     </div>
                 </div> 
                 <div className="row">
-                    <p className="text-center" id="guest" >Continue as a guest</p>
+                    <div className="col-md-12" align="center">      
+                        <Link to="/">
+                        <button className="btn btn-primary"id="guest" >Continue as a guest</button>
+                        </Link>
+                    </div>  
                 </div>
             </div>
         );
@@ -86,13 +96,15 @@ function Login () {
     else if(hasAccount === false){
         return(
             <div className="site-body center-items">
-                <h1>Recipes</h1>
-                <SignUp/>  
+                <div>
+                    <h1 className="text-center">Recipes</h1>
+                    <div className="box-size"> 
+                        <SignUp/>
+                    </div>  
+                </div>
             </div>
         );
     }
-
-
  }
 
  export default Login;
