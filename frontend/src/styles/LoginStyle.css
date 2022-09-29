@@ -1,0 +1,23 @@
+* {
+
+}
+
+.site-body {
+    height: 100vh;
+    width: 100vw;
+    background-color: grey;
+}
+
+.box-size {
+    width: 350px;
+    margin-top:20px;
+    padding:40px;
+    border-radius: 12px;
+    background-color: white;
+}
+
+.center-items{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
