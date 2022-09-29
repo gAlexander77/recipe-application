@@ -20,13 +20,22 @@ $ source .venv/bin/activate # zsh, csh, fish also supported
 $ python3 -m pip install -r requirements.txt
 ```
 ### check to see if it works:
-`python3 -m flask --app api run`
-or
-`python3 ./api.py`
-or
-`./api.py`
+To run the webserver, you can use any of these commands:
+`python3 -m flask --app api run`, `python3 ./api.py`, or `./api.py`
 after you're done, and don't want to be in the virtual env anymore
-use the command "deactivate"
+use the command `deactivate`
+
+# Generate a test database:
+`python ./tests/build_test_db.py` this generates a database in db/db.sqlite3, which is where the webserver
+loads the database from by default
+
+# Routes
+## GET
+- /api: index page  
+- /api/users: dumps a list of usernames + ids
+## POST
+- /api/users/create: accepts username and password parameters to create a user
+- /api/users/login: accepts username and password parameters to authenticate a user and return their id
 
 # Folder Structure
 - ./documents: project documentation and meeting notes

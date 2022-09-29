@@ -8,7 +8,8 @@ create table if not exists recipies (
 	id text primary key,
 	title text not null,
 	instructions text,
-	user blob not null,
+	rating integer not null,
+	user text not null,
 	foreign key(user) references users(id)
 );
 
@@ -17,6 +18,6 @@ create table if not exists ingredients (
 	name text not null,
 	unit text not null,
 	quantity integer,
-	recipe blob not null,
+	recipe text not null,
 	foreign key(recipe) references recipies(id)
 );

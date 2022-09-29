@@ -34,7 +34,7 @@ def load_database(database: str=DATABASE, schema: str=SCHEMA) -> sqlite3.Connect
 
 
 # insert fields into a database. will return json serializable data
-def insert(db: sqlite3.Connection, table: str, fields: dict) -> dict:
+def insert(db: sqlite3.Connection, table: str, fields: dict) -> tuple:
     
     # extract the keys and values from the supplied request parameters
     uuid: str = uuid4().hex
@@ -47,21 +47,22 @@ def insert(db: sqlite3.Connection, table: str, fields: dict) -> dict:
         db.execute(f"insert into {table} (id, {keys}) values {values}")
         db.commit()
     except Exception as error:
-        return {"ok": False, "error": str(error)}
-    return {"ok": True, "data": str(uuid)}
+        return False, str(error)
+    
+    return True, uuid
 
 
 # insert a user row into the database
-def insert_user(db: sqlite3.Connection, username: str, password: str) -> dict:
+def insert_user(db: sqlite3.Connection, username: str, password: str) -> tuple:
     try:
         if len(username) < 3:
-            return {"ok": False, "error": "username must be > 3 characters"}
+            return False, "username must be > 3 characters"
         # attempt to load a dict with the required values
         fields: dict = { "username": username,
             "password": sha256(password.encode("utf-8")).digest().hex() }
         return insert(db, "users", fields) # try inserting
     except Exception as error:
-        return {"ok": False, "error": str(error)}
+        return False, error
 
 
 # temporary function, will most likely change
@@ -69,6 +70,18 @@ def insert_user(db: sqlite3.Connection, username: str, password: str) -> dict:
 # to this function, or have a specific funciton for querying a specific
 # user
 def select_users(db: sqlite3.Connection) -> dict:
-    return {"ok": True, "data": dict(db.execute("select id, username from users"))}
+    return True, dict(db.execute("select id, username from users").fetchall())
+
+
+# specific function for login
+def select_user_password(db: sqlite3.Connection, username: str) -> tuple:
+    try:
+        row = db.execute(
+                "select id, password from users where username=?",
+                (username,))
+        return True, row.fetchall()[0]
+    except Exception as error:
+        return False, error
+
 
 # TODO: insert function wrapper for recipies

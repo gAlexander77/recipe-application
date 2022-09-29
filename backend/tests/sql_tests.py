@@ -16,14 +16,11 @@ TEST_FAILED = "[\033[31mFAILED\033[0m]"
 # write tests here
 # example
 def test_insert_user(db, username, password, expected, context=None):
-    query = sql.insert_user(db, username, password)
-    success = query["ok"] == expected
-    if context is not None:
-        if query["ok"]:
-            return success and context == query["data"]
-        else:
-            return success and context == query["error"]
-    return success
+    ok, data = sql.insert_user(db, username, password)
+    result = ok == expected
+    if not result:
+        print(str(data))
+    return result if context is None else result and context == data
 
 
 # add tests here
