@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import '../styles/LoginStyle.css'
 
 function Login () {
 
@@ -19,7 +20,7 @@ function Login () {
 
     function SignIn() {
         return (
-            <form>
+            <form className="container">
                 <h1>Username</h1>
                 <input className="Username" type="text"></input>
                 <h1>Password</h1>
@@ -30,24 +31,38 @@ function Login () {
 
     function LoginOptions() {
         return (
-            <div> 
-                <button onClick={() => setHasAccount(true)}>Login</button>
-                <button onClick={() => setHasAccount(false)}>Create Account</button>
-                <p>Continue as a guest</p>
+            <div className="container">
+                <div className="row p-2">
+                    <div className="col" align="center">   
+                        <button className="btn btn-primary" id="login-button" onClick={() => setHasAccount(true)}>Login</button>
+                    </div> 
+                </div>
+                <div className="row p-2">
+                    <div className="col-md-12" align="center">
+                        <button className="btn btn-primary" id="create-account-button" onClick={() => setHasAccount(false)}>Create Account</button>
+                    </div>
+                </div> 
+                <div className="row">
+                    <p className="text-center" id="guest" >Continue as a guest</p>
+                </div>
             </div>
         );
     }
 
     if(hasAccount === null){    
         return(
-            <div>
-                <h1>Recipes</h1>
-                <LoginOptions/>
+            <div className="site-body center-items">
+                <div> 
+                    <h1 className="text-center">Title</h1>
+                    <div className="box-size">   
+                        <LoginOptions/>
+                    </div> 
+                </div>   
             </div>
         );}
     else if(hasAccount === true){
         return(
-            <div>
+            <div className="site-body center-items">
                 <h1>Recipes</h1>
                 <SignIn/>  
             </div>
@@ -55,7 +70,7 @@ function Login () {
     }
     else if(hasAccount === false){
         return(
-            <div>
+            <div className="site-body center-items">
                 <h1>Recipes</h1>
                 <SignUp/>  
             </div>
