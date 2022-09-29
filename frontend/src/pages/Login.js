@@ -20,11 +20,22 @@ function Login () {
 
     function SignIn() {
         return (
-            <form className="container">
-                <h1>Username</h1>
-                <input className="Username" type="text"></input>
-                <h1>Password</h1>
-                <input className="Password" type="password"></input>
+            <form className="need-validation">
+                <div className="form-group">  
+                    <label className="form-label">Username</label>
+                    <input className="form-control" type="text"></input>
+                    <div className="invalid-feedback">
+                        Please enter your username
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Password</label>
+                    <input className="form-control" type="password" placeholder="Password"></input>
+                    <button className="btn btn-primary w-100">Login</button>
+                    <div className="invalid-feedback">
+                        Please enter your username
+                    </div>
+                </div>
             </form>
         );
     }
@@ -54,7 +65,7 @@ function Login () {
             <div className="site-body center-items">
                 <div> 
                     <h1 className="text-center">Title</h1>
-                    <div className="box-size">   
+                    <div className="box-size">  
                         <LoginOptions/>
                     </div> 
                 </div>   
@@ -63,8 +74,12 @@ function Login () {
     else if(hasAccount === true){
         return(
             <div className="site-body center-items">
-                <h1>Recipes</h1>
-                <SignIn/>  
+                <div>
+                    <h1 className="text-center">Title</h1>
+                    <div className="box-size"> 
+                        <SignIn/>  
+                    </div>
+                </div>
             </div>
         );
     }
