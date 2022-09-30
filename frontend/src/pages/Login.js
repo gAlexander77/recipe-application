@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import '../styles/LoginStyle.css'
 import {Link } from "react-router-dom";
+import { FaBeer } from 'react-icons/fa';
 
 function Login () {
 
@@ -8,18 +9,14 @@ function Login () {
 
     function SignUp() {
         return (
-            <form className="need-validation">
-                <div className="form-group">
-                    <label>Username</label>
-                    <input className="Username" type="text"></input>
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input className="Password" type="password"></input>
-                    <label>Verify Password</label>
-                    <input className="Verify Password" type="password"></input>
-                    <button className="btn btn-primary">Create Account</button>
-                </div>      
+            <form>
+                <label>Username</label>
+                <input className="Username" type="text"></input>
+                <label>Password</label>
+                <input className="Password" type="password"></input>
+                <label>Verify Password</label>
+                <input className="Verify Password" type="password"></input>
+                <button className="btn btn-primary">Create Account</button>
             </form>
         );
     }
@@ -48,24 +45,12 @@ function Login () {
 
     function LoginOptions() {
         return (
-            <div className="container">
-                <div className="row p-2">
-                    <div className="col" align="center">   
-                        <button className="btn btn-primary" id="login-button" onClick={() => setHasAccount(true)}>Login</button>
-                    </div> 
-                </div>
-                <div className="row p-2">
-                    <div className="col-md-12" align="center">
-                        <button className="btn btn-primary" id="create-account-button" onClick={() => setHasAccount(false)}>Create Account</button>
-                    </div>
-                </div> 
-                <div className="row">
-                    <div className="col-md-12" align="center">      
-                        <Link to="/">
-                        <button className="btn btn-primary"id="guest" >Continue as a guest</button>
-                        </Link>
-                    </div>  
-                </div>
+            <div className="login-options">
+                <button className="btn-3 btn-size btn-padding" onClick={() => setHasAccount(true)}>Login</button>
+                <button className="button-59 btn-size btn-padding create-account-button" onClick={() => setHasAccount(false)}>Create Account</button>    
+                <Link to="/">
+                <a className="guest" >Continue as a guest</a>
+                </Link>
             </div>
         );
     }
@@ -74,7 +59,7 @@ function Login () {
         return(
             <div className="site-body center-items">
                 <div> 
-                    <h1 className="text-center">Title</h1>
+                    <h1 className="text-center"></h1>
                     <div className="box-size">  
                         <LoginOptions/>
                     </div> 
