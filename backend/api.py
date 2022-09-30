@@ -83,9 +83,13 @@ def users():
 
 @api.route("/api/users/create", methods=["POST"])
 def create_user():
-    
-    username = request.json.get("username")
-    password = request.json.get("password")
+
+    print(request)
+
+    json = request.get_json(force=True)
+    print(json)
+    username = json.get("username")
+    password = json.get("password")
     
     if username is None or password is None:
         return api_error("username and password required", "POST /api/users/create 401")
@@ -107,9 +111,10 @@ def delete_user(uuid: str):
 
 @api.route("/api/users/login", methods=["POST"])
 def login_user():
-
-    username = request.json.get("username")
-    password = request.json.get("password")
+    
+    json = request.get_json(force=True)
+    username = json.get("username")
+    password = json.get("password")
 
     if username is None or password is None:
         return api_error("username and password required", "POST /api/users/login 401")
