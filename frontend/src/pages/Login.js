@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import '../styles/LoginStyle.css'
 import {Link } from "react-router-dom";
-import { FaBeer } from 'react-icons/fa';
+import { FaUser,FaLock } from "react-icons/fa"
+import { BsXLg } from "react-icons/bs";
 
 function Login () {
 
@@ -9,35 +10,42 @@ function Login () {
 
     function SignUp() {
         return (
-            <form>
-                <label>Username</label>
-                <input className="Username" type="text"></input>
-                <label>Password</label>
-                <input className="Password" type="password"></input>
-                <label>Verify Password</label>
-                <input className="Verify Password" type="password"></input>
-                <button className="btn btn-primary">Create Account</button>
+            <form className="box-size center">
+                <BsXLg className="form-exit" onClick={()=>setHasAccount(null)}/>
+                <div className="content-box center">
+                    <div className="">
+                        <FaUser/>
+                        <input className="Username" placeholder="Username" type="text"></input>
+                    </div>
+                    <div>
+                    <FaLock/>
+                        <input className="Password" placeholder="Password" type="password"></input>
+                        </div>
+                    <div>
+                        <FaLock/>
+                        <input className="Verify Password" placeholder="Verify Password" type="password"></input>
+                    </div>
+                    <button className="btn btn-primary">Create Account</button>
+                </div>
             </form>
         );
     }
 
     function SignIn() {
         return (
-            <form className="need-validation">
-                <div className="form-group">  
-                    <label className="form-label">Username</label>
-                    <input className="form-control" type="text"></input>
-                    <div className="invalid-feedback">
-                        Please enter your username
+            <form className="box-size center">
+                <BsXLg className="form-exit" onClick={()=>setHasAccount(null)}/>
+                <div className="content-box center">
+                    <div className="">  
+                        <FaUser/>
+                        <input className="" type="text" placeholder="Username"></input>
+
                     </div>
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Password</label>
-                    <input className="form-control" type="password" placeholder="Password"></input>
-                    <button className="btn btn-primary w-100">Login</button>
-                    <div className="invalid-feedback">
-                        Please enter your username
+                    <div className="">
+                        <FaLock/>
+                        <input className="" type="password" placeholder="Password"></input>
                     </div>
+                        <button className="">Login</button>
                 </div>
             </form>
         );
@@ -45,9 +53,9 @@ function Login () {
 
     function LoginOptions() {
         return (
-            <div className="login-options">
-                <button className="btn-3 btn-size btn-padding" onClick={() => setHasAccount(true)}>Login</button>
-                <button className="button-59 btn-size btn-padding create-account-button" onClick={() => setHasAccount(false)}>Create Account</button>    
+            <div className="box-size stack">
+                <button className="btn-login-options" onClick={() => setHasAccount(true)}>Login</button>
+                <button className="btn-login-options" onClick={() => setHasAccount(false)}>Create Account</button>    
                 <Link to="/">
                 <a className="guest" >Continue as a guest</a>
                 </Link>
@@ -57,35 +65,23 @@ function Login () {
 
     if(hasAccount === null){    
         return(
-            <div className="site-body center-items">
-                <div> 
-                    <h1 className="text-center"></h1>
-                    <div className="box-size">  
-                        <LoginOptions/>
-                    </div> 
-                </div>   
+            <div className="Login center">
+                <LoginOptions/> 
             </div>
-        );}
+        );
+    }
     else if(hasAccount === true){
         return(
-            <div className="site-body center-items">
-                <div>
-                    <h1 className="text-center">Title</h1>
-                    <div className="box-size"> 
-                        <SignIn/>  
-                    </div>
-                </div>
+            <div className="Login center">
+                <SignIn/>  
             </div>
         );
     }
     else if(hasAccount === false){
         return(
-            <div className="site-body center-items">
+            <div className="Login center">
                 <div>
-                    <h1 className="text-center">Recipes</h1>
-                    <div className="box-size"> 
-                        <SignUp/>
-                    </div>  
+                    <SignUp/>
                 </div>
             </div>
         );
