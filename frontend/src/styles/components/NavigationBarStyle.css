@@ -16,3 +16,12 @@
     padding-right: 5%;
 }
 
+.icon-link {
+    grid-column: 1;
+
+    justify-self: start;
+    align-self: center;
+    padding-left: 5%;
+
+    font-size: 25px;
+}

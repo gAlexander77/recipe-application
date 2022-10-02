@@ -1,18 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import '../styles/HomeStyle.css'
 
 function Home(){
-    let navigate = useNavigate();
-    let userType = localStorage.getItem('userType');
+    let navigate = useRef(useNavigate());
+    const [userType, setUserType] = useState(localStorage.getItem('userType'));
 
     useEffect(()=>{ 
-        userType = localStorage.getItem('userType')
-        if (userType ===null){
-            navigate('/login');
+        setUserType(localStorage.getItem('userType'));
+        console.log(userType)
+        if (userType === null){
+            navigate.current('/login');
         }
-    },[])
+    },[userType]);
 
     return (
         <div className="site-body">

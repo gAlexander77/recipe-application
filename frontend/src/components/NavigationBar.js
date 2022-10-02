@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
 import '../styles/components/NavigationBarStyle.css'
 
 function NavigationBar({userType}){
@@ -8,7 +9,9 @@ function NavigationBar({userType}){
         if (userType === 'user'){
             return(
                 <div className="user-account">
-                    <h1>My Account</h1>
+                    <Link to="/account">
+                    My Account
+                    </Link>
                 </div>
             );
         }
@@ -26,6 +29,11 @@ function NavigationBar({userType}){
 
     return (
         <div className="NavigationBar">
+            
+            <Link to="/" className="icon-link">
+                <FaHome className="icon"/>
+            </Link>
+            
             <User/>
         </div>
     );

@@ -60,8 +60,8 @@ function Login () {
             <div className="box-size stack">
                 <button className="btn-login-options" onClick={() => setHasAccount(true)}>Login</button>
                 <button className="btn-login-options" onClick={() => setHasAccount(false)}>Create Account</button>    
-                <Link to="/">
-                <a className="guest"  onClick={guestHandler}> Continue as a guest</a>
+                <Link to="/" onClick={guestHandler}>
+                Continue as a guest
                 </Link>
             </div>
         );

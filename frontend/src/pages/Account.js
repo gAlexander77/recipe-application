@@ -1,21 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavigationBar from '../components/NavigationBar';
 
 function Account() {
 
     let navigate = useRef(useNavigate());
-    let userType = useRef(localStorage.getItem('userType'));
+    const [userType, setUserType] = useState(localStorage.getItem('userType'));
 
     useEffect(()=>{ 
-        userType.current = localStorage.getItem('userType')
-        if (userType ===null || 'guest'){
+        setUserType(localStorage.getItem('userType'));
+        if (userType !== 'user'){
             navigate.current('/login');
         }
-    },[])
+    },[userType])
 
     return(
         <div className="Account">
-            <h1>Header</h1>
+            <NavigationBar {...{userType}}/>
             <h1>Account Info</h1>
             <h1>My Recipes</h1>
             <h1>Saved Recipes</h1>
