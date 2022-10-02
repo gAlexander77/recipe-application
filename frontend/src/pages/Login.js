@@ -6,6 +6,10 @@ import { BsXLg } from "react-icons/bs";
 
 function Login () {
 
+    const guestHandler = () => {
+        localStorage.setItem('userType', 'guest')
+    }
+
     const [hasAccount,setHasAccount] = useState(null)
 
     function SignUp() {
@@ -57,7 +61,7 @@ function Login () {
                 <button className="btn-login-options" onClick={() => setHasAccount(true)}>Login</button>
                 <button className="btn-login-options" onClick={() => setHasAccount(false)}>Create Account</button>    
                 <Link to="/">
-                <a className="guest" >Continue as a guest</a>
+                <a className="guest"  onClick={guestHandler}> Continue as a guest</a>
                 </Link>
             </div>
         );
