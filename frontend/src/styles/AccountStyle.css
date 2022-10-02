@@ -1,0 +1,56 @@
+.Account {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.saved-recipes-container{
+    height: 290px;
+    max-width: 1000px;
+    width: 90vw;
+    /*background-color: green;*/
+    margin-top: 100px;
+    margin-bottom: 25px;
+}
+
+.my-recipes-container{
+    height: 290px;
+    max-width: 1000px;
+    width: 90vw;
+    /*background-color: blue;*/
+}
+
+.recipe-row { 
+    display: flex;
+    margin-top: 10px;
+}
+
+.box{
+    height: 200px;
+    width: 200px;
+    background-color: grey;
+    margin-right: 50px;
+}
+
+.account-information {
+    position: absolute;
+    left: 2%;
+    top: 10%;
+}
+
+.circle {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-color: grey;
+}
+
+.account-username { 
+    text-align: center;
+    color: white;
+}
+
+.row-title {
+    color: white;
+}

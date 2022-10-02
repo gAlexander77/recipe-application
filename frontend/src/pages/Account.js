@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
+import '../styles/AccountStyle.css';
 
 function Account() {
 
@@ -17,9 +18,28 @@ function Account() {
     return(
         <div className="Account">
             <NavigationBar {...{userType}}/>
-            <h1>Account Info</h1>
-            <h1>My Recipes</h1>
-            <h1>Saved Recipes</h1>
+            <div className="account-information">
+                <div className="circle"></div>
+                <h1 className="account-username">Username</h1>
+            </div>
+            <div className="saved-recipes-container">
+                <h1 className="row-title">Saved Recipes</h1>
+                <div className="recipe-row">
+                    <div className="box"></div>
+                    <div className="box"></div>
+                    <div className="box"></div>
+                    <div className="box"></div>
+                </div>
+            </div>
+            <div className="my-recipes-container">
+                <h1 className="row-title">My Recipes</h1>
+                <div className="recipe-row">
+                    <div className="box"></div>
+                    <div className="box"></div>
+                    <div className="box"></div>
+                    <div className="box"></div>
+                </div>
+            </div>
         </div>
     );
 }
