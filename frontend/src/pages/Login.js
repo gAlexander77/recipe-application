@@ -17,19 +17,19 @@ function Login () {
             <form className="box-size center">
                 <BsXLg className="form-exit" onClick={()=>setHasAccount(null)}/>
                 <div className="content-box center">
-                    <div className="">
-                        <FaUser/>
+                    <div className="input-row">
+                        <FaUser className="input-logo"/>
                         <input className="Username" placeholder="Username" type="text"></input>
                     </div>
-                    <div>
-                    <FaLock/>
+                    <div className="input-row">
+                    <FaLock className="input-logo"/>
                         <input className="Password" placeholder="Password" type="password"></input>
                         </div>
-                    <div>
-                        <FaLock/>
+                    <div className="input-row">
+                        <FaLock className="input-logo"/>
                         <input className="Verify Password" placeholder="Verify Password" type="password"></input>
                     </div>
-                    <button className="btn btn-primary">Create Account</button>
+                    <button className="btn-hover btn">Create Account</button>
                 </div>
             </form>
         );
@@ -40,16 +40,16 @@ function Login () {
             <form className="box-size center">
                 <BsXLg className="form-exit" onClick={()=>setHasAccount(null)}/>
                 <div className="content-box center">
-                    <div className="">  
-                        <FaUser/>
+                    <div className="input-row">  
+                        <FaUser className="input-logo"/>
                         <input className="" type="text" placeholder="Username"></input>
 
                     </div>
-                    <div className="">
-                        <FaLock/>
+                    <div className="input-row">
+                        <FaLock className="input-logo"/>
                         <input className="" type="password" placeholder="Password"></input>
                     </div>
-                        <button className="">Login</button>
+                        <button className="btn-hover btn">Login</button>
                 </div>
             </form>
         );
@@ -58,8 +58,8 @@ function Login () {
     function LoginOptions() {
         return (
             <div className="box-size stack">
-                <button className="btn-login-options" onClick={() => setHasAccount(true)}>Login</button>
-                <button className="btn-login-options" onClick={() => setHasAccount(false)}>Create Account</button>    
+                <button className="btn-hover btn" onClick={() => setHasAccount(true)}>Login</button>
+                <button className="btn-hover btn" onClick={() => setHasAccount(false)}>Create Account</button>    
                 <Link to="/" onClick={guestHandler}>
                 Continue as a guest
                 </Link>
