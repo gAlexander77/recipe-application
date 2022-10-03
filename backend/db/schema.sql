@@ -28,13 +28,3 @@ create table if not exists recipes_ingredients (
 	foreign key(recipe) references recipes(id),
 	foreign key(ingredient) references ingredients(id)
 );
-
-create table if not exists users_recipes (
-	id text primary key,
-	user text not null,
-	recipe text not null,
-	rating integer not null,
-	marked integer not null,
-	foreign key(user) references users(id),
-	foreign key(recipe) references recipies(recipe)
-);
