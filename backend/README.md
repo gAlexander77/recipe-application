@@ -6,12 +6,14 @@
 - SQLite3 (included with python)
 - Flask 2.2
 
+## Testing
+In order to get going quickly in the frontend with some sample data, run `python3 ./test/gendb.py` before running the server
+
 ## How To Use
 In order to run the server you must have flask installed: 
-`python3 -m pip install flask==2.2.2 --user`. \ 
+`python3 -m pip install --user flask==2.2.2`. \ 
 If flask is installed, you may run the program in the "backend/" directory like so:
 `python3 -m flask --app ./src/main.py run`
-
 
 ## Active API Routes
 ```
@@ -23,6 +25,7 @@ GET:
 	  -- title: title of recipe
 	  -- steps: content of the instructions of the recipe
 	  -- rating: numerical rating of recipe (0-10 for stars & half-stars)
+	  
 	  example:
 		
 		> http://localhost:5000/api/recipes?title=Pot%20Roast
