@@ -1,7 +1,9 @@
 create table if not exists users (
 	id text primary key,
 	username text unique not null,
-	password text
+	password text,
+	created integer not null,
+	updated integer not null
 );
 
 create table if not exists recipes (
@@ -10,13 +12,17 @@ create table if not exists recipes (
 	title text unique not null,
 	steps text not null,
 	rating integer not null,
-	foreign key(user) references users(id)
+	created integer not null,
+	updated integer not null,
+	constraint fk_user 
+		foreign key(user) 
+		references users(id)
+		on delete cascade
 );
 
 create table if not exists ingredients (
 	id text primary key,
-	name text unique not null,
-	rating integer not null
+	name text unique not null
 );
 
 create table if not exists recipes_ingredients (
@@ -25,6 +31,28 @@ create table if not exists recipes_ingredients (
 	ingredient text not null,
 	units text,
 	count real not null,
-	foreign key(recipe) references recipes(id),
-	foreign key(ingredient) references ingredients(id)
+	constraint fk_recipe 
+		foreign key(recipe) 
+		references recipes(id)
+		on delete cascade,
+	constraint fk_ingredient
+		foreign key(ingredient)
+		references ingredients(id)
+		on delete cascade
+);
+
+create table if not exists users_recipes (
+	id text primary key,
+	user text not null,
+	recipe text not null,
+	rating integer not null,
+	pinned integer not null,
+	constraint fk_user
+		foreign key(user) 
+		references users(id)
+		on delete cascade,
+	constraint fk_recipe 
+		foreign key(recipe) 
+		references recipes(id)
+		on delete cascade
 );
