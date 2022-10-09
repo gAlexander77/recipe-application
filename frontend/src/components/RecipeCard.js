@@ -7,7 +7,7 @@ function RecipeCard({image,name,desc,rating}){
         <div className="RecipeCard">
             <div className="Container">
                 <img className="Image" src={image}/>
-                <h1>{name}]</h1>
+                <h1>{name}</h1>
                 <body>{desc}</body>
                 <div>{rating}</div>
                 <button className="btn btn-primary">View Recipe</button>

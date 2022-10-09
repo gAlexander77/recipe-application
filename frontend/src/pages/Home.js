@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
+import Feed from '../components/Feed';
 import '../styles/HomeStyle.css'
 
 function Home(){
@@ -16,10 +17,9 @@ function Home(){
     },[userType]);
 
     return (
-        <div className="site-body">
+        <div className="Home">
             <NavigationBar {...{userType}}/>
-            <h1>Header</h1>
-            <h2>Feed</h2>
+            <Feed className="Feed"/>
         </div>
     );
 }
