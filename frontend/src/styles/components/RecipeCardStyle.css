@@ -1,6 +1,125 @@
 .RecipeCard {
-    background-color: purple;
+    background-color: white;
     margin: 10px;
     width: 90%;
     height: 200px;
+    border-radius: 5px;
+
+    display: grid;
+    grid-template-columns: 220px 1fr 170px;
+    grid-template-rows: 50px 1fr;
+    z-index: -1;
+}
+
+.recipe-image {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    justify-self: center;
+    
+    position: relative;
+    top: 30%;
+
+    grid-row: 1/2;
+    grid-column: 1;
+
+    background-color: gray;
+}
+
+.recipe-name {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.recipe-desc {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.recipe-rating {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.view-recipe {
+    grid-column: 3;
+    grid-row: 2;
+
+    justify-self: center;
+    align-self: end;
+
+    margin-bottom: 10px;
+
+    width: 130px;
+    height: 35px;
+}
+
+@media only screen and (max-width: 1000px){
+    .RecipeCard {
+        background-color: white;
+        margin: 10px;
+        width: 90%;
+        height: 200px;
+        border-radius: 5px;
+    
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        z-index: -1;
+    }
+    
+    .recipe-image {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+    
+        justify-self: center;
+        
+        position: relative;
+        top: -10%;
+    
+        grid-row: 2;
+        grid-column: 1;
+    
+        background-color: gray;
+    }
+    
+    .recipe-name {
+        grid-column: 1;
+        grid-row: 1;
+        
+        margin-top: 10px;
+        margin-left: 10px;
+        
+        font-size: 20px;
+    }
+    
+    .recipe-desc {
+        display: none;
+    }
+    
+    .recipe-rating {
+        grid-column: 2;
+        grid-row: 1;
+
+        justify-self: end;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+    
+    .view-recipe {
+        grid-column: 2;
+        grid-row: 2;
+    
+        justify-self: center;
+        align-self: end;
+    
+        margin-bottom: 10px;
+    
+        width: 130px;
+        height: 35px;
+    }
 }

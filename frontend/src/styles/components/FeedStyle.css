@@ -1,7 +1,15 @@
 .Feed {
     max-width: 90vw;
     width: 1400px;
-    background-color: green;
+}
+
+.glass{
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 5px;
+    border:1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .Header{
@@ -11,8 +19,7 @@
     "sort search-box";
 
     width: 100%;
-    height: 30px;
-    background-color: grey;
+    height: 35px;
 
     position: sticky;
     top: 0;
@@ -25,7 +32,7 @@
     justify-self: start;
     align-self: center;
     padding-left: 5%;
-    background-color: blue;
+    /*background-color: blue;*/
 }
 
 .search-box-container {
@@ -35,5 +42,5 @@
     justify-self: end;
     align-self: center;
     padding-right: 5%;
-    background-color: red;
+    /*background-color: red;*/
 }

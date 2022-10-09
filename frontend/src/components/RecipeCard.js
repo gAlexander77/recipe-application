@@ -5,13 +5,11 @@ function RecipeCard({image,name,desc,rating}){
 
     return (
         <div className="RecipeCard">
-            <div className="Container">
-                <img className="Image" src={image}/>
-                <h1>{name}</h1>
-                <body>{desc}</body>
-                <div>{rating}</div>
-                <button className="btn btn-primary">View Recipe</button>
-            </div>
+            <img className="recipe-image" src={image}/>
+            <h1 className="recipe-name">{name}</h1>
+            <p className="recipe-desc">{desc}</p>
+            <div className="recipe-rating">Rating: {rating}</div>
+            <button className="view-recipe">View Recipe</button>
         </div>
     );
 }
