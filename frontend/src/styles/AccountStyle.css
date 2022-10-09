@@ -1,51 +1,86 @@
 .Account {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 20vw 1fr 20vw;
+    grid-template-rows: 50px 1fr 1fr;
+    grid-template-areas: 
+    "nav nav nav"
+    "profile saved-recipes empty"
+    "profile my-recipes empty";
+    gap: 10px;
+}
 
-    align-items: center;
+.nav {
+    grid-area: nav;
+    
+    /*background-color: white;*/
 }
 
 .saved-recipes-container{
-    height: 290px;
-    max-width: 1000px;
-    width: 90vw;
-    /*background-color: green;*/
+    grid-area: saved-recipes;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     margin-top: 100px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    
+    /*background-color: green;*/
 }
 
 .my-recipes-container{
-    height: 290px;
-    max-width: 1000px;
-    width: 90vw;
+    grid-area: my-recipes;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     /*background-color: blue;*/
+}
+
+.row-container {
+    height: 290px;
 }
 
 .recipe-row { 
     display: flex;
     margin-top: 10px;
+    max-width: 1000px;
+    width: 70vw;
+
+    /*background-color: white;*/
+
+    overflow: auto;
 }
 
 .box{
     height: 200px;
     width: 200px;
+    min-width: 200px;
     background-color: grey;
     margin-right: 50px;
     border-radius: 10px;
 }
 
 .account-information {
-    position: absolute;
-    left: 2%;
-    top: 10%;
+    grid-area: profile;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /*background-color: pink;*/
 }
 
 .circle {
+    margin-top: 120px;
+
     height: 200px;
     width: 200px;
     border-radius: 50%;
     background-color: grey;
 }
+
 
 .account-username { 
     text-align: center;
@@ -54,4 +89,48 @@
 
 .row-title {
     color: white;
+}
+
+@media only screen and (max-width: 1000px){
+    .Account {
+        display: grid;
+        grid-template-columns: 5vw 1fr 5vw;
+        grid-template-rows: 50px 300px 290px 290px;
+        grid-template-areas: 
+        "nav nav nav"
+        "profile profile profile"
+        "saved-recipes saved-recipes saved-recipes"
+        "my-recipes  my-recipes my-recipes ";
+        gap: 0px;
+    }
+    .circle {
+        margin-top: 10px;
+
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        /*background-color: grey;*/
+    }
+    .saved-recipes-container{
+        grid-area: saved-recipes;
+    
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+        margin-top: 25px;
+        margin-bottom: 0px;
+        
+        /*background-color: green;*/
+    }
+    .recipe-row { 
+        display: flex;
+        margin-top: 10px;
+        max-width: 1000px;
+        width: 95vw;
+    
+        /*background-color: white;*/
+    
+        overflow: auto;
+    }
 }
