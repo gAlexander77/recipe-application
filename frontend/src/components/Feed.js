@@ -37,7 +37,7 @@ function Feed(){
         <div className="Feed">
         <Header/>
         <div className="content">
-            <RecipeCard image={image} name='Hamburger' desc={description} rating={5} />
+            <RecipeCard image={image} name='Hamburger' desc={description} rating={4.2} />
             <RecipeCard/>
             <RecipeCard/>
             <RecipeCard/>

@@ -56,6 +56,15 @@
     height: 35px;
 }
 
+.star {
+    color: orange;
+    font-size: 18px;
+}
+
+ImStarEmpty {
+    color: green;
+}
+
 @media only screen and (max-width: 1000px){
     .RecipeCard {
         background-color: white;
@@ -121,5 +130,9 @@
     
         width: 130px;
         height: 35px;
+    }
+
+    .star-style {
+        color: yellow;
     }
 }
