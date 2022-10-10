@@ -1,31 +1,24 @@
 from .util import valid_table, db_pass, db_fail
 
+RECIPE_SQL = """select recipes.id, 
+title, steps, rating,
+recipes.created, recipes.updated, 
+user as userid, username 
+from recipes
+left join users on recipes.user = users.id"""
+INGREDIENT_SQL = "select id, name from ingredients"
 
-def recipe_query(table, fields, expression):
-    
+
+def query(sql, fields, expression):
     items = filter(lambda t: t[1] is not None, fields.items())
-    sql = " and ".join(expression % (k, v) for k, v in items)
-    
-    query = f"""select 
-            recipes.id, title, steps, rating,
-            recipes.created, recipes.updated, 
-            user as userid, username 
-            from {table} 
-            left join users on recipes.user = users.id"""
+    if items:
+        return sql + " where " + " and ".join(expression % (k, v) for k, v in items)
+    return sql
 
-    if sql:
-        query += f" where {sql}"
-
-    return query
-
-
-def select(db, query_callback, table, fields, single=False):
-
-    if not valid_table(db, table):
-        return db_fail("invalid table")
+def select(db, sql, fields, single=False):
 
     expression =  "%s = %s" if single else "%s like '%%%s%%'"
-    sql = query_callback(table, fields, expression)
+    sql = query(sql, fields, expression)
 
     try:
         rows = db.execute(sql)
@@ -38,11 +31,25 @@ def select(db, query_callback, table, fields, single=False):
 # if user only wants one, only let them use the unique columns
 def recipe(db, id=None, title=None, user=None):
     if id is not None or name is not None or user is not None:
-        return select(db, recipe_query, "recipes", {
-            "id": id, "title": title, "user": user }, single=True)
+        return select(db, RECIPE_SQL, {
+            "id": id, 
+            "title": title, 
+            "user": user 
+        }, single=True)
     return db_fail("id or title or user required")
 
 
 def recipes(db, id=None, title=None, steps=None, user=None, rating=None):
-    return select(db, recipe_query, "recipes", {
-        "id": id, "title": title, "steps": steps, "user": user, "rating": rating})
+    return select(db, RECIPE_SQL, {
+        "id": id, 
+        "title": title, 
+        "steps": steps, 
+        "user": user, 
+        "rating": rating
+    })
+
+def ingredients(db, id=None, name=None):
+    return select(db, INGREDIENT_SQL, {
+        "id": id,
+        "name": name
+    })

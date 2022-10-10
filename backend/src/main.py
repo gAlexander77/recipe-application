@@ -95,6 +95,19 @@ def query_recipes():
     return api.send(recipes)
 
 
+@app.route("/api/ingredients")
+def query_ingredients():
+    
+    id, name = api.values(request.args, ("id", "name"))
+    ingredients, error = sql.select.ingredients(
+            open_database(), id=id, name=name)
+
+    if error:
+        return api.fail(error)
+
+    return api.send(ingredients)
+
+
 # D
 @app.route("/api/delete/recipe/<id>", methods=["POST"])
 def delete_recipe(id):
