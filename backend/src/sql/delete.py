@@ -1,11 +1,11 @@
 from .util import dump_tables, db_pass, db_fail
 
-def recipe(db, id):
-    try:
-        query = db.execute("select title from recipes where id = ?", (id, ))
-        db.execute("delete from recipes where id = ?", (id, ))
-        db.commit()
-    except Exception as error:
-        return db_fail(error)
+SQL_DELETE = "DELETE FROM %s WHERE id = ?"
 
+def recipe(db, id):
+    db.execute("delete from recipes where id = ?", (id, ))
+    db.commit()
     return db_pass(query.fetchone()["title"])
+
+def ingredient(db, id):
+    db.execute(SQL_DELETE % "ingredients", (id, ))
