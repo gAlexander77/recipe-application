@@ -98,18 +98,55 @@ def create_recipe():
 @app.route("/api/recipes")
 def query_recipes():
  
-    id, title, description, rating = api.values(
-            request.args, ("id", "title", "description", "rating"))
+    id, title, description, rating, sort_by = api.values(
+            request.args, ("id", "title", "description", "rating", "sort"))
 
     recipes, error = sql.select.recipes(
-            open_database(), id=id, title=title, description=description, rating=rating)
+            open_database(), id=id, title=title, description=description, rating=rating, sort_by=sort_by)
     if error:
         return api.fail(error)
+
+    for recipe in recipes:
+        recipe["user"] = {
+            "id": recipe["userid"],
+            "name": recipe["username"]
+        }
+        del recipe["userid"]
+        del recipe["username"]
 
     return api.send(recipes)
 
 
-@app.route("/api/recipe/<id>")
+@app.route("/api/users")
+def query_users():
+ 
+    id, username = api.values(request.args, ("id", "username"))
+
+    users, error = sql.select.users(open_database(), id=id, username=username)
+    if error:
+        return api.fail(error)
+
+    return api.send(users)
+
+
+@app.route("/api/users/<id>")
+def user_details(id):
+
+    db = open_database()
+
+    user, error = sql.select.user(db, id=id)
+    if not user:
+        return api.fail("user does not exist" if not error else error)
+
+    recipes, error = sql.select.recipes(db, user=user["id"])
+    if error:
+        return api.fail(error)
+
+    user["recipes"] = recipes
+    return api.send(user)
+
+
+@app.route("/api/recipes/<id>")
 def recipe_details(id):
     
     db = open_database()
@@ -126,8 +163,8 @@ def recipe_details(id):
         return api.fail(error)
 
     recipe["ingredients"] = ingredients
-
     return api.send(recipe)
+
 
 @app.route("/api/ingredients")
 def query_ingredients():

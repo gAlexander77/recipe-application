@@ -51,7 +51,7 @@ def ingredient(db, name):
     if len(name) < 3:
         return db_fail("name must be greater than or equal to 3 characters")
 
-    return insert(db, "ingredients", { "name": name })
+    return insert(db, "ingredients", { "name": name.capitalize().strip() })
 
 
 # INSERT RECIPE
@@ -67,8 +67,8 @@ def recipe(db, user, title, description):
     timestamp = int(datetime.now().timestamp())
     return insert(db, "recipes", {
         "user": user,
-        "title": title,
-        "description": description,
+        "title": title.capitalize().strip(),
+        "description": description.strip(),
         "created": timestamp,
         "updated": timestamp,
     })
@@ -91,7 +91,7 @@ def recipe_ingredient(db, recipe, ingredient, units, count):
     return insert(db, "recipes_ingredients", {
         "recipe": recipe,
         "ingredient": ingredient,
-        "units": units,
+        "units": units.strip(),
         "count": count
     })
 

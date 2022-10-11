@@ -1,7 +1,6 @@
 from .util import valid_table, db_pass, db_fail
 
 
-# users and ingredients are ez
 USERS_SQL = "SELECT id, username FROM users"
 INGREDIENTS_SQL = "SELECT id, name FROM ingredients"
 
@@ -21,7 +20,7 @@ FROM recipes
 LEFT JOIN users ON recipes.user = users.id
 INNER JOIN users_recipes ON recipes.id = users_recipes.recipe
 GROUP BY recipes.id
-ORDER BY rating DESC"""
+ORDER BY %s DESC"""
 RECIPE_INGREDIENTS_SQL = """SELECT
 ingredients.id as id, name
 FROM recipes_ingredients
@@ -31,13 +30,18 @@ INNER JOIN ingredients ON ingredients.id = recipes_ingredients.ingredient"""
 def query(sql, fields, expression):
     items = list(filter(lambda t: t[1] is not None, fields.items()))
     if len(items) > 0:
-        return sql + " WHERE " + " AND ".join(expression % (k, v) for k, v in items)
+        filtered = " WHERE " + " AND ".join(expression % (k, v) for k, v in items)
+        if "GROUP" in sql:
+            halves = sql.split('GROUP')
+            sql = halves[0].strip() + filtered + " GROUP" + halves[1]
+        else:
+            sql += filtered
     return sql
 
 
 def select(db, sql, fields, single=False):
 
-    expression =  "%s = '%s'" if single else "%s LIKE '%%%s%%'"
+    expression =  "%s LIKE '%%%s%%'"
     sql = query(sql, fields, expression)
 
     try:
@@ -50,7 +54,7 @@ def select(db, sql, fields, single=False):
 
 def user(db, id=None, username=None):
     if id is not None or username is not None:
-        return select(db, USER_SQL, {
+        return select(db, USERS_SQL, {
             "id": id, 
             "username": username, 
         }, single=True)
@@ -69,6 +73,7 @@ def recipe(db, id=None, title=None, user=None):
 
 def ingredient(db, id=None, name=None):
     if id is not None or name is not None:
+        name = name if name is None else name.capitalize().strip()
         return select(db, INGREDIENTS_SQL, {
             "id": id,
             "name": name
@@ -83,17 +88,20 @@ def users(db, id=None, username=None):
     })
 
 
-def recipes(db, id=None, title=None, description=None, user=None, rating=None):
-    return select(db, RECIPES_SQL, {
-        "id": id, 
+def recipes(db, id=None, title=None, description=None, user=None, rating=None, sort_by=None):
+    sort_by = "created" if sort_by is None else sort_by
+    sort_by = "recipes." + sort_by if sort_by != "rating" else sort_by
+    return select(db, RECIPES_SQL % sort_by, {
+        "recipes.id": id, 
         "title": title, 
         "description": description, 
-        "user": user, 
+        "recipes.user": user, 
         "rating": rating
     })
 
 
 def ingredients(db, id=None, name=None):
+    name = name if name is None else name.capitalize().strip()
     return select(db, INGREDIENTS_SQL, {
         "id": id,
         "name": name
