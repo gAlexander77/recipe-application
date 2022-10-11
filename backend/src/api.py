@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import Blueprint, jsonify
 
 def values(data, keys):
     return ( data[k] if k in data else None for k in keys )

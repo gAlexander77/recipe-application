@@ -9,9 +9,8 @@ create table if not exists users (
 create table if not exists recipes (
 	id text primary key,
 	user text not null,
-	title text unique not null,
-	steps text not null,
-	rating integer not null,
+	title text not null,
+	description text not null,
 	created integer not null,
 	updated integer not null,
 	constraint fk_user 

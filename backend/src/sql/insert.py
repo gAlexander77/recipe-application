@@ -58,8 +58,8 @@ def ingredient(db, name):
 # db:    database object
 # user:  uuid of user who posted recipe
 # title: title of recipe (length must be > 3)
-# steps: instructions for recipe
-def recipe(db, user, title, steps, rating):
+# description: instructions for recipe
+def recipe(db, user, title, description):
     
     if len(title) < 3:
         return db_fail("title must be greater than or equal to 3 characters")
@@ -68,8 +68,7 @@ def recipe(db, user, title, steps, rating):
     return insert(db, "recipes", {
         "user": user,
         "title": title,
-        "steps": steps,
-        "rating": rating,
+        "description": description,
         "created": timestamp,
         "updated": timestamp,
     })
@@ -94,4 +93,20 @@ def recipe_ingredient(db, recipe, ingredient, units, count):
         "ingredient": ingredient,
         "units": units,
         "count": count
+    })
+
+
+def user_recipe(db, user, recipe, rating, pinned):
+
+    if not isinstance(rating, int):
+        try:
+            rating = int(rating)
+        except:
+            rating = 0
+
+    return insert(db, "users_recipes", {
+        "user": user,
+        "recipe": recipe,
+        "rating": rating,
+        "pinned": pinned
     })

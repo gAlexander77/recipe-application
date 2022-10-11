@@ -20,6 +20,20 @@ def close_connection(exception):
         db.close()
 
 
+@app.route("/api/login", methods=["POST"])
+def login():
+    
+    username, password = api.values(
+            request.get_json(force=True), ("username", "password"))
+
+    id, error = sql.validate_password(open_database(), username, password)
+
+    if error:
+        return api.fail(error)
+
+    return api.send(id)
+
+
 # C
 @app.route("/api/create/user", methods=["POST"])
 def create_user():
@@ -84,16 +98,36 @@ def create_recipe():
 @app.route("/api/recipes")
 def query_recipes():
  
-    id, title, steps, rating = api.values(
-            request.args, ("id", "title", "steps", "rating"))
+    id, title, description, rating = api.values(
+            request.args, ("id", "title", "description", "rating"))
 
     recipes, error = sql.select.recipes(
-            open_database(), id=id, title=title, steps=steps, rating=rating)
+            open_database(), id=id, title=title, description=description, rating=rating)
     if error:
         return api.fail(error)
 
     return api.send(recipes)
 
+
+@app.route("/api/recipe/<id>")
+def recipe_details(id):
+    
+    db = open_database()
+
+    recipe, error = sql.select.recipe(db, id=id)
+    if error:
+        return api.fail(error)
+    
+    if not recipe:
+        return api.fail("no recipe matches")
+
+    ingredients, error = sql.select.recipe_ingredients(db, id)
+    if error:
+        return api.fail(error)
+
+    recipe["ingredients"] = ingredients
+
+    return api.send(recipe)
 
 @app.route("/api/ingredients")
 def query_ingredients():
@@ -111,10 +145,6 @@ def query_ingredients():
 # D
 @app.route("/api/delete/recipe/<id>", methods=["POST"])
 def delete_recipe(id):
-    
     # attempt to delete user with matching uuid
-    title, error = sql.delete.recipe(open_database(), id)
-    if error:
-        return api.fail(error)
-    
+    sql.delete.recipe(open_database(), id) 
     return api.send(f"deleted {title}")
