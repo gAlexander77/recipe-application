@@ -1,5 +1,6 @@
 from .util import valid_table, db_pass, db_fail
 
+DEBUG = 0
 
 USERS_SQL = "SELECT id, username FROM users"
 INGREDIENTS_SQL = "SELECT id, name FROM ingredients"
@@ -22,10 +23,15 @@ INNER JOIN users_recipes ON recipes.id = users_recipes.recipe
 GROUP BY recipes.id
 ORDER BY %s DESC"""
 RECIPE_INGREDIENTS_SQL = """SELECT
-ingredients.id as id, name
+ingredients.id AS id, name
 FROM recipes_ingredients
 INNER JOIN ingredients ON ingredients.id = recipes_ingredients.ingredient"""
-
+INGREDIENT_RECIPES_SQL = """SELECT
+recipes.id, title, description, AVG(rating) as rating
+FROM recipes
+INNER JOIN recipes_ingredients ON recipes.id = recipes_ingredients.recipe
+INNER JOIN users_recipes ON recipes.id = users_recipes.recipe
+GROUP BY recipes.id"""
 
 def query(sql, fields, expression):
     items = list(filter(lambda t: t[1] is not None, fields.items()))
@@ -43,6 +49,8 @@ def select(db, sql, fields, single=False):
 
     expression =  "%s LIKE '%%%s%%'"
     sql = query(sql, fields, expression)
+
+    if DEBUG: print(sql)
 
     try:
         rows = db.execute(sql)
@@ -88,16 +96,18 @@ def users(db, id=None, username=None):
     })
 
 
-def recipes(db, id=None, title=None, description=None, user=None, rating=None, sort_by=None):
+def recipes(db, id=None, title=None, description=None, userid=None, username=None, rating=None, sort_by=None):
     sort_by = "created" if sort_by is None else sort_by
     sort_by = "recipes." + sort_by if sort_by != "rating" else sort_by
     return select(db, RECIPES_SQL % sort_by, {
         "recipes.id": id, 
         "title": title, 
         "description": description, 
-        "recipes.user": user, 
+        "recipes.user": userid,
+        "username": username,
         "rating": rating
     })
+
 
 
 def ingredients(db, id=None, name=None):
@@ -107,7 +117,14 @@ def ingredients(db, id=None, name=None):
         "name": name
     })
 
+
 def recipe_ingredients(db, recipe):
     return select(db, RECIPE_INGREDIENTS_SQL, {
         "recipes_ingredients.recipe": recipe
+    })
+
+
+def ingredient_recipes(db, ingredient):
+    return select(db, INGREDIENT_RECIPES_SQL, { 
+        "recipes_ingredients.ingredient": ingredient 
     })

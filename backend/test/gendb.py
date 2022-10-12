@@ -89,7 +89,7 @@ press [\033[33mCTRL+C\033[0m] to abort > """)
 
     db = sql.open_database()
     
-    user_limit, recipe_limit, ingredient_limit = 20, 7, 12
+    user_limit, recipe_limit, ingredient_limit = 20, 12, 15
     user_ids, recipe_ids = [], []
 
     for user_id, username in gen_users(db, user_limit):
