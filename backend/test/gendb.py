@@ -7,12 +7,13 @@ from random import randint, choice, random, shuffle
 from base64 import b64decode
 
 PASSWORD = "ravioli"
-TSIZE = os.get_terminal_size()
+TSIZE = os.get_terminal_size().columns + 18
 UNITS = ["oz", "lbs", "floz", "tbsp", "tsp"]
-CLS = f"\033[2K\033[{TSIZE.columns}D"
+CLS = f"\033[2K\033[{TSIZE}D"
 
 def output(text, newline=False):
-    print(CLS + text[:TSIZE.columns], flush=True, end='\n' if newline else '')
+    fulltext = CLS + text
+    print(fulltext[:TSIZE], flush=True, end='\n' if newline else '')
 
 
 # import a file as an array of lines
@@ -102,14 +103,14 @@ press [\033[33mCTRL+C\033[0m] to abort > """)
                 icount = i
             output(f"  \033[33m-\033[0m `{title}` recipe created with [\033[36m{icount}\033[0m] ingredients", newline=True)
 
-    for _ in range(randint(100, 150)):
+    for _ in range(randint(150, 200)):
         uid = choice(user_ids)
         rid = choice(recipe_ids)
         pinned = True if random() > 0.5 else False
         rating = randint(0, 5)
-        output(f"{uid[:10]}... rates {rid[:10]}... {rating}/5 stars")
+        output(f"{uid[:20]}... rates {rid[:20]}... {rating}/5 stars")
         if pinned:
-            output(f"{uid[:10]}... pinned {rid[:10]}...")
+            output(f"{uid[:20]}... pinned {rid[:20]}...")
         _, error = sql.insert.user_recipe(db, uid, rid, rating, pinned)
         if error:
             output(error, newline=True)

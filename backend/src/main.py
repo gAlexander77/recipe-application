@@ -1,25 +1,22 @@
-import api, sql
+import sys; sys.path.append("./src")
+
 from flask import Flask, g, request
+import api
+import sql
 
 
 app = Flask(__name__)
+with app.app_context():
+    app.register_blueprint(api.views, url_prefix="/api")
 
 
-# opening the database object
-def open_database():
-    if (db := getattr(g, "_db", None)) is None:
-        db = g._db = sql.open_database()
-    db.row_factory = sql.util.dicts
-    return db
-
-
-# closing the database object after the connection closes
+# closing each database object after the connection closes
 @app.teardown_appcontext
 def close_connection(exception):
     if (db := getattr(g, "_db", None)) is not None:
         db.close()
 
-
+'''
 @app.route("/api/login", methods=["POST"])
 def login():
     
@@ -177,11 +174,4 @@ def query_ingredients():
         return api.fail(error)
 
     return api.send(ingredients)
-
-
-# D
-@app.route("/api/delete/recipe/<id>", methods=["POST"])
-def delete_recipe(id):
-    # attempt to delete user with matching uuid
-    sql.delete.recipe(open_database(), id) 
-    return api.send(f"deleted {title}")
+'''
