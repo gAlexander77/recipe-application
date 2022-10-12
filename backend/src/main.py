@@ -1,12 +1,24 @@
 import api, sql
-from flask import Flask
+from flask import Flask, g, request
 
 
 app = Flask(__name__)
-app.config["_db"] = sql.open_database()
-app.config["_db"].row_factory = sql.util.dicts
-with app.app_context():
-    app.register_blueprint(api.users)
+
+
+# opening the database object
+def open_database():
+    if (db := getattr(g, "_db", None)) is None:
+        db = g._db = sql.open_database()
+    db.row_factory = sql.util.dicts
+    return db
+
+
+# closing the database object after the connection closes
+@app.teardown_appcontext
+def close_connection(exception):
+    if (db := getattr(g, "_db", None)) is not None:
+        db.close()
+
 
 @app.route("/api/login", methods=["POST"])
 def login():

@@ -11,9 +11,8 @@ TSIZE = os.get_terminal_size()
 UNITS = ["oz", "lbs", "floz", "tbsp", "tsp"]
 CLS = f"\033[2K\033[{TSIZE.columns}D"
 
-
 def output(text, newline=False):
-    print(CLS + text[:TSIZE.columns + 9], flush=True, end='\n' if newline else '')
+    print(CLS + text[:TSIZE.columns], flush=True, end='\n' if newline else '')
 
 
 # import a file as an array of lines
@@ -103,8 +102,6 @@ press [\033[33mCTRL+C\033[0m] to abort > """)
                 icount = i
             output(f"  \033[33m-\033[0m `{title}` recipe created with [\033[36m{icount}\033[0m] ingredients", newline=True)
 
-    n = randint(100, 150)
-    output(f"generating {n} relations", newline=True)
     for _ in range(randint(100, 150)):
         uid = choice(user_ids)
         rid = choice(recipe_ids)
