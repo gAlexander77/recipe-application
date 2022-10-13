@@ -1,14 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import AddRecipe from "./AddRecipe";
 import '../styles/components/NavigationBarStyle.css'
 
-function NavigationBar({userType}){
+function NavigationBar({userType}){  
+
+    const [recipePopUp, setRecipePopUp] = useState(false);
+
+    const recipePopUpHandler = () => {
+        setRecipePopUp(!recipePopUp)
+        console.log(recipePopUp)
+    }
+
 
     const User = () => {
         if (userType === 'user'){
             return(
                 <div className="user-account">
+                    <button onClick={recipePopUpHandler}>Post A Recipe</button>
                     <Link to="/account">
                     My Account
                     </Link>
@@ -27,6 +37,13 @@ function NavigationBar({userType}){
     
     }
 
+    const AddRecipePopUp = () => {
+        if (recipePopUp === true){ 
+            return(
+                <AddRecipe></AddRecipe>
+            );}
+    }
+
     return (
         <div className="NavigationBar">
             
@@ -35,6 +52,8 @@ function NavigationBar({userType}){
             </Link>
             
             <User/>
+
+            <AddRecipePopUp/>
         </div>
     );
 }
