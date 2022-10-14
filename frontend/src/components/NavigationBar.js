@@ -18,7 +18,7 @@ function NavigationBar({userType}){
         if (userType === 'user'){
             return(
                 <div className="user-account">
-                    <button onClick={recipePopUpHandler}>Post A Recipe</button>
+                    <button className="post-btn" onClick={recipePopUpHandler}>Post A Recipe</button>
                     <Link to="/account">
                     My Account
                     </Link>
@@ -46,11 +46,10 @@ function NavigationBar({userType}){
 
     return (
         <div className="NavigationBar">
-            
             <Link to="/" className="icon-link">
                 <FaHome className="icon"/>
             </Link>
-            
+                
             <User/>
 
             <AddRecipePopUp/>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import '../styles/LoginStyle.css'
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaUser,FaLock } from "react-icons/fa"
 import { BsXLg } from "react-icons/bs";
 
@@ -19,15 +19,15 @@ function Login () {
                 <div className="content-box center">
                     <div className="input-row">
                         <FaUser className="input-logo"/>
-                        <input className="Username" placeholder="Username" type="text"></input>
+                        <input className="inpt Username" placeholder="Username" type="text"></input>
                     </div>
                     <div className="input-row">
                     <FaLock className="input-logo"/>
-                        <input className="Password" placeholder="Password" type="password"></input>
+                        <input className="inpt Password" placeholder="Password" type="password"></input>
                         </div>
                     <div className="input-row">
                         <FaLock className="input-logo"/>
-                        <input className="Verify Password" placeholder="Verify Password" type="password"></input>
+                        <input className="inpt verify-password" placeholder="Verify Password" type="password"></input>
                     </div>
                     <button className="btn-hover btn">Create Account</button>
                 </div>
@@ -42,12 +42,12 @@ function Login () {
                 <div className="content-box center">
                     <div className="input-row">  
                         <FaUser className="input-logo"/>
-                        <input className="" type="text" placeholder="Username"></input>
+                        <input className="inpt" type="text" placeholder="Username"></input>
 
                     </div>
                     <div className="input-row">
                         <FaLock className="input-logo"/>
-                        <input className="" type="password" placeholder="Password"></input>
+                        <input className="inpt" type="password" placeholder="Password"></input>
                     </div>
                         <button className="btn-hover btn">Login</button>
                 </div>
