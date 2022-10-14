@@ -1,15 +1,28 @@
-import React, { useState }from 'react';
-import RecipeCard from './RecipeCard'
+import React, { useState, useEffect }from 'react';
+import axios from 'axios';
+import RecipeCard from './RecipeCard';
 import { FaAngleDown, FaSearch } from "react-icons/fa";
-import '../styles/components/FeedStyle.css'
+import '../styles/components/FeedStyle.css';
 
 function Feed(){
     
-    const description = 'A hamburger, or simply burger, is a food consisting of fillings—usually a patty of ground meat, typically beef—placed inside a sliced bun or bread roll. Hamburgers are often served with cheese, lettuce, tomato, onion, pickles, bacon, or chilis; condiments such as ketchup, mustard, mayonnaise, relish, or a "special sauce", often a variation of Thousand Island dressing; and are frequently placed on sesame seed buns.'
+    /*
+    const description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet purus ac egestas egestas consequat donec aliquam senectus. Senectus varius et ac ac feugiat. Magna aliquam aliquam elit, placerat at. Eu faucibus sed nisl aliquam.'
     const image = 'https://makeyourmeals.com/wp-content/uploads/2019/03/air-fryer-hamburger.jpg';
+    <RecipeCard image={image} name='Hamburger' desc={description} rating={4.2} />
+    */
 
     const [setSortBy, sortBy] = useState('recent')
     const sortList = ['Recently Added', 'Most popular'];
+
+    const [recipe, setRecipe] = useState([])
+    
+    /* Test Mock API */
+    useEffect(()=>{
+        axios.get('http://localhost:3001/recipes').then(res => {
+        setRecipe(res.data)
+        }).catch(error => alert('API ERROR'));
+      }, []);
 
     const Sort = () => {
         return (
@@ -37,22 +50,17 @@ function Feed(){
         <div className="Feed">
         <Header/>
         <div className="content">
-            <RecipeCard image={image} name='Hamburger' desc={description} rating={4.2} />
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>    
+            {recipe.map(recipe =>{
+                return(
+                    <RecipeCard
+                     image={recipe.image} 
+                     name={recipe.recipe_name} 
+                     desc={recipe.description} 
+                     rating={recipe.rating}
+                    />
+                );
+            }
+            )}
         </div>
         </div>
     );
