@@ -9,10 +9,9 @@ function NavigationBar({userType}){
     const [recipePopUp, setRecipePopUp] = useState(false);
 
     const recipePopUpHandler = () => {
-        setRecipePopUp(!recipePopUp)
+        setRecipePopUp(true)
         console.log(recipePopUp)
     }
-
 
     const User = () => {
         if (userType === 'user'){
@@ -34,14 +33,6 @@ function NavigationBar({userType}){
                 </div>    
             );
         }
-    
-    }
-
-    const AddRecipePopUp = () => {
-        if (recipePopUp === true){ 
-            return(
-                <AddRecipe></AddRecipe>
-            );}
     }
 
     return (
@@ -52,7 +43,7 @@ function NavigationBar({userType}){
                 
             <User/>
 
-            <AddRecipePopUp/>
+            <AddRecipe trigger={recipePopUp} setTrigger={setRecipePopUp}/>
         </div>
     );
 }

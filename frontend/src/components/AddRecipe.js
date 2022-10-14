@@ -2,11 +2,11 @@ import React from 'react';
 import { BsXLg } from "react-icons/bs";
 import '../styles/components/AddRecipeStyle.css'; 
 
-function AddRecipe(){
-    return(
+function AddRecipe(props){
+    return(props.trigger)?(
         <div className="popup">
             <form className="popup-inner">
-                <BsXLg/>
+                <BsXLg onClick={() => props.setTrigger(false)}/>
                 <label>Name of Recipe: </label>
                 <input type="text" placeholder="Name of recipe"></input>
                 <label>Description: </label>
@@ -16,7 +16,7 @@ function AddRecipe(){
                 <button>Post Recipe</button>
             </form>
         </div>
-    );   
+    ) : "";   
 }
 
 export default AddRecipe;
