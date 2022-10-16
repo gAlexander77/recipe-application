@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { ImStarFull, ImStarHalf , ImStarEmpty } from "react-icons/im";
-import '../styles/components/RecipeCardStyle.css'
+import '../styles/components/RecipeCardStyle.css';
 
-function RecipeCard({image,name,desc,rating}){
+function RecipeCard({id,image,name,desc,rating}){
 
     const Stars = () => {
         if(rating > 4.5)
@@ -35,7 +36,7 @@ function RecipeCard({image,name,desc,rating}){
             <h1 className="recipe-name">{name}</h1>
             <p className="recipe-desc">{desc}</p>
             <div className="recipe-rating"> Rating <Stars/> </div>
-            <button className="view-recipe">View Recipe</button>
+            <Link className="view-recipe" to={"/recipe/"+id} state={id} onClick={() => console.log("clicked "+id)}>View Recipe</Link>
         </div>
     );
 }

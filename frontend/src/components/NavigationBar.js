@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaPaperPlane } from "react-icons/fa";
 import AddRecipe from "./AddRecipe";
 import '../styles/components/NavigationBarStyle.css'
 
@@ -17,7 +17,9 @@ function NavigationBar({userType}){
         if (userType === 'user'){
             return(
                 <div className="user-account">
-                    <button className="post-btn" onClick={recipePopUpHandler}>Post A Recipe</button>
+                    <button className="post-btn" onClick={recipePopUpHandler}>
+                        Post Recipe <FaPaperPlane className="post-btn-icon"/>
+                    </button>
                     <Link to="/account">
                     My Account
                     </Link>

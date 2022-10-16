@@ -12,7 +12,7 @@ function Feed(){
     <RecipeCard image={image} name='Hamburger' desc={description} rating={4.2} />
     */
 
-    const [setSortBy, sortBy] = useState('recent')
+    const [sortBy, setSortBy] = useState('recent')
     const sortList = ['Recently Added', 'Most popular'];
 
     const [recipe, setRecipe] = useState([])
@@ -53,6 +53,8 @@ function Feed(){
             {recipe.map(recipe =>{
                 return(
                     <RecipeCard
+                     key = {recipe.id}
+                     id = {recipe.id}
                      image={recipe.image} 
                      name={recipe.recipe_name} 
                      desc={recipe.description} 

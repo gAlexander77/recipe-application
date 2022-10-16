@@ -16,6 +16,76 @@
 .popup-inner {
     background-color: white;
     color: black;
+    border-radius: 10px;
     height: 700px;
     width: 1200px;
+    overflow: auto;
+    
+    position: relative;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.exit {
+    position: absolute; 
+    right: 10px;
+    top: 10px;
+}
+
+.post-recipe-form-btn {
+    width: 100px;
+    height: 20px;
+
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    
+    padding-top: 45px;
+    padding-left: 100px;
+}
+
+.name-input {
+    background-color: grey;
+    height: 24px;
+    width: 170px;
+}
+
+.desc-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.ingr-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.desc-input {
+    height: 120px;
+    width: 600px;
+}
+
+.inst-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.inst-input {
+    height: 170px;
+    width: 600px;
 }

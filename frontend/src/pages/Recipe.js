@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useLocation } from "react-router-dom"
 
 function Recipe(){
+    const location = useLocation();
+    const recipeID = location.state;
     return(
         <div className="Recipe">
-            <h1>Image</h1>
+            <h1>Image {recipeID}</h1>
             <h1>Recipe Name</h1>
             <h1>Recipe Rating</h1>
             <h1>Recipe Description</h1>
