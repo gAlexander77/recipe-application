@@ -3,15 +3,14 @@
     grid-template-columns: 20vw 1fr 20vw;
     grid-template-rows: 50px 1fr 1fr;
     grid-template-areas: 
-    "nav nav nav"
+    "navbar navbar navbar"
     "profile saved-recipes empty"
     "profile my-recipes empty";
     gap: 10px;
 }
 
-.nav {
-    grid-area: nav;
-    
+.navbar {
+    grid-area: navbar;
     /*background-color: white;*/
 }
 
@@ -97,7 +96,7 @@
         grid-template-columns: 5vw 1fr 5vw;
         grid-template-rows: 50px 300px 290px 290px;
         grid-template-areas: 
-        "nav nav nav"
+        "navbar navbar navbar"
         "profile profile profile"
         "saved-recipes saved-recipes saved-recipes"
         "my-recipes  my-recipes my-recipes ";

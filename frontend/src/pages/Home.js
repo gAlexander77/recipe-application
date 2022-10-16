@@ -18,7 +18,7 @@ function Home(){
 
     return (
         <div className="Home">
-            <NavigationBar {...{userType}}/>
+            <NavigationBar {...{userType}} className="navbar"/>
             <Feed className="Feed"/>
         </div>
     );

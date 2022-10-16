@@ -17,7 +17,9 @@ function Account() {
 
     return(
         <div className="Account">
-            <NavigationBar {...{userType}} className="nav"/>
+            <div className="navbar">
+                <NavigationBar {...{userType}}/>
+            </div>
             <div className="account-information">
                 <div className="circle"></div>
                 <h1 className="account-username">Username</h1>

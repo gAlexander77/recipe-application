@@ -1,20 +1,30 @@
 * {
     margin: 0;
     padding: 0;
-    }
+}
 
 .Home {
-    display: flex;
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 1fr;
     flex-direction: column;
     align-items: center;
+    min-width: 0;  
 }
+
 
 .Feed {
+    grid-row: 2;
+    grid-column: 1;
+
+    align-self: center;
+    justify-self: center;
+
     margin-top: 100px;
+    min-width: 0;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.navbar {
+    grid-row: 1;
+    grid-column: 1;
 }
