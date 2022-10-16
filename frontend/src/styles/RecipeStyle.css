@@ -1,0 +1,45 @@
+.Recipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recipe-container {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 95vw;
+    background-color: white;
+
+    position: relative;
+}
+
+.recipe-imagebox {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    background-color: gray;
+    
+    position: absolute; 
+}
+
+.rating-container {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.info-container {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.desc-textbox {
+    width: 750px;
+    height: 160px;
+}
+
+.inst-textbox {
+    width: 750px;
+    height: 160px;
+}
