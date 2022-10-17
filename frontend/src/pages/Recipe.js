@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { ImStarFull, ImStarHalf , ImStarEmpty } from "react-icons/im";
 import NavigationBar from '../components/NavigationBar';
 import DisplayStars from '../components/DisplayStars';
+import RateRecipe from '../components/RateRecipe';
 import '../styles/RecipeStyle.css';
 
 function Recipe(){
@@ -11,6 +11,12 @@ function Recipe(){
     const recipeID = location.state;
 
     const [recipe, setRecipe] = useState([])
+
+    const [rateRecipePopUp, setRateRecipePopUp] = useState(false);
+    const rateRecipePopUpHandler = () => {
+        setRateRecipePopUp(true)
+        console.log(rateRecipePopUp)
+    }
     
     /* Test Mock API */
     useEffect(()=>{
@@ -40,7 +46,7 @@ function Recipe(){
                 <img src={recipe.image} className="recipe-imagebox"/>
                 <div className="rating-container">
                     <DisplayStars rating={recipe.rating}/>
-                    <button>Rate Recipe</button>
+                    <button onClick={rateRecipePopUpHandler}>Rate Recipe</button>
                 </div>
                 <div className="info-container">
                     <h1 className="recipe-title">{recipe.recipe_name}</h1>
@@ -60,6 +66,7 @@ function Recipe(){
                 <button>Download Recipe</button>
                 <button>Save Recipe</button>
             </div>
+            <RateRecipe trigger={rateRecipePopUp} setTrigger={setRateRecipePopUp}/>
         </div>
     );   
 }
