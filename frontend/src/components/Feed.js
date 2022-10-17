@@ -15,44 +15,45 @@ function Feed(){
     const [sortBy, setSortBy] = useState('Filter Results')
     const sortList = ['Recently Added', 'Most popular'];
 
-    const [recipe, setRecipe] = useState([])
+    const [recipes, setRecipes] = useState([])
     
     /* Test Mock API */
     useEffect(()=>{
         axios.get('https://f3fad6f8-6516-4627-a8dd-ac467a4107cf.mock.pstmn.io/recipes').then(res => {
-        setRecipe(res.data)
+        setRecipes(res.data)
         }).catch(error => alert('API ERROR'));
       }, []);
 
     
 
-    const [search, setSearch] = useState([])
-
+    const [search, setSearch] = useState([]);
     
     
     const [sorting, setSorting] = useState(false)
-    useEffect(()=>{},[sorting])
+    useEffect(()=>{console.log("Sorting Activated useEffect");},[sorting])
     
     const sortByRank = () => {
-        recipe.sort(function compare(a, b){
+        recipes.sort(function compare(a, b){
             if(a.rating > b.rating) return -1;
             if(a.rating < b.rating) return 1;
             return 0;});
         setSorting(!sorting);
+        console.log("Sorting By Rank");
     }
 
     const sortByMostRecent = () => {
-        recipe.sort(function compare(a, b){
+        recipes.sort(function compare(a, b){
             if(a.id > b.id) return -1;
             if(a.id < b.id) return 1;
             return 0;});
         setSorting(!sorting);
+        console.log("Sorting by Most Recent");
     }
 
-    const searchHandler = evt => {
+    const searchHandler = (evt) => {
         setSearch(evt.target.value.toLowerCase())
     }
-    const filterRecipes = recipe.filter(recipe => 
+    const filterRecipes = recipes.filter(recipe => 
         recipe.recipe_name.toLowerCase().includes(search)    
     );
 
@@ -87,7 +88,13 @@ function Feed(){
 
     return (
         <div className="Feed">
-        <Header/>
+            <div className="Header glass">
+                <SortByButton></SortByButton>
+                <div className="search-box-container">
+                    <input type="text" className="search" placeholder="Search" onChange={searchHandler} value={search}/>
+                    <FaSearch/>
+                </div>
+            </div>
         <div className="content">
             {filterRecipes.map((recipe, index) =>{
                 return(
