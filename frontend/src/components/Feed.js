@@ -12,7 +12,7 @@ function Feed(){
     <RecipeCard image={image} name='Hamburger' desc={description} rating={4.2} />
     */
 
-    const [sortBy, setSortBy] = useState('recent')
+    const [sortBy, setSortBy] = useState('Filter Results')
     const sortList = ['Recently Added', 'Most popular'];
 
     const [recipe, setRecipe] = useState([])
@@ -24,10 +24,51 @@ function Feed(){
         }).catch(error => alert('API ERROR'));
       }, []);
 
-    const Sort = () => {
+    
+
+    const [search, setSearch] = useState([])
+
+    
+    
+    const [sorting, setSorting] = useState(false)
+    useEffect(()=>{},[sorting])
+    
+    const sortByRank = () => {
+        recipe.sort(function compare(a, b){
+            if(a.rating > b.rating) return -1;
+            if(a.rating < b.rating) return 1;
+            return 0;});
+        setSorting(!sorting);
+    }
+
+    const sortByMostRecent = () => {
+        recipe.sort(function compare(a, b){
+            if(a.id > b.id) return -1;
+            if(a.id < b.id) return 1;
+            return 0;});
+        setSorting(!sorting);
+    }
+
+    const searchHandler = evt => {
+        setSearch(evt.target.value.toLowerCase())
+    }
+    const filterRecipes = recipe.filter(recipe => 
+        recipe.recipe_name.toLowerCase().includes(search)    
+    );
+
+    function SortOpitons(){
+        <div className="sort-options-box">  
+            <button onClick={() => setSortBy(sortList[0])}>{sortList[0]}</button>
+            <button onClick={() => setSortBy(sortList[1])}>{sortList[1]}</button>
+        </div>
+    }
+
+    function SortByButton(){
         return (
-            <div className="Sort">
-                Recently Added
+            <div className="sort-by-container">
+                <button>{sortBy}<FaAngleDown/></button>
+                <button onClick={sortByRank}>Rank</button>
+                <button onClick={sortByMostRecent}>Most Recent</button>
             </div>
         );
     }
@@ -35,11 +76,9 @@ function Feed(){
     function Header(){
         return (
             <div className="Header glass">
-                <div className="sort-by-container">
-                    Recently Added<FaAngleDown/>
-                </div>
+                <SortByButton></SortByButton>
                 <div className="search-box-container">
-                    <input type="text" className="search" placeholder="Search"/>
+                    <input type="text" className="search" placeholder="Search" onChange={searchHandler} value={search}/>
                     <FaSearch/>
                 </div>
             </div>
@@ -50,10 +89,10 @@ function Feed(){
         <div className="Feed">
         <Header/>
         <div className="content">
-            {recipe.map(recipe =>{
+            {filterRecipes.map((recipe, index) =>{
                 return(
                     <RecipeCard
-                     key = {recipe.id}
+                     key = {index}
                      id = {recipe.id}
                      image={recipe.image} 
                      name={recipe.recipe_name} 
