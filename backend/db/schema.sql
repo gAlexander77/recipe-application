@@ -1,18 +1,19 @@
 create table if not exists users (
 	id text primary key,
 	username text unique not null,
-	password text,
+	password text not null,
 	created integer not null,
 	updated integer not null
 );
 
 create table if not exists recipes (
 	id text primary key,
-	user text not null,
-	title text not null,
+	name text not null,
 	description text not null,
+	instructions text not null,
 	created integer not null,
 	updated integer not null,
+	user text not null,
 	constraint fk_user 
 		foreign key(user) 
 		references users(id)
@@ -28,8 +29,6 @@ create table if not exists recipes_ingredients (
 	id text primary key,
 	recipe text not null,
 	ingredient text not null,
-	units text,
-	count real not null,
 	constraint fk_recipe 
 		foreign key(recipe) 
 		references recipes(id)
