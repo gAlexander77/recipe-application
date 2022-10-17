@@ -12,7 +12,7 @@
 * Gilbert Martinez
 * Jon Brooks
 * Andrew Heckman
-### Things Discussed
+### Discussed
 * Database table requirements
 * Roles
 * ## October 3rd, 2022
@@ -20,7 +20,7 @@
 * Gilbert Martinez
 * Jon Brooks
 * Andrew Heckman
-### Things Discussed
+### Discussed
 * User Interface
 * Database request 
 * ## October 10th, 2022
@@ -28,6 +28,6 @@
 * Gilbert Martinez
 * Jon Brooks
 * Andrew Heckman
-### Things Discussed
+### Discussed
 * Functional Requirements
 * Non-functional Requirements
