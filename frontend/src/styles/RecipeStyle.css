@@ -26,8 +26,11 @@
 
 .rating-container {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 10%;
+    top: 20px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .info-container {
@@ -35,12 +38,25 @@
     width: 50%;
 }
 
+.recipe-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.desc-title {
+    margin-bottom: 5px;
+}
+
 .desc-textbox {
     width: 750px;
-    height: 160px;
+    margin-bottom: 20px;
+}
+
+.ingr-list {
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
 
 .inst-textbox {
     width: 750px;
-    height: 160px;
 }

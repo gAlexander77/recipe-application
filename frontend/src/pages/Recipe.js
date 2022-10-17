@@ -38,25 +38,27 @@ function Recipe(){
             <NavigationBar {...{userType}} className="navbar"/>
             <div className="recipe-container">
                 <img src={recipe.image} className="recipe-imagebox"/>
-                <div className="rating-container"><DisplayStars rating={recipe.rating}/></div>
+                <div className="rating-container">
+                    <DisplayStars rating={recipe.rating}/>
+                    <button>Rate Recipe</button>
+                </div>
                 <div className="info-container">
-                    <h1>{recipe.recipe_name}</h1>
-                    <h1>Description</h1>
+                    <h1 className="recipe-title">{recipe.recipe_name}</h1>
+                    <h1 className="desc-title">Description</h1>
                     <p className="desc-textbox">{recipe.description}</p>
-                    <h1>Ingredient{recipe.id}</h1>
-                    <ul>
+                    <h1 className="ingr-title">Ingredients</h1>
+                    <ul className="ingr-list">
                         <li>Ingredient 1</li>
                         <li>Ingredient 2</li>
                         <li>Ingredient 3</li>
                         <li>Ingredient 4</li>
                         <li>Ingredient 5</li>
                     </ul>
-                    <h1>Instructions</h1>
+                    <h1 className="inst-title">Instructions</h1>
                     <p className="inst-textbox">{recipe.instructions}</p>
                 </div>
                 <button>Download Recipe</button>
                 <button>Save Recipe</button>
-                <button>Rate Recipe</button>
             </div>
         </div>
     );   
