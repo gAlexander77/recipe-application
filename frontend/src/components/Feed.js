@@ -19,7 +19,7 @@ function Feed(){
     
     /* Test Mock API */
     useEffect(()=>{
-        axios.get('http://localhost:3001/recipes').then(res => {
+        axios.get('https://f3fad6f8-6516-4627-a8dd-ac467a4107cf.mock.pstmn.io/recipes').then(res => {
         setRecipe(res.data)
         }).catch(error => alert('API ERROR'));
       }, []);

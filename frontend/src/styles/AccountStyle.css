@@ -1,6 +1,7 @@
 .Account {
     display: grid;
-    grid-template-columns: 20vw 1fr 20vw;
+    width: 100vw;
+    grid-template-columns: 20vw 1fr 10vw;
     grid-template-rows: 50px 1fr 1fr;
     grid-template-areas: 
     "navbar navbar navbar"
