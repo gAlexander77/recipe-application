@@ -5,12 +5,6 @@ import { FaAngleDown, FaSearch } from "react-icons/fa";
 import '../styles/components/FeedStyle.css';
 
 function Feed(){
-    
-    /*
-    const description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet purus ac egestas egestas consequat donec aliquam senectus. Senectus varius et ac ac feugiat. Magna aliquam aliquam elit, placerat at. Eu faucibus sed nisl aliquam.'
-    const image = 'https://makeyourmeals.com/wp-content/uploads/2019/03/air-fryer-hamburger.jpg';
-    <RecipeCard image={image} name='Hamburger' desc={description} rating={4.2} />
-    */
 
     const [sortBy, setSortBy] = useState('Filter Results')
     const sortList = ['Recently Added', 'Most popular'];
@@ -70,18 +64,6 @@ function Feed(){
                 <button>{sortBy}<FaAngleDown/></button>
                 <button onClick={sortByRank}>Rank</button>
                 <button onClick={sortByMostRecent}>Most Recent</button>
-            </div>
-        );
-    }
-
-    function Header(){
-        return (
-            <div className="Header glass">
-                <SortByButton></SortByButton>
-                <div className="search-box-container">
-                    <input type="text" className="search" placeholder="Search" onChange={searchHandler} value={search}/>
-                    <FaSearch/>
-                </div>
             </div>
         );
     }
