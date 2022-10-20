@@ -1,0 +1,36 @@
+.rate-recipe-popup {
+    position: fixed;
+
+    z-index: 99;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgb(0, 0, 0, 0.8);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rate-recipe-inner {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    height: 200px;
+    width: 300px;
+    overflow: auto;
+    
+    position: relative;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.exit-rate-recipe {
+    position: absolute; 
+    right: 10px;
+    top: 10px;
+}
