@@ -9,6 +9,7 @@
     grid-template-columns: 220px 1fr 170px;
     grid-template-rows: 50px 1fr;
     z-index: 0;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .recipe-image {

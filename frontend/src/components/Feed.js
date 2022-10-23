@@ -1,27 +1,27 @@
 import React, { useState, useEffect }from 'react';
 import axios from 'axios';
 import RecipeCard from './RecipeCard';
-import { FaAngleDown, FaSearch } from "react-icons/fa";
+import { FaAngleDown, FaAngleUp} from "react-icons/fa";
+import { BsSearch } from "react-icons/bs";
 import '../styles/components/FeedStyle.css';
+
+import hostname from '../hostname';
 
 function Feed(){
 
     const [sortBy, setSortBy] = useState('Filter Results')
-    const sortList = ['Recently Added', 'Most popular'];
+    const sortList = ['Recently Added', 'Most Popular'];
 
     const [recipes, setRecipes] = useState([])
     
     /* Test Mock API */
     useEffect(()=>{
-        axios.get('https://f3fad6f8-6516-4627-a8dd-ac467a4107cf.mock.pstmn.io/recipes').then(res => {
+        axios.get(hostname+'/recipes').then(res => {
         setRecipes(res.data)
         }).catch(error => alert('API ERROR'));
       }, []);
 
-    
-
     const [search, setSearch] = useState([]);
-    
     
     const [sorting, setSorting] = useState(false)
     useEffect(()=>{console.log("Sorting Activated useEffect");},[sorting])
@@ -51,19 +51,27 @@ function Feed(){
         recipe.recipe_name.toLowerCase().includes(search)    
     );
 
-    function SortOpitons(){
-        <div className="sort-options-box">  
-            <button onClick={() => setSortBy(sortList[0])}>{sortList[0]}</button>
-            <button onClick={() => setSortBy(sortList[1])}>{sortList[1]}</button>
-        </div>
-    }
+    function DropdownMenu(props){
+        return(props.trigger)?(
+            <div className="dropdown-box">
+                <div className="dropdown-row" onClick={sortByRank}>{sortList[0]}</div>
+                <div className="dropdown-row" onClick={sortByMostRecent}>{sortList[1]}</div>
+            </div>
+        ):"";
+}
 
     function SortByButton(){
+        const [dropdown, setDropdown] = useState(false)
+        
+        const Angle = () => {
+            if (dropdown===false) return(<FaAngleDown/>);
+            else return (<FaAngleUp/>);
+        }
+        
         return (
             <div className="sort-by-container">
-                <button>{sortBy}<FaAngleDown/></button>
-                <button onClick={sortByRank}>Rank</button>
-                <button onClick={sortByMostRecent}>Most Recent</button>
+                <div className="filter" onClick={() => setDropdown(!dropdown)}><p className="filter-text">{sortBy}   <Angle/></p></div>
+                <DropdownMenu trigger={dropdown} setTrigger={setDropdown}/>
             </div>
         );
     }
@@ -73,11 +81,12 @@ function Feed(){
             <div className="Header glass">
                 <SortByButton></SortByButton>
                 <div className="search-box-container">
-                    <input type="text" className="search" placeholder="Search" onChange={searchHandler} value={search}/>
-                    <FaSearch/>
+                    <BsSearch className="search-icon"/>
+                    <input type="text" className="search-box" placeholder="Search" onChange={searchHandler} value={search}/>
                 </div>
             </div>
         <div className="content">
+        <DropdownMenu/>
             {filterRecipes.map((recipe, index) =>{
                 return(
                     <RecipeCard
