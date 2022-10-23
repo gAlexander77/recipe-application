@@ -6,6 +6,8 @@ import DisplayStars from '../components/DisplayStars';
 import RateRecipe from '../components/RateRecipe';
 import '../styles/RecipeStyle.css';
 
+import hostname from '../hostname';
+
 function Recipe(){
     const location = useLocation();
     const recipeID = location.state;
@@ -20,7 +22,7 @@ function Recipe(){
     
     /* Test Mock API */
     useEffect(()=>{
-        axios.get('https://f3fad6f8-6516-4627-a8dd-ac467a4107cf.mock.pstmn.io/recipes/'+recipeID).then(res => {
+        axios.get(hostname+'/recipes/'+recipeID).then(res => {
         setRecipe(res.data)
         }).catch(error => alert('API ERROR'));
     }, []);

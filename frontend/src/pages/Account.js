@@ -4,6 +4,8 @@ import axios from 'axios';
 import NavigationBar from '../components/NavigationBar';
 import '../styles/AccountStyle.css';
 
+import hostname from '../hostname';
+
 function Account() {
 
     let navigate = useRef(useNavigate());
@@ -21,7 +23,7 @@ function Account() {
     const [recipes, setRecipes] = useState([])
     /* Test Mock API */
     useEffect(()=>{
-        axios.get('https://f3fad6f8-6516-4627-a8dd-ac467a4107cf.mock.pstmn.io/recipes').then(res => {
+        axios.get(hostname+'/recipes').then(res => {
         setRecipes(res.data)
         }).catch(error => alert('API ERROR'));
     }, []);
