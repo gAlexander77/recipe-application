@@ -20,6 +20,7 @@
     height: 700px;
     width: 1200px;
     overflow: auto;
+    overflow-x: hidden;
     
     position: relative;
     
@@ -34,12 +35,24 @@
 }
 
 .post-recipe-form-btn {
-    width: 100px;
-    height: 20px;
-
     position: absolute;
-    right: 10px;
-    bottom: 10px;
+    right: 20px;
+    bottom: 20px;
+
+    border: none;
+    border-radius: 10px;
+    padding: 5px 15px;
+    background-color: rgb(255, 119, 119);
+    color: white;
+}
+
+.post-recipe-form-btn:hover {
+    background-color: rgb(216, 86, 86);
+    cursor: pointer;
+}
+
+.plane-icon {
+    margin-left: 4px;
 }
 
 .name-container {
@@ -50,10 +63,17 @@
     padding-left: 100px;
 }
 
+.name-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
 .name-input {
-    background-color: grey;
     height: 24px;
     width: 170px;
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
 }
 
 .desc-container {
@@ -64,6 +84,19 @@
     padding-left: 100px;
 }
 
+.desc-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.desc-input {
+    height: 120px;
+    width: 600px;
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
+}
+
 .ingr-container {
     display: flex;
     flex-direction: column;
@@ -72,9 +105,35 @@
     padding-left: 100px;
 }
 
-.desc-input {
-    height: 120px;
-    width: 600px;
+.ingr-label-container {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.add-btn {
+    border: none;
+    border-radius: 10px;
+    margin-left: 4px;
+    padding: 1px 3px;
+    background-color: rgb(255, 119, 119);
+    color: white;
+}
+
+.ingr-input {
+    padding-right: 20px;
+    padding-left: 5px;
+    margin-bottom: 4px;
+    height: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.remove-btn {
+    position: relative;
+    left: -22px;
+    height: 20px;
+    border: none;
+    width: 20px;
 }
 
 .inst-container {
@@ -85,7 +144,15 @@
     padding-left: 100px;
 }
 
+.inst-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
 .inst-input {
     height: 170px;
     width: 600px;
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
 }

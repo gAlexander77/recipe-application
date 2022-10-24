@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { motion } from 'framer-motion';
 import { BsXLg } from "react-icons/bs";
+import { FaPaperPlane } from "react-icons/fa";
 import '../styles/components/AddRecipeStyle.css'; 
 
 function AddRecipe(props){
@@ -20,7 +21,8 @@ function AddRecipe(props){
     const removeIngredient = (index) => {
         let deleteIngredient = [...ingredients];
         deleteIngredient.splice(index, 1);
-        setIngredients(deleteIngredient);
+        if(ingredients.length !== 1)
+            setIngredients(deleteIngredient);
     }
 
     const submit = (evt) => {
@@ -42,14 +44,20 @@ function AddRecipe(props){
                     <input className="name-input" type="text" placeholder="Name of recipe"></input>
                 </div>  
                 <div className="desc-container">
-                    <label className="desc-lable">Description</label>
+                    <label className="desc-label">Description</label>
                     <textarea className="desc-input" type="text" placeholder="Description of your Recipe"></textarea>
                 </div>
                 <div className="ingr-container">
-                    <label className="ingr-label">Ingredients <button onClick={addIngredient}>+</button></label>
+                    <div className="ingr-label-container">
+                    <label>Ingredients</label>
+                    <button className="add-btn" onClick={addIngredient}>+</button>
+                    </div>
                     {ingredients.map((form, index)=>{
                         return (
-                            <div className="ingredient" key={index}>
+                            <motion.div className="ingredient" key={index}
+                                initial = {{x:-200}}
+                                animate={{x:0}}
+                                >
                                 <input 
                                 className="ingr-input"
                                 type="text"
@@ -57,16 +65,16 @@ function AddRecipe(props){
                                 onChange={(evt) => handleIngredientChange(evt, index)}
                                 value = {form.ingredient}
                                 />
-                                <button onClick={()=>removeIngredient(index)}>-</button>
-                            </div>
+                                <button className="remove-btn" onClick={()=>removeIngredient(index)}>-</button>
+                            </motion.div>
                         );
                     })}
                 </div>
                 <div className="inst-container">
-                    <label className="inst-lable">Instructions</label>
+                    <label className="inst-label">Instructions</label>
                     <textarea className="inst-input" type="text" placeholder="Instructions"></textarea>
                 </div>
-                <button className="post-recipe-form-btn" onClick={submit}>Post Recipe</button>
+                <button className="post-recipe-form-btn" onClick={submit}>Post Recipe<FaPaperPlane className="plane-icon"/></button>
             </motion.form>
         </div>
     ) : "";   
