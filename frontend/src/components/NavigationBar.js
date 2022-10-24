@@ -21,7 +21,7 @@ function NavigationBar({userType}){
                         Post Recipe <FaPaperPlane className="post-btn-icon"/>
                     </button>
                     <Link to="/account">
-                    My Account
+                    <button className="account-btn">My Account</button>
                     </Link>
                 </div>
             );
@@ -30,7 +30,7 @@ function NavigationBar({userType}){
             return(
                 <div className="user-account">
                     <Link to="/login">
-                    Create Account
+                    <button className="account-btn">Create Account</button>
                     </Link>
                 </div>    
             );

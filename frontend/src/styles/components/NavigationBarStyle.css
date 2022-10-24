@@ -10,7 +10,7 @@
 
 .user-account {
     grid-column: 2;
-    
+    font-family: 'Inter', sans-serif;
     justify-self: end;
     align-self: center;
     padding-right: 5%;
@@ -33,6 +33,8 @@
     padding: 5px 15px;
     margin-right: 15px;
     border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
 }
 
 .post-btn:hover {
@@ -45,3 +47,16 @@
     top: 0px;
 }
 
+.account-btn {
+    font-family: 'Inter', sans-serif;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    font-weight: 500;
+}
+
+.account-btn:hover {
+    background-color: rgba(216, 86, 86, 0.253);
+    cursor: pointer;
+}

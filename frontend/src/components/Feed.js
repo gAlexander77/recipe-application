@@ -64,13 +64,13 @@ function Feed(){
         const [dropdown, setDropdown] = useState(false)
         
         const Angle = () => {
-            if (dropdown===false) return(<FaAngleDown/>);
-            else return (<FaAngleUp/>);
+            if (dropdown===false) return(<FaAngleDown className="angle"/>);
+            else return (<FaAngleUp className="angle"/>);
         }
         
         return (
             <div className="sort-by-container">
-                <div className="filter" onClick={() => setDropdown(!dropdown)}><p className="filter-text">{sortBy}   <Angle/></p></div>
+                <button className="filter" onClick={() => setDropdown(!dropdown)}><p className="filter-text">{sortBy}</p><Angle/></button>
                 <DropdownMenu trigger={dropdown} setTrigger={setDropdown}/>
             </div>
         );
