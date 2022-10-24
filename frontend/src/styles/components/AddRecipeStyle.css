@@ -20,7 +20,7 @@
     height: 700px;
     width: 1200px;
     overflow: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     
     position: relative;
     

@@ -10,7 +10,7 @@ import hostname from '../hostname';
 function Feed(){
 
     const [sortBy, setSortBy] = useState('Filter Results')
-    const sortList = ['Recently Added', 'Most Popular'];
+    const sortList = ['Most Popular','Recently Added'];
 
     const [recipes, setRecipes] = useState([])
     
