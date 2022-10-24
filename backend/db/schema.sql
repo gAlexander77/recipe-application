@@ -1,56 +1,39 @@
-create table if not exists users (
-	id text primary key,
+drop table if exists users;
+drop table if exists recipes;
+drop table if exists ingredients;
+drop table if exists ratings;
+
+create table users (
+	rowid integer primary key autoincrement,
 	username text unique not null,
 	password text not null,
-	created integer not null,
-	updated integer not null
+	created integer not null default (strftime('%s'))
 );
 
-create table if not exists recipes (
-	id text primary key,
+create table recipes (
+	rowid integer primary key autoincrement,
+	userid integer not null,
 	name text not null,
 	description text not null,
 	instructions text not null,
-	created integer not null,
-	updated integer not null,
-	user text not null,
-	constraint fk_user 
-		foreign key(user) 
-		references users(id)
-		on delete cascade
+	created integer not null default (strftime('%s')),
+	unique(userid, name),
+	foreign key (userid) references users (rowid) on delete cascade
 );
 
-create table if not exists ingredients (
-	id text primary key,
-	name text unique not null
+create table ingredients (
+	rowid integer primary key autoincrement,
+	recipeid integer not null,
+	name text not null,
+	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
 
-create table if not exists recipes_ingredients (
-	id text primary key,
-	recipe text not null,
-	ingredient text not null,
-	constraint fk_recipe 
-		foreign key(recipe) 
-		references recipes(id)
-		on delete cascade,
-	constraint fk_ingredient
-		foreign key(ingredient)
-		references ingredients(id)
-		on delete cascade
-);
-
-create table if not exists users_recipes (
-	id text primary key,
-	user text not null,
-	recipe text not null,
+create table ratings (
+	userid integer not null,
+	recipeid integer not null,
 	rating integer not null,
-	pinned integer not null,
-	constraint fk_user
-		foreign key(user) 
-		references users(id)
-		on delete cascade,
-	constraint fk_recipe 
-		foreign key(recipe) 
-		references recipes(id)
-		on delete cascade
+	foreign key (userid) references users (rowid) on delete cascade,
+	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
+
+insert into users (username, password) values ("admin", "21232f297a57a5a743894a0e4a801fc3");

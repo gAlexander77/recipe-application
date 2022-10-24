@@ -1,4 +1,2 @@
-./db/db.sqlite3
-.venv/
-log/
+/db/db.sqlite3
 **/__pycache__/
