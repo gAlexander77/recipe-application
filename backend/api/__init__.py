@@ -32,5 +32,5 @@ def create_app():
 
     app.teardown_appcontext(db.free)
     app.register_blueprint(routes.views)
-    
+
     return app

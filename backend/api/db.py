@@ -1,4 +1,5 @@
 from flask import g, current_app
+from api.models import users
 import sqlite3
 import click
 
@@ -19,9 +20,11 @@ def load():
 
 @click.command("initdb")
 def init():
+    db = load()
     path = current_app.config["SCHEMA"]
     with current_app.open_resource(path) as file:
-        load().executescript(file.read().decode("utf-8"))
+        db.executescript(file.read().decode("utf-8"))
+    users.create(db, "admin", "admin")
     click.echo(f"- created database using schema file {path}")
 
 

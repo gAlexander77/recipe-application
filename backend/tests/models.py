@@ -8,20 +8,25 @@ db = create_db()
 class Test01Users(unittest.TestCase):
 
     def test010_create(self):
-        user_id, error = users.create(db, "user1", "password!")
+        userid, error = users.create(db, "user1", "password!")
         self.assertIsNone(error)
-        self.assertEqual(user_id, 2) # 2nd user created should have rowid = 2
+        self.assertEqual(userid, 1)
 
     def test011_create_duplicate_username(self):
-        result, error = users.create(db, "user1", "password")
+        _, error = users.create(db, "user1", "password")
         self.assertIsNotNone(error)
         self.assertEqual(str(error), "UNIQUE constraint failed: users.username")
+    
+    def test011_create_duplicate_password(self):
+        userid, error = users.create(db, "user2", "password")
+        self.assertIsNone(error)
+        self.assertEqual(userid, 2)
     
     def test020_get_rowid(self):
         user, error = users.get(db, rowid=1)
         self.assertIsNone(error)
-        self.assertEqual(user["username"], "admin")
-        self.assertEqual(user["password"], md5sum("admin"))
+        self.assertEqual(user["username"], "user1")
+        self.assertEqual(user["password"], md5sum("password!"))
 
     def test021_get_username(self):
         user, error = users.get(db, username="user1")
@@ -41,7 +46,7 @@ class Test01Users(unittest.TestCase):
         self.assertEqual(len(rows), 2)
 
     def test040_delete(self):
-        username, error = users.delete(db, 2)
+        username, error = users.delete(db, 1)
         self.assertIsNone(error)
         self.assertEqual(username, "user1")
 
@@ -56,7 +61,7 @@ class Test02Recipes(unittest.TestCase):
     def test011_create_duplicate_name(self):
         result, error = recipes.create(db, 1, "meatballs", "dope", "dope")
         self.assertIsNotNone(error)
-        self.assertEqual(str(error), "UNIQUE constraint failed: recipes.user_id, recipes.name")
+        self.assertEqual(str(error), "UNIQUE constraint failed: recipes.userid, recipes.name")
 
 
 if __name__ == "__main__":

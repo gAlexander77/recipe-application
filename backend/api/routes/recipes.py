@@ -39,8 +39,6 @@ def create():
     if error:
         return json.exception(error)
 
-    print(ingredient_list)
-
     for ingredient in ingredient_list:
         _, error = ingredients.create(database, recipe_id, ingredient)
         if error:
