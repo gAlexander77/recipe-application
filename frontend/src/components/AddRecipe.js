@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { motion } from 'framer-motion';
 import { BsXLg } from "react-icons/bs";
 import '../styles/components/AddRecipeStyle.css'; 
 
@@ -29,7 +30,12 @@ function AddRecipe(props){
 
     return(props.trigger)?(
         <div className="popup">
-            <form className="popup-inner" onSubmit={submit}>
+            <motion.form className="popup-inner" onSubmit={submit}
+            initial={{ opacity: 0, y: "300px" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: 0.2, y: 0.3 }}
+            >
                 <BsXLg className="exit" onClick={() => props.setTrigger(false)}/>
                 <div className="name-container">  
                     <label className="name-label">Name of Recipe</label>
@@ -61,7 +67,7 @@ function AddRecipe(props){
                     <textarea className="inst-input" type="text" placeholder="Instructions"></textarea>
                 </div>
                 <button className="post-recipe-form-btn" onClick={submit}>Post Recipe</button>
-            </form>
+            </motion.form>
         </div>
     ) : "";   
 }

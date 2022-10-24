@@ -4,6 +4,7 @@
     width: 90%;
     height: 200px;
     border-radius: 5px;
+    border: 1px solid rgb(209, 209, 209);
 
     display: grid;
     grid-template-columns: 220px 1fr 170px;
@@ -27,6 +28,7 @@
     grid-column: 1;
 
     background-color: gray;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .recipe-name {
@@ -42,6 +44,9 @@
 .recipe-rating {
     grid-column: 3;
     grid-row: 1;
+
+    justify-self: center;
+    margin-top: 10px;
 }
 
 .view-recipe {
@@ -51,11 +56,23 @@
     justify-self: center;
     align-self: end;
 
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 
-    width: 130px;
-    height: 35px;
+    background-color: white;
+    color: grey; 
+    border: 1px solid grey;
+    
+    padding: 10px 15px;
+    border-radius: 10px;
 }
+
+.view-recipe:hover {
+    background-color: rgb(255, 119, 119);
+    border: 1px solid rgb(255, 119, 119);
+    color: white;
+}
+
+    
 
 .star {
     color: orange;

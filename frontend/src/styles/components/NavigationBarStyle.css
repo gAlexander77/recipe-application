@@ -27,7 +27,7 @@
 }
 
 .post-btn {
-    background-color: green;
+    background-color: rgb(255, 119, 119);
     color: white;
     border: none;
     padding: 5px 15px;
@@ -36,7 +36,7 @@
 }
 
 .post-btn:hover {
-    background-color: rgb(0, 162, 202);
+    background-color: rgb(216, 86, 86);
     cursor: pointer;
 }
 
