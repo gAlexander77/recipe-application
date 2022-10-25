@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
 import axios from 'axios';
 import NavigationBar from '../components/NavigationBar';
 import DisplayStars from '../components/DisplayStars';
@@ -44,14 +45,19 @@ function Recipe(){
     return(
         <div className="Recipe">
             <NavigationBar {...{userType}} className="navbar"/>
-            <div className="recipe-container">
-                <img src={recipe.image} className="recipe-imagebox"/>
-                <div className="rating-container">
-                    <DisplayStars rating={recipe.rating}/>
-                    <button onClick={rateRecipePopUpHandler}>Rate Recipe</button>
-                </div>
+            <motion.div className="recipe-container"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            >
                 <div className="info-container">
-                    <h1 className="recipe-title">{recipe.recipe_name}</h1>
+                    <div className="row-1">
+                    <h1 className="recipe-title">{recipe.recipe_name}</h1> 
+                    <div className="rating-container">
+                        <DisplayStars classname="rating-stars" rating={recipe.rating}/>
+                        <button className="rate-recipe-btn" onClick={rateRecipePopUpHandler}>Rate Recipe</button>
+                    </div>
+                    </div>
+                    <img src={recipe.image} className="recipe-imagebox"/>                   
                     <h1 className="desc-title">Description</h1>
                     <p className="desc-textbox">{recipe.description}</p>
                     <h1 className="ingr-title">Ingredients</h1>
@@ -65,9 +71,7 @@ function Recipe(){
                     <h1 className="inst-title">Instructions</h1>
                     <p className="inst-textbox">{recipe.instructions}</p>
                 </div>
-                <button>Download Recipe</button>
-                <button>Save Recipe</button>
-            </div>
+            </motion.div>
             <RateRecipe trigger={rateRecipePopUp} setTrigger={setRateRecipePopUp}/>
         </div>
     );   
