@@ -8,6 +8,11 @@
     "profile saved-recipes empty"
     "profile my-recipes empty";
     gap: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+.hidden {
+    display: none;
 }
 
 .navbar {
@@ -15,7 +20,7 @@
     /*background-color: white;*/
 }
 
-.saved-recipes-container{
+.my-recipes-container{
     grid-area: saved-recipes;
 
     display: flex;
@@ -28,23 +33,68 @@
     /*background-color: green;*/
 }
 
-.my-recipes-container{
-    grid-area: my-recipes;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    /*background-color: blue;*/
-}
-
 .row-container {
     height: 290px;
 }
 
+.row-header {
+    display: flex;
+}
+
+.trash-icon {
+    font-size: 35px;
+    margin-left: 5px;
+    color: black;
+    cursor: pointer;
+}
+
+.trash-icon:active {
+    color: rgb(255, 119, 119);
+}
+
+.trash-icon-active {
+    font-size: 35px;
+    margin-left: 5px;
+    color: rgb(255, 119, 119);
+    cursor: pointer;
+}
+
+.trash-icon-active:active {
+    color: black;
+}
+
+.recipe-row-container {
+    display: flex;
+}
+
+.left-btn {
+    font-size: 30px;
+    align-self: center;
+    margin-right: 15px;
+    color: grey; 
+}
+
+.left-btn:hover {
+    color: rgb(255, 119, 119);
+    cursor: pointer;
+}
+
+.right-btn {
+    font-size: 30px;
+    align-self: center;
+    margin-left: 15px;
+    color: grey; 
+}
+
+.right-btn:hover {
+    color: rgb(255, 119, 119);
+    cursor: pointer;
+}
+
+
 .recipe-row { 
     display: flex;
-    margin-top: 10px;
+    margin-top: 5px;
     max-width: 1000px;
     width: 70vw;
 
@@ -53,13 +103,49 @@
     overflow: auto;
 }
 
+.delete-recipe-btn {
+    font-size: 25px;
+    color: gray;
+    position: relative;
+    right: -5px;
+    bottom: -14px;
+    margin-top: -20px;
+    cursor: pointer;
+}
+
+.delete-recipe-btn:hover {
+    font-size: 25px;
+    color: red;
+}
+
+.hide-delete-recipe-btn {
+    font-size: 25px;
+    color: white;
+    right: -5px;
+    bottom: -14px;
+    margin-top: -20px;
+}
+
+.box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .box{
     height: 200px;
     width: 200px;
     min-width: 200px;
     background-color: grey;
-    margin-right: 50px;
+    margin-left: 25px;
+    margin-right: 25px;
     border-radius: 10px;
+    object-fit: cover;
+}
+
+.my-recipe-name {
+    color: black;
+    font-weight: 700;
 }
 
 .account-information {
@@ -79,16 +165,40 @@
     width: 200px;
     border-radius: 50%;
     background-color: grey;
+
+    text-align: center;
+}    
+
+.letter {
+    position: relative;
+    font-size: 120px;
+    top: 35px;
+    color: white;
 }
 
 
 .account-username { 
     text-align: center;
-    color: white;
+    color: black;
 }
 
 .row-title {
+    color: black;
+}
+
+.logout-btn {
+    background-color: rgb(255, 119, 119);
     color: white;
+    border: none;
+    padding: 5px 15px;
+    margin-right: 15px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+}
+
+.logout-btn:hover {
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 1000px){
