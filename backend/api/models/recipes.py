@@ -1,14 +1,14 @@
 from api.models import ingredients, success, failure
 
 
-def create(db, userid, name, description, instructions):
+def create(db, userid, name, description, instructions, image):
     try:
         row = db.execute(
             """insert into recipes 
-            (userid, name, description, instructions) 
-            values (?, ?, ?, ?)
+            (userid, name, description, instructions, image) 
+            values (?, ?, ?, ?, ?)
             returning rowid""",
-            (userid, name, description, instructions)).fetchone()
+            (userid, name, description, instructions, image)).fetchone()
         db.commit()
     except Exception as error:
         return failure(str(error))
@@ -53,6 +53,7 @@ def get(db, rowid):
         "description": recipe["description"],
         "ingredients": list(ingredients_list),
         "instructions": recipe["instructions"],
+        "image": recipe["image"],
         "user": {
             "id": recipe["userid"],
             "username": recipe["username"]
@@ -73,6 +74,7 @@ def all(db):
         "name": row["name"],
         "description": row["description"],
         "instructions": row["instructions"],
+        "image": row["image"],
         "user": {
             "id": row["userid"],
             "username": row["username"]

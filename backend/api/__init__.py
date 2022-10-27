@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 
 from . import routes
 from . import db
@@ -11,22 +11,24 @@ PROC_ROOTDIR = os.getcwd()
 
 
 def create_app():
-    
+   
     app = Flask(__name__)
 
     app.secret_key = secrets.token_bytes()
     app.config.from_mapping(
-            DATABASE=os.path.join(PROC_ROOTDIR, "db/"),
-            UPLOADS=os.path.join(PROC_ROOTDIR, "uploads/"))
+            DATABASE=os.path.join(PROC_ROOTDIR, "db"),
+            UPLOADS=os.path.join(PROC_ROOTDIR, "uploads"))
 
     app.config["SQLITE"] = os.path.join(app.config["DATABASE"], "db.sqlite3")
     app.config["SCHEMA"] = os.path.join(app.config["DATABASE"], "schema.sql")
     
-    try:
-        os.makedirs(app.config["DATABASE"])
-        os.makedirs(app.config["UPLOADS"])
-    except OSError:
-        pass
+    if not os.path.isdir(app.config["DATABASE"]):
+        os.mkdir(app.config["DATABASE"])
+    
+    @app.route("/uploads/<userid>/<file>")
+    def get_file(userid, file):
+        path = f"{userid}/{file}"
+        return send_from_directory(app.config["UPLOADS"], path)
 
     app.cli.add_command(db.init)
 

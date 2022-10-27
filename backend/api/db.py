@@ -9,9 +9,7 @@ def load():
     # checking to see if the key "db" exists in the global hash table for flask (a.k.a. 'g')
     if "db" not in g:
         # this line is responsible for opening the database file and loading it into memory
-        g.db = sqlite3.connect(
-                current_app.config["SQLITE"],
-                detect_types=sqlite3.PARSE_DECLTYPES)
+        g.db = sqlite3.connect(current_app.config["SQLITE"])
         # change the default row type make it easier to use
         g.db.execute("PRAGMA foreign_keys=ON")
         g.db.row_factory = sqlite3.Row
@@ -22,8 +20,10 @@ def load():
 def init():
     db = load()
     path = current_app.config["SCHEMA"]
+    db.execute("PRAGMA foreign_keys=OFF")
     with current_app.open_resource(path) as file:
         db.executescript(file.read().decode("utf-8"))
+    db.execute("PRAGMA foreign_keys=ON")
     users.create(db, "admin", "admin")
     click.echo(f"- created database using schema file {path}")
 

@@ -39,7 +39,7 @@ def login():
     return json.exception("password does not match")
 
 
-@views.route("/logout")
+@views.route("/logout", methods=["POST"])
 def logout():
     if "id" in session:
         return json.ok(session.pop("id"))

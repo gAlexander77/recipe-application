@@ -2,7 +2,7 @@ from api.models import success, failure, md5sum
 from api import db
 
 
-def create(db, username, password):
+def create(db, username, password, image=None):
     try:
         row = db.execute(
             """insert into users (username, password) values (?, ?)

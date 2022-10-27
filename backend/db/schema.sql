@@ -1,16 +1,23 @@
-create table if not exists users (
+drop table if exists users;
+drop table if exists recipes;
+drop table if exists ingredients;
+drop table if exists ratings;
+
+create table users (
 	rowid integer primary key autoincrement,
 	username text unique not null,
 	password text not null,
+	image text,
 	created integer not null default (strftime('%s'))
 );
 
-create table if not exists recipes (
+create table recipes (
 	rowid integer primary key autoincrement,
 	userid integer not null,
 	name text not null,
 	description text not null,
 	instructions text not null,
+	image text,
 	created integer not null default (strftime('%s')),
 	unique(userid, name),
 	foreign key (userid) references users (rowid) on delete cascade

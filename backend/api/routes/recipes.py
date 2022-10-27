@@ -1,8 +1,13 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, current_app, request, session
 
 from api.models import recipes, ingredients
 from api.routes import json
 from api import db
+
+import os
+
+
+DEFAULT_IMG = "/uploads/default.jpeg"
 
 
 views = Blueprint("recipes", __name__, url_prefix="/recipes")
@@ -25,26 +30,41 @@ def create():
 
     database = db.load()
 
-    user_id = session.get("id")
-    if user_id is None:
+    userid = session.get("id")
+    if userid is None:
         return json.exception("must be logged in to create a recipe")
 
-    fields = request.get_json(force=True)
-    values = tuple(fields.get(field) for field in ("name", "ingredients", "description", "instructions"))
-    if None in values:
+    fields = request.form
+    values = tuple(fields.get(field) for field in ("name", "description", "instructions"))
+    ingredient_list = fields.getlist("ingredients")
+    if None in values or ingredients is None:
         return json.exception("must have name, ingredients, description, and instructions")
 
-    name, ingredient_list, description, instructions = values
-    recipe_id, error = recipes.create(database, user_id, name, description, instructions)
+    image = request.files.get("image")
+    path = f"{userid}/{image.filename}" if image and image.filename else DEFAULT_IMG
+    if path != DEFAULT_IMG:
+        upload_full = current_app.config["UPLOADS"]
+        upload_base = os.path.basename(upload_full)
+        syspath = os.path.join(upload_full, path)
+        webpath = os.path.join(upload_base, path) 
+        if not os.path.isdir(f"{upload_base}/{userid}"):
+            os.makedirs(f"{upload_base}/{userid}")
+        image.save(syspath)
+    else:
+        webpath = path
+    
+    name, description, instructions = values
+    recipeid, error = recipes.create(
+        database, userid, name, description, instructions, webpath)
     if error:
         return json.exception(error)
 
     for ingredient in ingredient_list:
-        _, error = ingredients.create(database, recipe_id, ingredient)
+        _, error = ingredients.create(database, recipeid, ingredient)
         if error:
             return json.exception(error)
 
-    return json.ok(recipe_id)
+    return json.ok(recipeid)
 
 
 @views.route("/delete/<int:rowid>", methods=["POST"])

@@ -22,7 +22,7 @@ def query(rowid):
 @views.route("/create", methods=["POST"])
 def create():
     
-    fields = request.get_json(force=True)
+    fields = request.form
     values = [fields.get(field) for field in ("username", "password")]
     if None in values:
         return json.exception("username and password required")
