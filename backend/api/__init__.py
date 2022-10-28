@@ -24,11 +24,6 @@ def create_app():
     
     if not os.path.isdir(app.config["DATABASE"]):
         os.mkdir(app.config["DATABASE"])
-    
-    @app.route("/uploads/<userid>/<file>")
-    def get_file(userid, file):
-        path = f"{userid}/{file}"
-        return send_from_directory(app.config["UPLOADS"], path)
 
     app.cli.add_command(db.init)
 

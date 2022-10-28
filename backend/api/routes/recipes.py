@@ -47,8 +47,8 @@ def create():
         upload_base = os.path.basename(upload_full)
         syspath = os.path.join(upload_full, path)
         webpath = os.path.join(upload_base, path) 
-        if not os.path.isdir(f"{upload_base}/{userid}"):
-            os.makedirs(f"{upload_base}/{userid}")
+        if not os.path.isdir(f"{upload_full}/{userid}"):
+            os.makedirs(f"{upload_full}/{userid}")
         image.save(syspath)
     else:
         webpath = path
