@@ -27,10 +27,45 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Inter', sans-serif;
 }
 
 .exit-rate-recipe {
     position: absolute; 
     right: 10px;
     top: 10px;
+}
+
+.number-btn {
+    font-family: 'Inter', sans-serif;
+    padding: 4px;
+    margin: 2px;
+    margin-top: 10px;
+    background-color: rgb(255, 119, 119);
+    border: none;
+    color: white;
+    width: 20px;
+    border-radius: 10px;
+}
+
+.number-btn:hover {
+    background-color: rgb(216, 86, 86);
+    cursor: pointer;
+}
+
+.submit-rating-btn {
+    font-family: 'Inter', sans-serif;
+    padding: 4px;
+    margin: 2px;
+    margin-top: 10px;
+    background-color: rgb(255, 119, 119);
+    border: none;
+    color: white;
+    border-radius: 10px;
+}
+
+
+.submit-rating-btn:hover {
+    background-color: rgb(216, 86, 86);
+    cursor: pointer;
 }
