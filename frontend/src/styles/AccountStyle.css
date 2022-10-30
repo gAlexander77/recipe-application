@@ -96,7 +96,8 @@
 
     /*background-color: white;*/
 
-    overflow: auto;
+    overflow: hidden;
+    scroll-behavior: smooth;
 }
 
 .delete-recipe-btn {
@@ -194,49 +195,18 @@
 }
 
 .logout-btn:hover {
+    background-color: rgb(216, 86, 86);
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1000px){
-    .Account {
-        display: grid;
-        grid-template-columns: 5vw 1fr 5vw;
-        grid-template-rows: 50px 300px 290px 290px;
-        grid-template-areas: 
-        "navbar navbar navbar"
-        "profile profile profile"
-        "saved-recipes saved-recipes saved-recipes"
-        "my-recipes  my-recipes my-recipes ";
-        gap: 0px;
-    }
-    .circle {
-        margin-top: 10px;
+.empty-row {
+    height: 243px;
+    width: 100%;
+    text-align: center;
+}
 
-        height: 200px;
-        width: 200px;
-        border-radius: 50%;
-        /*background-color: grey;*/
-    }
-    .saved-recipes-container{
-        grid-area: saved-recipes;
-    
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    
-        margin-top: 25px;
-        margin-bottom: 0px;
-        
-        /*background-color: green;*/
-    }
-    .recipe-row { 
-        display: flex;
-        margin-top: 10px;
-        max-width: 1000px;
-        width: 95vw;
-    
-        /*background-color: white;*/
-    
-        overflow: auto;
-    }
+.empty-text {
+    position: relative;
+    top: 45%;
+    cursor: pointer;
 }
