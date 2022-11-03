@@ -15,4 +15,4 @@ def create(db, userid, recipeid, comment=None, rating=None):
 
 
 def update(db, rowid, comment=None, rating=None):
-    
+    pass
