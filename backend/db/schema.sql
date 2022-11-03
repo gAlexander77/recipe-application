@@ -1,10 +1,10 @@
 drop table if exists users;
 drop table if exists recipes;
 drop table if exists ingredients;
-drop table if exists ratings;
+drop table if exists interaction;
 
-drop view if exists recipe_card;
-drop view if exists recipe_full;
+drop view if exists recipe_cards;
+drop view if exists recipe_pages;
 
 create table users (
 	rowid integer primary key autoincrement,
@@ -33,21 +33,25 @@ create table if not exists ingredients (
 	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
 
-create table if not exists activity (
+create table if not exists interaction (
 	userid integer not null,
 	recipeid integer not null,
 	rating integer,
 	comment text,
-	foreign key (userid) references users (rowid) on delete cascade,
-	foreign key (recipeid) references recipes (rowid) on delete cascade
+	created integer not null default (strftime('%s')),
+	foreign key(userid) references users(rowid) on delete cascade,
+	foreign key(recipeid) references recipes(rowid) on delete cascade
 );
 
-create view recipe_card as
+create view recipe_cards as
 select recipes.rowid, name, description, recipes.image, userid, username
-from recipes left join users on recipes.userid = users.rowid;
+from recipes 
+left join users on recipes.userid = users.rowid
+left join interaction on recipes.rowid = interaction.recipeid;
 
-create view recipe_full as
+create view recipe_pages as
 select recipes.rowid, name, description, instructions, recipes.image, 
 userid, username
-from recipes left join users on recipes.userid = users.rowid;
-
+from recipes 
+left join users on recipes.userid = users.rowid
+left join interaction on recipes.rowid = interaction.recipeid;
