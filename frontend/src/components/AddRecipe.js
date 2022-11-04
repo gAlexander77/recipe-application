@@ -53,11 +53,9 @@ function AddRecipe(props){
                     <button className="add-btn" onClick={addIngredient}>+</button>
                     </div>
                     {ingredients.map((form, index)=>{
-                        return (
-                            <motion.div className="ingredient" key={index}
-                                initial = {{x:-200}}
-                                animate={{x:0}}
-                                >
+                        if(index === 0){
+                            return(
+                                <div className="ingredient" key={index}>
                                 <input 
                                 className="ingr-input"
                                 type="text"
@@ -66,8 +64,26 @@ function AddRecipe(props){
                                 value = {form.ingredient}
                                 />
                                 <button className="remove-btn" onClick={()=>removeIngredient(index)}>-</button>
-                            </motion.div>
-                        );
+                            </div>
+                            );
+                        } 
+                        else{
+                            return (
+                                <motion.div className="ingredient" key={index}
+                                    initial = {{x:-200}}
+                                    animate={{x:0}}
+                                    >
+                                    <input 
+                                    className="ingr-input"
+                                    type="text"
+                                    placeholder="Ingredient"
+                                    onChange={(evt) => handleIngredientChange(evt, index)}
+                                    value = {form.ingredient}
+                                    />
+                                    <button className="remove-btn" onClick={()=>removeIngredient(index)}>-</button>
+                                </motion.div>
+                            );
+                        }
                     })}
                 </div>
                 <div className="inst-container">

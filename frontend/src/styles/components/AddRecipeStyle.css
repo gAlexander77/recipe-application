@@ -28,8 +28,13 @@
     flex-direction: column;
 }
 
+textarea {
+    resize: none;
+}
+
 .exit {
-    position: absolute; 
+    position: absolute;
+    cursor: pointer;
     right: 10px;
     top: 10px;
 }
