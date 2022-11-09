@@ -1,10 +1,10 @@
 drop table if exists users;
 drop table if exists recipes;
+drop table if exists ratings;
+drop table if exists comments;
 drop table if exists ingredients;
-drop table if exists interaction;
 
-drop view if exists recipe_cards;
-drop view if exists recipe_pages;
+drop view if exists interactions;
 
 create table users (
 	rowid integer primary key autoincrement,
@@ -26,32 +26,36 @@ create table recipes (
 	foreign key (userid) references users (rowid) on delete cascade
 );
 
-create table if not exists ingredients (
+create table ratings (
 	rowid integer primary key autoincrement,
+	userid integer not null,
 	recipeid integer not null,
-	name text not null,
+	score real not null,
+	unique(userid, recipeid),
+	foreign key (userid) references users (rowid) on delete cascade,
 	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
 
-create table if not exists interaction (
+create table comments (
+	rowid integer primary key autoincrement,
 	userid integer not null,
 	recipeid integer not null,
-	rating integer,
-	comment text,
+	content text,
 	created integer not null default (strftime('%s')),
-	foreign key(userid) references users(rowid) on delete cascade,
-	foreign key(recipeid) references recipes(rowid) on delete cascade
+	unique(userid, recipeid),
+	foreign key (userid) references users (rowid) on delete cascade,
+	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
 
-create view recipe_cards as
-select recipes.rowid, name, description, recipes.image, userid, username
-from recipes 
-left join users on recipes.userid = users.rowid
-left join interaction on recipes.rowid = interaction.recipeid;
+create table ingredients (
+	rowid integer primary key autoincrement,
+	recipeid integer not null,
+	name text not null,
+	unique(recipeid, name),
+	foreign key (recipeid) references recipes (rowid) on delete cascade
+);
 
-create view recipe_pages as
-select recipes.rowid, name, description, instructions, recipes.image, 
-userid, username
-from recipes 
-left join users on recipes.userid = users.rowid
-left join interaction on recipes.rowid = interaction.recipeid;
+create view interactions
+select * from users
+left join ratings on users.rowid = ratings.userid
+left join comments on users.rowid = comments.userid;

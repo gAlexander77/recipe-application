@@ -1,60 +1,32 @@
-from api.models import success, failure, md5sum
-from api import db
+# create:
+# makes a new user
+#  inputs:
+#   - current database object
+#   - new user's username
+#   - new user's password
+#  side effects:
+#   - creates a table in the database
+#  output:
+#   - value of new user's id
+def create(db, username, password):
+
+    from api.models import insert
+    from hashlib import md5
+
+    return insert(db, "users", {
+        "username": username, 
+        "password": md5(password.encode("utf-8")).digest().hex()
+    })
 
 
-def create(db, username, password, image=None):
-    try:
-        row = db.execute(
-            """insert into users (username, password) values (?, ?)
-            returning rowid""",
-            (username, md5sum(password))).fetchone()
-    except Exception as error:
-        return failure(error)
-    db.commit()
-    return success(row["rowid"])
-
-
+# delete:
+# deletes the specified user
+#  inputs:
+#    - user's id
+#  side effects:
+#    - removes a table from the database
+#  output:
+#    - username of user deleted
 def delete(db, rowid):
-    try:
-        row = db.execute(
-            """delete from users where rowid = ?
-            returning username""", 
-            (rowid,)).fetchone()
-    except Exception as error:
-        return failure(error)
-    db.commit()
-    return success(row["username"])
-
-
-def get(db, rowid=None, username=None):
-   
-    field, query = ("rowid", rowid) if rowid is not None else ("username", username)
-    if query is None:
-        return failure("username or rowid is required")
-
-    try:
-        row = db.execute(f"select * from users where {field} = ?", 
-            (query,))
-    except Exception as error:
-        return failure(error)
-
-    user = row.fetchone()
-    return success({
-        "id": user["rowid"],
-        "username": user["username"],
-        "password": user["password"],
-        "created": user["created"] }) if user else failure("user does not exist")
-
-
-def all(db):
-    
-    try:
-        rows = db.execute("select * from users")
-    except Exception as error:
-        return failure(error)
-
-    return success(list({
-        "id": user["rowid"], 
-        "username": user["username"], 
-        "created": user["created"]
-        } for user in rows.fetchall()))
+    from api.models import delete
+    return delete(db, "users", rowid, "username")

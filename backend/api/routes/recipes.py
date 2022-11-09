@@ -54,8 +54,8 @@ def create():
         webpath = path
     
     name, description, instructions = values
-    recipeid, error = recipes.create(
-        database, userid, name, description, instructions, webpath)
+    recipeid, error = recipes.create(database, userid, 
+        name, description, instructions, webpath)
     if error:
         return json.exception(error)
 
@@ -65,6 +65,27 @@ def create():
             return json.exception(error)
 
     return json.ok(recipeid)
+
+
+@views.route("/comments/<int:rowid>", methods=["GET", "POST"])
+def comments(rowid):
+    
+    from api.models import comments
+
+    if request.method == "GET":
+        return comments.all(db.load(), recipeid=rowid)
+
+    userid = session.get("id")
+    if userid is None:
+        return json.exception("must be logged in to comment")
+    
+    content = request.form.get("content")
+
+    commentid, error = comments.create(db.load(), userid, rowid, content)
+    if error:
+        return json.exception(error)
+
+    return json.ok(commentid)
 
 
 @views.route("/delete/<int:rowid>", methods=["POST"])
