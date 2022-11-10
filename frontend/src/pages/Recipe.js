@@ -5,6 +5,7 @@ import axios from 'axios';
 import NavigationBar from '../components/NavigationBar';
 import DisplayStars from '../components/DisplayStars';
 import RateRecipe from '../components/RateRecipe';
+import Comments from '../components/Comments';
 import '../styles/RecipeStyle.css';
 
 import hostname from '../hostname';
@@ -71,6 +72,7 @@ function Recipe(){
                     <h1 className="inst-title">Instructions</h1>
                     <p className="inst-textbox">{recipe.instructions}</p>
                 </div>
+                <Comments/>
             </motion.div>
             <RateRecipe trigger={rateRecipePopUp} setTrigger={setRateRecipePopUp}/>
         </div>
