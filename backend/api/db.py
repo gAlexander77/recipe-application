@@ -10,9 +10,9 @@ def load():
     if "db" not in g:
         # this line is responsible for opening the database file and loading it into memory
         g.db = sqlite3.connect(current_app.config["SQLITE"])
-        # change the default row type make it easier to use
         g.db.execute("PRAGMA foreign_keys=ON")
-        g.db.row_factory = sqlite3.Row
+        # change the default row type make it easier to use
+        g.db.row_factory = lambda c, r: dict((c.description[i][0], v) for i, v in enumerate(r))
     return g.db # return the database, it should exist now
 
 
@@ -24,7 +24,8 @@ def init():
     with current_app.open_resource(path) as file:
         db.executescript(file.read().decode("utf-8"))
     db.execute("PRAGMA foreign_keys=ON")
-    users.create(db, "admin", "admin")
+    print(users.insert(db, "admin", "admin"))
+    db.close()
     click.echo(f"- created database using schema file {path}")
 
 

@@ -4,7 +4,8 @@ drop table if exists ratings;
 drop table if exists comments;
 drop table if exists ingredients;
 
-drop view if exists interactions;
+drop view if exists recipe_cards;
+drop view if exists recipe_comment_count;
 
 create table users (
 	rowid integer primary key autoincrement,
@@ -55,7 +56,17 @@ create table ingredients (
 	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
 
-create view interactions
-select * from users
-left join ratings on users.rowid = ratings.userid
-left join comments on users.rowid = comments.userid;
+
+create view recipe_cards as
+select name, username, description, instructions,
+recipes.userid as userid,
+recipes.rowid as rowid,
+recipes.image as image,
+recipes.created as created
+from recipes 
+join users on recipes.userid = users.rowid;
+
+create view recipe_comment_count as
+select count(comments.rowid)
+from recipes
+join comments on recipes.rowid = comments.recipeid;

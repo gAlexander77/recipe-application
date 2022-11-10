@@ -10,14 +10,13 @@ views = Blueprint("users", __name__, url_prefix="/users")
 @views.route("/create", methods=["POST"])
 def create():
     
-    fields = request.form
-    values = [fields.get(field) for field in ("username", "password")]
-    if None in values:
+    username = request.form.get("username")
+    password = request.form.get("password")
+    if username is None or password is None:
         return json.exception("username and password required")
 
-    username, password = values
-    result, error = users.create(db.load(), username, password)
-    return json.exception(error) if error else json.ok(result)
+    userid, error = users.create(db.load(), username, password)
+    return json.exception(error) if error else json.ok(userid)
 
 
 @views.route("/delete/<int:rowid>", methods=["POST"])

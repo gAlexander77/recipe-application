@@ -1,6 +1,8 @@
-def create(db, userid, name, description, instructions, image):
-    from api.models import insert
-    return insert(db, "recipes", {
+from api import models
+
+
+def insert(db, userid, name, description, instructions, image):
+    return models.insert(db, "recipes", {
         "userid": userid,
         "name": name,
         "description": description,
@@ -10,5 +12,20 @@ def create(db, userid, name, description, instructions, image):
 
 
 def delete(db, rowid):
-    from api.models import delete
-    return delete(db, "recipes", rowid, "name")
+    return models.delete(db, "recipes", rowid, "name")
+
+
+def select(db, rowid):
+    return models.select(db, "recipes", {"rowid": rowid})
+
+
+def query(db, userid):
+    return models.query(db, "recipes", {"userid": userid})
+
+
+def dump(db):
+    return models.dump(db, "recipes")
+
+
+def comment_count(db, rowid):
+    return models.select(db, "recipe_comment_count", {"recipes.rowid": rowid})

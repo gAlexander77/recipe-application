@@ -1,3 +1,5 @@
+from api import models
+
 # create:
 # makes a new user
 #  inputs:
@@ -8,14 +10,10 @@
 #   - creates a table in the database
 #  output:
 #   - value of new user's id
-def create(db, username, password):
-
-    from api.models import insert
-    from hashlib import md5
-
-    return insert(db, "users", {
-        "username": username, 
-        "password": md5(password.encode("utf-8")).digest().hex()
+def insert(db, username, password):
+    return models.insert(db, "users", {
+        "username": username,
+        "password": models.md5sum(password)
     })
 
 
@@ -28,5 +26,14 @@ def create(db, username, password):
 #  output:
 #    - username of user deleted
 def delete(db, rowid):
-    from api.models import delete
-    return delete(db, "users", rowid, "username")
+    return models.delete(db, "users", rowid, "username")
+
+
+# select
+# gets a user row based off rowid or username
+def select(db, rowid=None, username=None):
+    assert rowid is not None or username is not None
+    return models.select(db, "users", {
+        "rowid": rowid,
+        "username": username
+    })
