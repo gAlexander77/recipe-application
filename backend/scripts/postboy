@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+import requests
+import random
+import json
+
+from pprint import pprint
+
+session = requests.session()
+
+print("logging in...")
+session.post("http://localhost:5000/api/account/login", {
+    "username": "admin", 
+    "password": "admin"
+})
+
+print("user page:")
+with session.get("http://localhost:5000/api/account/") as response:
+    if response.status_code == 200:
+        pprint(response.json())
+    else:
+        print(response.text)
+
+print("posting recipe...")
+session.post("http://localhost:5000/api/recipes/create", {
+    "name": f"test recipe #{random.randint(0, 65535)}",
+    "ingredients": [
+        "milk",
+        "eggs"
+    ],
+    "description": "this is a test of the system",
+    "instructions": "instructions go here"
+})
+
+print("user page:")
+with session.get("http://localhost:5000/api/account/") as response:
+    if response.status_code == 200:
+        pprint(response.json())
+    else:
+        print(response.text)
+
+print("home page:")
+with session.get("http://localhost:5000/api/recipes/") as response:
+    if response.status_code == 200:
+        pprint(response.json())
+    else:
+        print(response.text)
