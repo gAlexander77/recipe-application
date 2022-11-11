@@ -22,14 +22,6 @@ function Account() {
         }
     },[userType])
 
-    const [recipes, setRecipes] = useState([])
-    /* Test Mock API */
-    useEffect(()=>{
-        axios.get(hostname+'/recipes').then(res => {
-        setRecipes(res.data)
-        }).catch(error => alert('API ERROR'));
-    }, []);
-
     const logout = () => {
         localStorage.removeItem('userType');
         localStorage.removeItem('userID');
@@ -37,49 +29,64 @@ function Account() {
         setUserType(localStorage.getItem('userType'));        
     }
 
-    
-    const [isDeleting, setIsDeleting] = useState(false);
-
-    function AccountRecipeCard({image, name, id}) {
-
-        const deleteRecipeHandler = () => {
-            setRecipes(recipes.filter(recipe=>recipe.id !== id));
-        }
-
-        const RecipeImage = () => {
-            if(isDeleting === true) {
-            return(
-                <motion.img src={image} className="box"
-                        animate={{
-                            rotate: [0,2,0,-2,0],
-                          }}
-                          transition={{
-                            duration: 0.25,
-                            repeat: Infinity
-                          }}/>
-            );}
-            else
-            return(<img src={image} className="box"/>);
-        };
-
-
-        return (
-            <div>
-                <BsXCircle className={`${isDeleting ? "delete-recipe-btn ": "hidden"}`} onClick={deleteRecipeHandler}/>
-                <BsXCircle className={`${isDeleting ? "hidden": "hide-delete-recipe-btn"}`}/>
-                <div className="box-container">
-                    <Link to={"/recipe/"+id} state={id} onClick={() => console.log("clicked "+id)}> 
-                        <RecipeImage/>
-                    </Link>
-                    <p className="my-recipe-name">{name}</p>
+    function AccountInfo() {
+        return(
+            <div className="account-information">
+                <div className="circle">
+                    <h1 className="letter">{username[0].toUpperCase()}</h1>
                 </div>
+                <h1 className="account-username">@{username}</h1>
+                <button className="logout-btn" onClick={logout}>Logout</button>
             </div>
         );
     }
 
-    
-
     function MyRecipes() {
+
+        const [recipes, setRecipes] = useState([])
+        const [isDeleting, setIsDeleting] = useState(false);
+        
+        useEffect(()=>{
+            axios.get(hostname+'/recipes').then(res => {
+            setRecipes(res.data)
+            }).catch(error => alert('API ERROR'));
+        }, []);
+
+        function AccountRecipeCard({image, name, id}) {
+
+            const deleteRecipeHandler = () => {
+                setRecipes(recipes.filter(recipe=>recipe.id !== id));
+            }
+
+            const RecipeImage = () => {
+                if(isDeleting === true) {
+                return(
+                    <motion.img src={image} className="box"
+                            animate={{
+                                rotate: [0,2,0,-2,0],
+                            }}
+                            transition={{
+                                duration: 0.25,
+                                repeat: Infinity
+                            }}/>
+                );}
+                else
+                return(<img src={image} className="box"/>);
+            };
+
+            return (
+                <div>
+                    <BsXCircle className={`${isDeleting ? "delete-recipe-btn ": "hidden"}`} onClick={deleteRecipeHandler}/>
+                    <BsXCircle className={`${isDeleting ? "hidden": "hide-delete-recipe-btn"}`}/>
+                    <div className="box-container">
+                        <Link to={"/recipe/"+id} state={id} onClick={() => console.log("clicked "+id)}> 
+                            <RecipeImage/>
+                        </Link>
+                        <p className="my-recipe-name">{name}</p>
+                    </div>
+                </div>
+            );
+        }
         
         const EmptyRow = () => {
             if(recipes.length === 0)
@@ -90,10 +97,6 @@ function Account() {
             );
         };
 
-        const MapRecipes = () => {
-            
-        }
-        
         const myRef = useRef();
         
         const slideLeft = () => {
@@ -133,14 +136,46 @@ function Account() {
         );
     }
 
-    function AccountInfo() {
+    function MyComments() {
+
+        const [comments, setComments] = useState([])
+    
+        useEffect(()=>{
+            axios.get(hostname+'/comments').then(res => {
+            setComments(res.data)
+            }).catch(error => alert('API ERROR'));
+        }, []);
+
+        
+        function MyComment({id,username,comment}){
+
+            const removeComment = (evt) => {
+                let commentID = evt;    
+                setComments(comments.filter(comment=>comment.id !== commentID));
+            }
+            
+            return(
+             <div className="my-comment-container">
+                <h1>Commented on {username}'s post:</h1>
+                <p>{comment}</p>
+                <button onClick={()=>removeComment(id)}>Delete Comment</button>
+             </div>   
+            );
+        }
+
         return(
-            <div className="account-information">
-                <div className="circle">
-                    <h1 className="letter">{username[0].toUpperCase()}</h1>
-                </div>
-                <h1 className="account-username">@{username}</h1>
-                <button className="logout-btn" onClick={logout}>Logout</button>
+            <div className="my-comments">
+                <h1 className="my-comments-title">My Comments</h1>
+                {comments.map((comment, index) =>{
+                    return(
+                        <MyComment
+                        key={index}
+                        id={comment.id}
+                        username={comment.username}
+                        comment={comment.comment}
+                        />
+                    );
+                })}
             </div>
         );
     }
@@ -156,6 +191,7 @@ function Account() {
             >
                 <AccountInfo/>
                 <MyRecipes/>
+                <MyComments/>
             </motion.div>
         </div>
     );
