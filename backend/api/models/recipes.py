@@ -28,4 +28,5 @@ def dump(db):
 
 
 def comment_count(db, rowid):
-    return models.select(db, "recipe_comment_count", {"recipes.rowid": rowid})
+    result, _ = models.select(db, "recipe_comment_count", {"rowid": rowid})
+    return 0 if result is None else result["comment_count"]

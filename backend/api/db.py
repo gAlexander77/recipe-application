@@ -23,10 +23,12 @@ def init():
     db.execute("PRAGMA foreign_keys=OFF")
     with current_app.open_resource(path) as file:
         db.executescript(file.read().decode("utf-8"))
-    db.execute("PRAGMA foreign_keys=ON")
-    print(users.insert(db, "admin", "admin"))
-    db.close()
     click.echo(f"- created database using schema file {path}")
+    db.execute("PRAGMA foreign_keys=ON")
+    _, error = users.insert(db, "admin", "admin")
+    if not error:
+        click.echo("- created admin user")
+    db.close()
 
 
 # this function will close the database whenever the app context is destroyed

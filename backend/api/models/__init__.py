@@ -62,7 +62,7 @@ def select(db, table, fields):
     except Exception as e:
         return error(str(e))
 
-    return ok(row) if row is not None else error(f"{'/'.join(values)} does not exist")
+    return ok(row) if row is not None else error("does not exist")
 
 
 # wrapper function to get one all rows from the table based on a filter

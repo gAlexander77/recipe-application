@@ -41,9 +41,8 @@ create table comments (
 	rowid integer primary key autoincrement,
 	userid integer not null,
 	recipeid integer not null,
-	content text,
+	comment text,
 	created integer not null default (strftime('%s')),
-	unique(userid, recipeid),
 	foreign key (userid) references users (rowid) on delete cascade,
 	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
@@ -67,6 +66,6 @@ from recipes
 join users on recipes.userid = users.rowid;
 
 create view recipe_comment_count as
-select count(comments.rowid)
+select recipes.rowid as rowid, count(comments.rowid) as comment_count
 from recipes
-join comments on recipes.rowid = comments.recipeid;
+left join comments on recipes.rowid = comments.recipeid;

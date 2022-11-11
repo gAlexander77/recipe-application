@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, request, session
+from flask import Blueprint, current_app, request, redirect, session
 from api.routes import json
 from api import models
 from api import db
@@ -7,6 +7,7 @@ import os
 
 
 views = Blueprint("recipes", __name__, url_prefix="/recipes")
+
 
 @views.route("/")
 def index():
@@ -17,6 +18,26 @@ def index():
 @views.route("/<int:rowid>")
 def get(rowid):
     return json.ok([])
+
+
+@views.route("/comment/<int:rowid>", methods=["POST"])
+def post_comment(rowid):
+
+    if "id" not in session:
+        return redirect("/login")
+
+    comment = request.form.get("comment")
+
+    if comment is None:
+        return json.exception("missing comment")
+
+    commentid, error = models.comments.insert(db.load(), 
+        session["id"], rowid, comment)
+
+    if error:
+        return json.exception(error)
+
+    return json.ok(commentid)
 
 @views.route("/create", methods=["POST"])
 def create():

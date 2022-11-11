@@ -1,11 +1,11 @@
 from api import models
 
 
-def insert(db, userid, recipeid, text):
+def insert(db, userid, recipeid, comment):
     return models.insert(db, "comments", {
         "userid": userid,
         "recipeid": recipeid,
-        "text": text
+        "comment": comment
     })
 
 

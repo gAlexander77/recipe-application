@@ -45,3 +45,18 @@ with session.get("http://localhost:5000/api/recipes/") as response:
         pprint(response.json())
     else:
         print(response.text)
+
+print("posting comment...")
+session.post("http://localhost:5000/api/recipes/comment/1", {
+    "comment": "hello world"
+})
+
+print("home page:")
+with session.get("http://localhost:5000/api/recipes/") as response:
+    if response.status_code == 200:
+        pprint(response.json())
+    else:
+        print(response.text)
+
+print("logging out...")
+session.post("http://localhost:5000/api/account/logout")
