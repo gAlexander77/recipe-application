@@ -153,12 +153,12 @@ function Account() {
                 let commentID = evt;    
                 setComments(comments.filter(comment=>comment.id !== commentID));
             }
-            
+
             return(
              <div className="my-comment-container">
-                <h1>Commented on {username}'s post:</h1>
-                <p>{comment}</p>
-                <button onClick={()=>removeComment(id)}>Delete Comment</button>
+                <h1 className="my-comment-title">Commented on {username}'s post:</h1>
+                <p className="my-comment">{comment}</p>
+                <button className="delete-comment-btn" onClick={()=>removeComment(id)}>Delete Comment</button>
              </div>   
             );
         }

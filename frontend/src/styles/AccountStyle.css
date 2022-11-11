@@ -7,6 +7,10 @@
     font-family: 'Inter', sans-serif;
 }
 
+body{
+    overflow-x: hidden;
+}
+
 .hidden {
     display: none;
 }
@@ -209,4 +213,57 @@
     position: relative;
     top: 45%;
     cursor: pointer;
+}
+
+.my-comments-title {
+    align-self: start;
+    margin-bottom: 14px
+}
+
+.my-comments {
+    max-width: 1083px;
+    width: 79vw;
+    margin: 50px auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.my-comment-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(209, 209, 209);
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.my-comment-title {
+    font-size: 18px;
+}
+
+.my-comment {
+    margin-left: 10px;
+    margin-right: 150px;
+}
+
+.delete-comment-btn {
+    align-self: end;
+    margin-right: 10px;
+    background-color: white;
+    color: grey; 
+    border: 1px solid grey;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.delete-comment-btn:hover {
+    background-color: rgb(255, 119, 119);
+    border: 1px solid rgb(255, 119, 119);
+    cursor: pointer;
+    color: white;
 }
