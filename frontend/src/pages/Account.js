@@ -163,6 +163,15 @@ function Account() {
             );
         }
 
+        const NoComments = () => {
+            if(comments.length === 0)
+            return(
+                <div className="no-comments">
+                <p className="no-comments-text">You haven't posted any comments</p>
+                </div>
+            );
+        };
+
         return(
             <div className="my-comments">
                 <h1 className="my-comments-title">My Comments</h1>
@@ -176,6 +185,60 @@ function Account() {
                         />
                     );
                 })}
+                <NoComments/>
+            </div>
+        );
+    }
+
+    function MyRatings(){
+        
+        const [ratings, setRatings] = useState([])
+    
+        useEffect(()=>{
+            axios.get(hostname+'/ratings').then(res => {
+            setRatings(res.data)
+            }).catch(error => alert('API ERROR'));
+        }, []);
+
+        function MyRating({id,recipe,username,rating}){
+
+            const removeRating = (evt) => {
+                let ratingID = evt;    
+                setRatings(ratings.filter(rating=>rating.id !== ratingID));
+            }
+
+            return(
+             <div className="my-rating-container">
+                <p className="my-rating-text">You rated {username}'s {recipe} recipe {rating} stars</p>
+                <button className="delete-rating-btn" onClick={()=>removeRating(id)}>Delete Rating</button>
+             </div>   
+            );
+        }
+
+        const NoRatings = () => {
+            if(ratings.length === 0)
+            return(
+                <div className="no-comments">
+                <p className="no-comments-text">You haven't rated any recipes</p>
+                </div>
+            );
+        };
+
+        return(
+            <div className="my-ratings">
+                <h1 className="my-comments-title">My Ratings</h1>
+                {ratings.map((rating, index) =>{
+                    return(
+                        <MyRating
+                        key={index}
+                        id={rating.id}
+                        recipe={rating.recipe_name}
+                        username={rating.username}
+                        rating={rating.rating}
+                        />
+                    );
+                })}
+                <NoRatings/>
             </div>
         );
     }
@@ -192,6 +255,7 @@ function Account() {
                 <AccountInfo/>
                 <MyRecipes/>
                 <MyComments/>
+                <MyRatings/>
             </motion.div>
         </div>
     );

@@ -267,3 +267,69 @@ body{
     cursor: pointer;
     color: white;
 }
+
+.no-comments {
+    height: 243px;
+    width: 100%;
+    text-align: center;
+}
+
+.no-comments-text {
+    position: relative;
+    top: 45%;
+    cursor: pointer;
+}
+
+.my-comments-title {
+    align-self: start;
+    margin-bottom: 14px
+}
+
+
+.my-ratings {
+    max-width: 1083px;
+    width: 79vw;
+    margin: 50px auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.my-rating-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(209, 209, 209);
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.my-rating-text {
+    position: relative;
+    top: 12px;
+}
+
+.delete-rating-btn {
+    align-self: end;
+    margin-right: 10px;
+    background-color: white;
+    color: grey; 
+    border: 1px solid grey;
+    padding: 5px 10px;
+    border-radius: 10px;
+    
+    position: relative;
+    bottom: 10px;
+}
+
+.delete-rating-btn:hover {
+    background-color: rgb(255, 119, 119);
+    border: 1px solid rgb(255, 119, 119);
+    cursor: pointer;
+    color: white;
+}
