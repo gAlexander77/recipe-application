@@ -54,7 +54,6 @@ create table ingredients (
 	rowid integer primary key autoincrement,
 	recipeid integer not null,
 	name text not null,
-	unique(recipeid, name),
 	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
 
