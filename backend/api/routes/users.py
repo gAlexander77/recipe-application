@@ -15,7 +15,7 @@ def create():
     if username is None or password is None:
         return json.exception("username and password required")
 
-    userid, error = users.create(db.load(), username, password)
+    userid, error = users.insert(db.load(), username, password)
     return json.exception(error) if error else json.ok(userid)
 
 

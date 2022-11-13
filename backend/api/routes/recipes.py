@@ -17,7 +17,33 @@ def index():
 
 @views.route("/<int:rowid>")
 def get(rowid):
-    return json.ok([])
+
+    database = db.load()
+
+    recipe, error = models.recipes.select(database, rowid)
+    if error:
+        return json.exception(error)
+
+    user, error = models.users.select(database, rowid=recipe["userid"])
+    if error:
+        return json.exception(error)
+
+    ingredients, error = models.ingredients.query(database, rowid)
+    if error:
+        return json.exception(error)
+
+    comments, comments_error = models.comments.from_recipe(database, rowid)
+
+    del user["password"]
+    del recipe["userid"]
+
+    recipe["user"] = user
+    recipe["ingredients"] = ingredients
+    
+    recipe["ratings"] = models.recipes.ratings_avg(database, rowid)
+    recipe["comments"] = comments_error or comments
+
+    return recipe
 
 
 @views.route("/comment/<int:rowid>", methods=["POST"])
@@ -39,6 +65,27 @@ def post_comment(rowid):
 
     return json.ok(commentid)
 
+
+@views.route("/rate/<int:rowid>", methods=["POST"])
+def post_rating(rowid):
+
+    if "id" not in session:
+        return redirect("/login")
+
+    rating = request.form.get("rating")
+
+    if rating is None:
+        return json.exception("missing rating value")
+
+    ratingid, error = models.ratings.insert(db.load(), 
+        session["id"], rowid, rating)
+
+    if error:
+        return json.exception(error)
+
+    return json.ok(ratingid)
+
+
 @views.route("/create", methods=["POST"])
 def create():
 
@@ -58,12 +105,12 @@ def create():
     recipeid, error = models.recipes.insert(database, session["id"], 
         name, description, instructions, "bigfile.png")
     if error:
-        return json.exception(error)
+        return json.exception("recipe: " + error)
 
     for ingredient in ingredients:
-        _, error = models.ingredients.insert(database, recipeid, ingredient)
+        _, error = models.ingredients.insert(database, int(recipeid), ingredient)
         if error:
-            return json.exception(error)
+            return json.exception(ingredient + ": " + error)
 
     return json.ok(recipeid)
 

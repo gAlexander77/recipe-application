@@ -6,57 +6,143 @@ import json
 
 from pprint import pprint
 
-session = requests.session()
 
-print("logging in...")
-session.post("http://localhost:5000/api/account/login", {
-    "username": "admin", 
-    "password": "admin"
-})
+URL = "http://localhost:5000/api"
+LOGIN_MENU = """c: create user
+l: login
+q: quit
+> """
+USER_MENU = """c: post comment
+r: post rating
+p: post recipe
+h: home
+g: get recipe
+l: logout
+q: quit
+%s > """
 
-print("user page:")
-with session.get("http://localhost:5000/api/account/") as response:
-    if response.status_code == 200:
-        pprint(response.json())
-    else:
-        print(response.text)
 
-print("posting recipe...")
-session.post("http://localhost:5000/api/recipes/create", {
-    "name": f"test recipe #{random.randint(0, 65535)}",
-    "ingredients": [
-        "milk",
-        "eggs"
-    ],
-    "description": "this is a test of the system",
-    "instructions": "instructions go here"
-})
 
-print("user page:")
-with session.get("http://localhost:5000/api/account/") as response:
-    if response.status_code == 200:
-        pprint(response.json())
-    else:
-        print(response.text)
+def unwrap_json(response):
+    return response.json() if response.status_code == 200 else None
 
-print("home page:")
-with session.get("http://localhost:5000/api/recipes/") as response:
-    if response.status_code == 200:
-        pprint(response.json())
-    else:
-        print(response.text)
 
-print("posting comment...")
-session.post("http://localhost:5000/api/recipes/comment/1", {
-    "comment": "hello world"
-})
+def input_list(ntext, itext):
+    return [input(itext % i) for i in range(int(input(ntext)))]
 
-print("home page:")
-with session.get("http://localhost:5000/api/recipes/") as response:
-    if response.status_code == 200:
-        pprint(response.json())
-    else:
-        print(response.text)
 
-print("logging out...")
-session.post("http://localhost:5000/api/account/logout")
+def login(session, username, password):
+    return unwrap_json(session.post(URL + "/account/login", {
+        "username": username, 
+        "password": password 
+    }))
+
+
+def logout(session):
+    return unwrap_json(session.post(URL + "/account/logout"))
+
+
+def create_user(session, username, password):
+    return unwrap_json(session.post(URL + "/users/create", {
+        "username": username,
+        "password": password
+    }))
+
+
+def home(session):
+    return unwrap_json(session.get(URL + "/recipes/"))
+
+
+def get_recipe(session, recipeid):
+    return unwrap_json(session.get(URL + f"/recipes/{recipeid}"))
+
+
+def post_recipe(session, name, ingredients, description, instructions):
+    return unwrap_json(session.post(URL + "/recipes/create", {
+        "name": name,
+        "ingredients": ingredients,
+        "description": description,
+        "instructions": instructions
+    }))
+
+
+def post_comment(session, recipeid, comment):
+    print("posting to:", recipeid)
+    return unwrap_json(session.post(URL + f"/recipes/comment/{recipeid}", {
+        "comment": comment
+    }))
+
+
+def post_rating(session, recipeid, rating):
+    return unwrap_json(session.post(URL + f"/recipes/rate/{recipeid}", {
+        "rating": rating
+    }))
+
+
+def main():
+
+    session = requests.session()
+    running = True
+
+    username = ''
+    login_input = lambda: (input("username: "), input("password: "))
+    logged_in = False
+
+    while running:
+        
+        while not logged_in:
+            try:
+                i = input(LOGIN_MENU)
+            except KeyboardInterrupt:
+                i = "q"
+            if i in ['l', 'c']:
+                username, password = login_input()
+                if i == 'c':
+                    pprint(create_user(session, username, password))
+                if login(session, username, password) is not None:
+                    print(f"- logged in as {username}")
+                    logged_in = True
+            elif i == "h":
+                pprint(home(session))
+            elif i == "g":
+                pprint(get_recipe(session, input("recipeid: ")))
+            elif i == "q":
+                running = False
+                break
+            else:
+                print("- not a valid option.")
+
+        while logged_in:
+            try:
+                i = input(USER_MENU % username)
+            except KeyboardInterrupt:
+                i = "q"
+            if i == "c":
+                pprint(post_comment(session, 
+                    input("recipeid: "), input("comment: ")))
+            elif i == "r":
+                pprint(post_rating(session,
+                    input("recipeid: "), input("rating: ")))
+            elif i == "p":
+                pprint(post_recipe(session, input("name: "), 
+                    input_list("how many ingredients: ", " ingredient %d: "),
+                    input("description: "),
+                    input("instructions: ")))
+            elif i == "h":
+                pprint(home(session))
+            elif i == "g":
+                pprint(get_recipe(session, input("recipeid: ")))
+            elif i == "l":
+                if logout(session):
+                    logged_in = False
+            elif i == "q":
+                running = False
+                break
+            else:
+                print("not a valid option")
+
+    return 0
+
+
+if __name__== "__main__":
+    main()

@@ -27,6 +27,11 @@ def dump(db):
     return models.dump(db, "recipes")
 
 
-def comment_count(db, rowid):
-    result, _ = models.select(db, "recipe_comment_count", {"rowid": rowid})
-    return 0 if result is None else result["comment_count"]
+def ratings_avg(db, rowid):
+    ratings, e = models.ratings.from_recipe(db, recipeid=rowid)
+    if e:
+        return models.error(e)
+
+    values = tuple(map(lambda row: row["rating"], ratings))
+
+    return None if len(values) == 0 else sum(values) / len(values)

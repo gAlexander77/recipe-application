@@ -17,11 +17,12 @@ def select(db, rowid):
     return models.select(db, "comments", {"rowid": rowid})
 
 
-def query(db, userid=None, recipeid=None):
-    return models.query(db, "comments", {
-        "userid": userid,
-        "recipeid": recipeid
-    })
+def from_recipe(db, recipeid):
+    return models.query(db, "recipe_comments", {"recipeid": recipeid})
+
+
+def from_user(db, userid):
+    return models.query(db, "user_comments", {"userid": userid})
 
 
 def dump(db):

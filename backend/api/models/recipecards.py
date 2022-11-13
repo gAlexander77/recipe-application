@@ -8,7 +8,14 @@ def dump(db):
 
     for recipe in recipes:
 
-        recipe["comments"] = models.recipes.comment_count(db, recipe["rowid"])
+        rowid = recipe["rowid"]
+
+        comments, e = models.comments.from_recipe(db, rowid)
+        if e:
+            return error(e)
+
+        recipe["comments"] = len(comments)
+        recipe["rating"] = models.recipes.ratings_avg(db, rowid)
         recipe["user"] = {
             "rowid": recipe["userid"],
             "username": recipe["username"]
