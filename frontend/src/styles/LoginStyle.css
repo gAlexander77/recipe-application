@@ -4,7 +4,7 @@
 }
 
 body .Login{
-    background-color: #2C2C2C;
+    background-color: white;
 }
 
 /*
@@ -20,30 +20,33 @@ input:focus {
 */
 
 .input-row {
-  border: rgb(187, 187, 187) solid;
+  border: rgb(187, 187, 187) 2px solid;
   padding-left: 5px;
   padding-right: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
-  background-color: rgb(187, 187, 187);
+  background-color: rgb(255, 255, 255);
   margin: 5px;
   border-radius: 10px;
 }
 
 .input-logo {
-  color: black;
+  color: rgb(177, 177, 177);
   padding-right: 5px;
   position: relative;
   top: 2px;
 }
 
 .inpt {
-  background-color: rgb(187, 187, 187);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  background-color: rgb(255, 255, 255);
   border: none;
   color: black;
+  width: 150px;
 }
 
-.inpt:hover {
+.inpt:focus {
   outline: none;
 }
 
@@ -78,6 +81,8 @@ a {
   padding:40px;
   border-radius: 12px;
   background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(209, 209, 209);
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .content-box {
@@ -116,7 +121,7 @@ a {
   color: #fff;
   cursor: pointer;
   margin: 7px;
-  height: 50px;
+  height: 45px;
   text-align:center;
   border: none;
   background-size: 300% 100%;
@@ -142,10 +147,10 @@ a {
 .btn-hover.btn {
   background-image: linear-gradient(
     to right,
-    #29323c,
-    #485563,
-    #2b5876,
-    #4e4376
+    rgb(255, 119, 119),
+    rgb(255, 119, 119),
+    rgb(255, 92, 92),
+    rgb(255, 78, 78)
   );
   box-shadow: 0 2px 7px 0 rgba(45, 54, 65, 0.75);
 }
