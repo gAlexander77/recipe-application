@@ -36,6 +36,7 @@ create table ratings (
 	userid integer not null,
 	recipeid integer not null,
 	rating real not null,
+	unique(userid, recipeid),
 	foreign key (userid) references users (rowid) on delete cascade,
 	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
