@@ -21,8 +21,8 @@ def from_recipe(db, recipeid):
     return models.query(db, "recipe_ratings", {"recipeid": recipeid})
 
 
-def from_user(db, recipeid):
-    return models.query(db, "user_ratings", {"recipeid": recipeid})
+def from_user(db, userid):
+    return models.query(db, "user_ratings", {"userid": userid})
 
 
 def dump(db):

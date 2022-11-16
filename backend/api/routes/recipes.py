@@ -43,7 +43,7 @@ def get(rowid):
     recipe["ratings"] = models.recipes.ratings_avg(database, rowid)
     recipe["comments"] = comments_error or comments
 
-    return recipe
+    return json.ok(recipe)
 
 
 @views.route("/comment/<int:rowid>", methods=["POST"])
@@ -99,13 +99,17 @@ def create():
     description = request.form.get("description")
     instructions = request.form.get("instructions")
 
+    file = request.file["image"]
+
     if None in (name, ingredients, description, instructions):
         return json.exception("must have the name, ingredients list, description, and instructions")
 
     recipeid, error = models.recipes.insert(database, session["id"], 
-        name, description, instructions, "bigfile.png")
+        name, description, instructions, )
     if error:
         return json.exception("recipe: " + error)
+
+    
 
     for ingredient in ingredients:
         _, error = models.ingredients.insert(database, int(recipeid), ingredient)

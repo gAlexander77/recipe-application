@@ -12,11 +12,13 @@ LOGIN_MENU = """c: create user
 l: login
 q: quit
 > """
-USER_MENU = """c: post comment
-r: post rating
+USER_MENU = """
 p: post recipe
-h: home
+c: post comment
+r: post rating
 g: get recipe
+h: home page
+a: account page
 l: logout
 q: quit
 %s > """
@@ -55,6 +57,10 @@ def home(session):
 
 def get_recipe(session, recipeid):
     return unwrap_json(session.get(URL + f"/recipes/{recipeid}"))
+
+
+def get_account(session):
+    return unwrap_json(session.get(URL + f"/account/"))
 
 
 def post_recipe(session, name, ingredients, description, instructions):
@@ -99,9 +105,12 @@ def main():
                 username, password = login_input()
                 if i == 'c':
                     pprint(create_user(session, username, password))
-                if login(session, username, password) is not None:
+                response = login(session, username, password)
+                if response and response["ok"]:
                     print(f"- logged in as {username}")
                     logged_in = True
+                else:
+                    print(response)
             elif i == "h":
                 pprint(home(session))
             elif i == "g":
@@ -128,6 +137,8 @@ def main():
                     input_list("how many ingredients: ", " ingredient %d: "),
                     input("description: "),
                     input("instructions: ")))
+            elif i == "a":
+                pprint(get_account(session))
             elif i == "h":
                 pprint(home(session))
             elif i == "g":

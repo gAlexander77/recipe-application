@@ -74,10 +74,11 @@ from comments
 left join users on users.rowid = comments.userid;
 
 create view user_comments as
-select comment, username, userid, 
+select comment, username, userid, recipeid
 comments.created as created
 from comments
-left join users on users.rowid = comments.userid;
+left join users on users.rowid = comments.userid
+left join recipes on recipes.rowid = comments.recipeid;
 
 create view recipe_ratings as
 select rating, username, recipeid
@@ -85,6 +86,6 @@ from ratings
 left join users on users.rowid = ratings.userid;
 
 create view user_ratings as
-select rating, username, userid
+select rating, username, userid, recipeid
 from ratings
 left join users on users.rowid = ratings.userid;

@@ -13,30 +13,31 @@ def index():
     if "id" not in session:
         return redirect("/login")
 
+    rowid = session["id"]
     database = db.load()
 
-    user, error = models.users.select(database, rowid=session["id"])
+    user, error = models.users.select(database, rowid)
     if error:
         return json.exception(error)
 
-    recipes, error = models.recipes.query(database, userid=user["rowid"])
+    recipes, recipes_error = models.recipes.query(database, userid=rowid)
     if error:
         return json.exception(error)
 
-    ratings, error = models.ratings.query(database, userid=user["rowid"])
+    ratings, ratings_error = models.ratings.from_user(database, rowid)
     if error:
         return json.exception(error)
 
-    comments, error = models.comments.query(database, userid=user["rowid"])
+    comments, comments_error = models.comments.from_user(database, rowid)
     if error:
         return json.exception(error)
 
     clear_userids = lambda row: dict(filter(lambda i: i[0] != "userid", row.items()))
 
     del user["password"]
-    user["recipes"] = list(map(clear_userids, recipes))
-    user["ratings"] = ratings
-    user["comments"] = comments
+    user["recipes"] = recipes_error or list(map(clear_userids, recipes))
+    user["ratings"] = ratings_error or ratings
+    user["comments"] = comments_error or comments
 
     return json.ok(user)
 
