@@ -8,5 +8,5 @@ def insert(db, recipeid, name):
     })
 
 
-def query(db, recipeid):
+def from_recipe(db, recipeid):
     return models.query(db, "ingredients", {"recipeid": recipeid})

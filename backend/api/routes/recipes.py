@@ -9,12 +9,6 @@ import os
 views = Blueprint("recipes", __name__, url_prefix="/recipes")
 
 
-@views.route("/")
-def index():
-    recipes, error = models.recipecards.dump(db.load())
-    return json.exception(error) if error else json.ok(recipes)
-
-
 @views.route("/<int:rowid>")
 def get(rowid):
 
@@ -28,7 +22,7 @@ def get(rowid):
     if error:
         return json.exception(error)
 
-    ingredients, error = models.ingredients.query(database, rowid)
+    ingredients, error = models.ingredients.from_recipe(database, rowid)
     if error:
         return json.exception(error)
 
@@ -40,10 +34,10 @@ def get(rowid):
     recipe["user"] = user
     recipe["ingredients"] = ingredients
     
-    recipe["ratings"] = models.recipes.ratings_avg(database, rowid)
+    recipe["ratings"] = models.ratings.from_recipe_avg(database, rowid)
     recipe["comments"] = comments_error or comments
 
-    return json.ok(recipe)
+    return recipe
 
 
 @views.route("/comment/<int:rowid>", methods=["POST"])

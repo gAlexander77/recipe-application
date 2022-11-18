@@ -1,16 +1,31 @@
 import pytest
+import os
 
-from api import create_app
+from api import db, create_app, PROC_ROOTDIR
 
 
-@pytest.fixture()
+@pytest.fixture
 def app():
-    yield create_app()
 
-@pytest.fixture()
+    testdb_path = os.path.join(PROC_ROOTDIR, "db/test_db.sqlite3")
+
+    app = create_app()
+    app.config["SQLITE"] = testdb_path
+    with app.app_context():
+        db.init()
+        d = db.load()
+        with open("./api/tests/sample.sql", "rt") as file:
+            d.executescript(file.read())
+        d.close()
+
+    yield app
+
+
+@pytest.fixture
 def client(app):
     return app.test_client()
 
-@pytest.fixture()
+
+@pytest.fixture
 def runner(app):
     return app.test_cli_runner()

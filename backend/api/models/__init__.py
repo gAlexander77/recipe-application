@@ -1,8 +1,6 @@
 from hashlib import md5
 
-from . import users
-from . import recipes, recipecards
-from . import ingredients
+from . import users, recipes, ingredients
 from . import comments, ratings
 
 ok = lambda value: (value, None)
@@ -43,8 +41,8 @@ def delete(db, table, rowid, returning):
     
     try:
         row = db.execute(f"""delete from {table} where rowid = ?
-            returning {returning}""").fetchone()
-        if len(row) == 0:
+            returning {returning}""", (rowid, )).fetchone()
+        if row is None:
             return error("id does not match")
     except Exception as e:
         return error(str(e))

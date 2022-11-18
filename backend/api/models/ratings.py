@@ -21,6 +21,17 @@ def from_recipe(db, recipeid):
     return models.query(db, "recipe_ratings", {"recipeid": recipeid})
 
 
+def from_recipe_avg(db, recipeid):
+    
+    ratings, error = from_recipe(db, recipeid)
+    if error:
+        return models.error(error)
+
+    values = tuple(map(lambda row: row["rating"], ratings))
+
+    return None if len(values) == 0 else sum(values) / len(values)
+
+
 def from_user(db, userid):
     return models.query(db, "user_ratings", {"userid": userid})
 

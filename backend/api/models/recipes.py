@@ -19,19 +19,9 @@ def select(db, rowid):
     return models.select(db, "recipes", {"rowid": rowid})
 
 
-def query(db, userid):
+def from_user(db, userid):
     return models.query(db, "recipes", {"userid": userid})
 
 
 def dump(db):
-    return models.dump(db, "recipes")
-
-
-def ratings_avg(db, rowid):
-    ratings, e = models.ratings.from_recipe(db, recipeid=rowid)
-    if e:
-        return models.error(e)
-
-    values = tuple(map(lambda row: row["rating"], ratings))
-
-    return None if len(values) == 0 else sum(values) / len(values)
+    return models.dump(db, "recipe_cards")

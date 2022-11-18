@@ -24,8 +24,11 @@ def create_app():
     
     if not os.path.isdir(app.config["DATABASE"]):
         os.mkdir(app.config["DATABASE"])
+    
+    if not os.path.isdir(app.config["UPLOADS"]):
+        os.mkdir(app.config["UPLOADS"])
 
-    app.cli.add_command(db.init)
+    app.cli.add_command(db.initdb)
 
     app.teardown_appcontext(db.free)
     app.register_blueprint(routes.views)
