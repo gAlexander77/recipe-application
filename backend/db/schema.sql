@@ -74,7 +74,7 @@ from comments
 left join users on users.rowid = comments.userid;
 
 create view user_comments as
-select comment, username, userid, recipeid,
+select comment, username, users.rowid as userid, recipeid,
 comments.created as created
 from comments
 left join users on users.rowid = comments.userid

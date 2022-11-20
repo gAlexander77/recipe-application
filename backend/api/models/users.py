@@ -12,9 +12,9 @@ def delete(db, rowid):
     return models.delete(db, "users", rowid, "username")
 
 
-def select(db, rowid=None, username=None):
-    assert rowid is not None or username is not None
-    return models.select(db, "users", {
-        "rowid": rowid,
-        "username": username
-    })
+def select(db, rowid):
+    return models.select(db, "users", {"rowid": rowid})
+
+
+def select_by_username(db, username):
+    return models.select(db, "users", {"username": username})

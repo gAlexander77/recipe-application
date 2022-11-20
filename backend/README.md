@@ -3,17 +3,30 @@ Contributors: Jon Brooks
 # Tests
 - [ ] Models
   - [x] Users
-  - [ ] Recipes
-  - [ ] Ingredients
+    - [x] Create
+    - [x] Delete
+    - [x] Get by id
+    - [x] Get by username
+  - [x] Recipes
+    - [x] Create
+    - [x] Delete
+    - [x] Get by id
+    - [x] Get all from user
+  - [x] Ingredients
+    - [x] Create
+    - [ ] Delete
+    - [x] Get all from recipe
+  - [ ] Comments
+    - [ ] Create
+    - [ ] Delete
+    - [ ] Get all from user
+    - [ ] Get all from recipe
   - [ ] Ratings
-- [ ] Routes (?)
-# Features
-- [x] Create user
-- [x] Create recipe
-  - [x] upload Image
-  - [ ] delete Image
-- [x] Delete recipe
-- [ ] Rate recipe
+    - [ ] Create
+    - [ ] Delete
+    - [ ] Get all from user
+    - [ ] Get all from recipe
+    - [ ] Get avg for recipe
 # Structure
 Here's is the <i>TL;DR:</i> The main source code is located in the `api/`
 directory. In there you will find two subdirectories: `models/` and `routes/`.

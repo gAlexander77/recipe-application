@@ -18,7 +18,7 @@ def get(rowid):
     if error:
         return json.exception(error)
 
-    user, error = models.users.select(database, rowid=recipe["userid"])
+    user, error = models.users.select(database, recipe["userid"])
     if error:
         return json.exception(error)
 
@@ -101,9 +101,7 @@ def create():
     recipeid, error = models.recipes.insert(database, session["id"], 
         name, description, instructions, )
     if error:
-        return json.exception("recipe: " + error)
-
-    
+        return json.exception("recipe: " + error)    
 
     for ingredient in ingredients:
         _, error = models.ingredients.insert(database, int(recipeid), ingredient)

@@ -19,9 +19,9 @@ def select(db, rowid):
     return models.select(db, "recipes", {"rowid": rowid})
 
 
+def dump(db):
+   return models.dump(db, "recipe_cards")
+
+
 def from_user(db, userid):
     return models.query(db, "recipes", {"userid": userid})
-
-
-def dump(db):
-    return models.dump(db, "recipe_cards")

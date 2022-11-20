@@ -10,7 +10,7 @@ def insert(db, userid, recipeid, comment):
 
 
 def delete(db, rowid):
-    return models.delete(db, "comments", rowid, "content")
+    return models.delete(db, "comments", rowid, "recipeid")
 
 
 def select(db, rowid):
@@ -23,7 +23,3 @@ def from_recipe(db, recipeid):
 
 def from_user(db, userid):
     return models.query(db, "user_comments", {"userid": userid})
-
-
-def dump(db):
-    return models.dump(db, "comments")
