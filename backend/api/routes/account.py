@@ -53,13 +53,13 @@ def login():
     if username is None and password is None:
         return json.exception("username and password required")
 
-    user, error = models.users.select(db.load(), username=username)
+    user, error = models.users.select_by_username(db.load(), username)
     if error:
         return json.exception(error)
     
     if user["password"] == models.md5sum(password):
         session["id"] = user["rowid"]
-        return json.ok(dict(session), redirect="/")
+        return json.ok(user["rowid"], redirect="/")
 
     return json.exception("invalid password")
 

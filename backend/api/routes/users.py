@@ -22,4 +22,4 @@ def create():
 @views.route("/delete/<int:rowid>", methods=["POST"])
 def delete(rowid):
     username, error = users.delete(db.load(), rowid)
-    return json.exception(error) if error else json.ok(f"deleted {username}")
+    return json.exception(error) if error else json.ok(username)

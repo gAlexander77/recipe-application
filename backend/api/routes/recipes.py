@@ -93,7 +93,7 @@ def create():
     description = request.form.get("description")
     instructions = request.form.get("instructions")
 
-    file = request.file["image"]
+    imagefile = request.files.get("image")
 
     if None in (name, ingredients, description, instructions):
         return json.exception("must have the name, ingredients list, description, and instructions")

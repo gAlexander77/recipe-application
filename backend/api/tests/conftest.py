@@ -25,6 +25,13 @@ def app():
 def client(app):
     return app.test_client()
 
+@pytest.fixture
+def admin(client):
+    client.post("/api/account/login", data={
+        "username": "admin",
+        "password": "admin"
+    })
+    return client
 
 @pytest.fixture
 def runner(app):

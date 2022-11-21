@@ -1,32 +1,18 @@
 # API Documentation
-Contributors: Jon Brooks
+Jon Brooks
 # Tests
-- [ ] Models
+- [x] Models
   - [x] Users
-    - [x] Create
-    - [x] Delete
-    - [x] Get by id
-    - [x] Get by username
   - [x] Recipes
-    - [x] Create
-    - [x] Delete
-    - [x] Get by id
-    - [x] Get all from user
   - [x] Ingredients
-    - [x] Create
-    - [ ] Delete
-    - [x] Get all from recipe
-  - [ ] Comments
-    - [ ] Create
-    - [ ] Delete
-    - [ ] Get all from user
-    - [ ] Get all from recipe
-  - [ ] Ratings
-    - [ ] Create
-    - [ ] Delete
-    - [ ] Get all from user
-    - [ ] Get all from recipe
-    - [ ] Get avg for recipe
+  - [x] Comments
+  - [x] Ratings
+- [ ] Routes
+  - [ ] Users
+  - [ ] Account
+  - [ ] Recipes
+# How to run tests
+Run `pytest` in this directory
 # Structure
 Here's is the <i>TL;DR:</i> The main source code is located in the `api/`
 directory. In there you will find two subdirectories: `models/` and `routes/`.
