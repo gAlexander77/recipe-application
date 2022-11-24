@@ -74,7 +74,7 @@ function Recipe(){
                 </div>
                 <Comments/>
             </motion.div>
-            <RateRecipe trigger={rateRecipePopUp} setTrigger={setRateRecipePopUp}/>
+            <RateRecipe recipeID={recipe.id} trigger={rateRecipePopUp} setTrigger={setRateRecipePopUp}/>
         </div>
     );   
 }

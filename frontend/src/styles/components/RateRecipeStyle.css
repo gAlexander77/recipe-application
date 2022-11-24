@@ -17,8 +17,8 @@
     background-color: white;
     color: black;
     border-radius: 10px;
-    height: 200px;
-    width: 300px;
+    height: 300px;
+    width: 550px;
     overflow: auto;
     
     position: relative;
@@ -55,9 +55,12 @@
 
 .submit-rating-btn {
     font-family: 'Inter', sans-serif;
-    padding: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin: 2px;
-    margin-top: 10px;
+    margin-top: 30px;
     background-color: rgb(255, 119, 119);
     border: none;
     color: white;
@@ -68,4 +71,22 @@
 .submit-rating-btn:hover {
     background-color: rgb(216, 86, 86);
     cursor: pointer;
+}
+
+.r-star {
+    color: white;
+    font-size: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    stroke-width: 1px;
+}
+.star-off {
+    stroke: gray;
+}
+.star-on {
+    color: orange;
+    transition: all .2s ease-in-out; 
+    stroke: orange;
 }
