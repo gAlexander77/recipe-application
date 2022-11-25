@@ -9,4 +9,6 @@ def test_010_create(client):
         "description": "just a test recipe",
         "instructions": "go with your gut"
     })
+    if response.json["ok"] == False:
+        print(response.json["error"])
     assert response.json["ok"] and response.json["data"] == 3

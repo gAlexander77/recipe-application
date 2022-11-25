@@ -1,5 +1,5 @@
 from flask import Blueprint, current_app, request, redirect, session
-from api.routes import json
+from api.routes import save_file, json
 from api import models
 from api import db
 
@@ -93,13 +93,13 @@ def create():
     description = request.form.get("description")
     instructions = request.form.get("instructions")
 
-    imagefile = request.files.get("image")
-
     if None in (name, ingredients, description, instructions):
         return json.exception("must have the name, ingredients list, description, and instructions")
 
+    imagepath = save_file(request.files, session["id"])
+
     recipeid, error = models.recipes.insert(database, session["id"], 
-        name, description, instructions, )
+        name, description, instructions, imagepath)
     if error:
         return json.exception("recipe: " + error)    
 

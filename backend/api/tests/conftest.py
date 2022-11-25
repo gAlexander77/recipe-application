@@ -11,6 +11,7 @@ def app():
 
     app = create_app()
     app.config["SQLITE"] = testdb_path
+
     with app.app_context():
         db.init()
         d = db.load()
@@ -25,13 +26,6 @@ def app():
 def client(app):
     return app.test_client()
 
-@pytest.fixture
-def admin(client):
-    client.post("/api/account/login", data={
-        "username": "admin",
-        "password": "admin"
-    })
-    return client
 
 @pytest.fixture
 def runner(app):
