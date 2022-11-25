@@ -9,6 +9,21 @@ import os
 views = Blueprint("recipes", __name__, url_prefix="/recipes")
 
 
+@views.route("/")
+def index():
+
+    database = db.load()
+
+    recipes, error = models.recipes.dump(database)
+    if error:
+        return json.exception(error)
+
+    for recipe in recipes:
+        recipe["rating"] = models.ratings.from_recipe_avg(database, recipe["rowid"])
+
+    return json.ok(recipes)
+
+
 @views.route("/<int:rowid>")
 def get(rowid):
 

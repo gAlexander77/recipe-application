@@ -4,7 +4,7 @@ drop table if exists ratings;
 drop table if exists comments;
 drop table if exists ingredients;
 
-drop view if exists recipe_cards;
+drop view if exists recipes_info;
 
 drop view if exists recipe_comments;
 drop view if exists recipe_ratings;
@@ -58,7 +58,7 @@ create table ingredients (
 	foreign key (recipeid) references recipes (rowid) on delete cascade
 );
 
-create view recipe_cards as
+create view recipes_info as
 select name, username, description, instructions,
 recipes.userid as userid,
 recipes.rowid as rowid,

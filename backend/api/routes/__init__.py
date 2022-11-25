@@ -8,11 +8,13 @@ def save_file(files, user):
     if file is None or file.filename == '':
         return "default.jpg"
 
-    filename = os.path.join(user, file.filename)
     with current_app.app_context():
-        file.save(os.path.join(current_app.config["UPLOADS"], filename))
+        basedir = os.path.join(current_app.config["UPLOADS"], str(user))
+        if not os.path.isdir(basedir):
+            os.makedirs(basedir)
+        file.save(os.path.join(basedir, file.filename))
     
-    return filename
+    return os.path.join(str(user), file.filename)
 
 from api.routes import users, account, recipes
 

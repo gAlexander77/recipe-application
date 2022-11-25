@@ -17,15 +17,15 @@ def test_020_delete(app):
 def test_030_from_user(app):
     with app.app_context():
         rows, error = ratings.from_user(db.load(), 1)
-    assert error is None and len(rows) == 1 and rows[0]["rating"] == 3
+    assert error is None and len(rows) == 2 and rows[0]["rating"] == 5
 
 
 def test_040_from_recipe(app):
     with app.app_context():
         rows, error = ratings.from_recipe(db.load(), 1)
-    assert error is None and len(rows) == 1 and rows[0]["rating"] == 4
+    assert error is None and len(rows) == 2 and rows[0]["rating"] == 4
 
 
 def test_041_from_recipe_avg(app):
     with app.app_context():
-        assert ratings.from_recipe_avg(db.load(), 1) == 4
+        assert ratings.from_recipe_avg(db.load(), 1) == 4.5

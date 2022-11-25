@@ -24,10 +24,10 @@ def test_030_select(app):
 def test_040_from_user(app):
     with app.app_context():
         rows, error = recipes.from_user(db.load(), 1)
-    assert error is None and len(rows) == 1 and rows[0]["rowid"] == 1
+    assert error is None and len(rows) == 2 and rows[0]["rowid"] == 1
 
 
 def test_050_dump(app):
     with app.app_context():
         rows, error = recipes.dump(db.load())
-    assert error is None and len(rows) == 2 and rows[0]["rowid"] == 1
+    assert error is None and len(rows) == 3 and rows[0]["rowid"] == 1

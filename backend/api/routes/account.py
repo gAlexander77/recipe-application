@@ -20,7 +20,7 @@ def index():
     if error:
         return json.exception(error)
 
-    recipes, recipes_error = models.recipes.query(database, userid=rowid)
+    recipes, recipes_error = models.recipes.from_user(database, rowid)
     if error:
         return json.exception(error)
 

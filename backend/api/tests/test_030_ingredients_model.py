@@ -11,4 +11,4 @@ def test_010_insert(app):
 def test_020_from_recipe(app):
     with app.app_context():
         rows, error = ingredients.from_recipe(db.load(), 1)
-    assert error is None and len(rows) == 3 and rows[0]["name"] == "bread"
+    assert error is None and len(rows) == 4 and rows[0]["name"] == "bread"

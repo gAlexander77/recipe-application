@@ -20,7 +20,7 @@ def select(db, rowid):
 
 
 def dump(db):
-   return models.dump(db, "recipe_cards")
+   return models.dump(db, "recipes_info")
 
 
 def from_user(db, userid):
