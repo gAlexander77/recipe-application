@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Account from './pages/Account';
 import Recipe from './pages/Recipe';
-import RecipeCard from './components/RecipeCard';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/account" element={<Account/>}/>
         <Route path="/recipe/:id" element={<Recipe/>}/>
-        <Route path="/recipecard" element={<RecipeCard/>}/>
+        <Route path="/admin" element={<Admin/>}/>
       </Routes>
     </Router>
   );

@@ -20,6 +20,9 @@ function Account() {
         if (userType !== 'user'){
             navigate.current('/login');
         }
+        if (username === 'admin'){
+            navigate.current('/admin')
+        }
     },[userType])
 
     const logout = () => {
