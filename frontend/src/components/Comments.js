@@ -7,8 +7,7 @@ import hostname from '../hostname';
 function Comments(){
 
     const [comments, setComments] = useState([]);
-    const [comment, setComment] = useState(0);
-    const [canComment, setCanComment] = useState(false);
+    const [comment, setComment] = useState();
 
     useEffect(()=>{
         axios.get(hostname+'/comments').then(res => {
@@ -19,13 +18,14 @@ function Comments(){
     const inputHandler = (evt) => {
         let num = evt.target.value
         setComment(num);
-        if(comment.length >= 1)
-            setComment(true);
-        else
-            setComment(false);
-        console.log('comment: '+comment)
     }
 
+    const postComment = () => {
+        let myComment = {
+            username: "TestUsername",
+            comment: comment
+        }
+    }
 
 
     function Comment({username,comment}){
@@ -42,7 +42,7 @@ function Comments(){
             <h1 className="comments-header">Comments</h1>
             <div className="comment-input-container">
                 <input className="comment-input" placeholder="Write a comment..." onChange={inputHandler}/>
-                <button disabled className="comment-btn">Comment</button>
+                <button disabled={!comment} className="comment-btn">Comment</button>
             </div>
             {comments.map((comment, index) =>{
                 return(
