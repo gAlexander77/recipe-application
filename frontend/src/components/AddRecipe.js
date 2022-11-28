@@ -5,8 +5,29 @@ import { FaPaperPlane } from "react-icons/fa";
 import '../styles/components/AddRecipeStyle.css'; 
 
 function AddRecipe(props){
+    const [recipeName, setRecipeName] = useState('');
+    const [image, setImage] = useState(null);
+    const [description, setDescription] = useState('');
+    const [instructions, setInstructions] = useState('');
     const [ingredients, setIngredients] = useState(['']);
-    
+
+    const handleRecipeNameChange = (evt) => {
+        setRecipeName(evt.target.value);
+        console.log(recipeName);
+    }
+
+    const handleImageChange = (evt) => {
+        setImage(evt.target.files[0]);
+    } 
+
+    const handleDescriptionChange = (evt) => {
+        setDescription(evt.target.value);
+    }
+
+    const handleInstructionsChange = (evt) => {
+        setInstructions(evt.target.value);
+    }
+
     const handleIngredientChange = (evt, index) => {
         let data = [...ingredients];
         data[index] = evt.target.value;
@@ -21,13 +42,18 @@ function AddRecipe(props){
     const removeIngredient = (index) => {
         let deleteIngredient = [...ingredients];
         deleteIngredient.splice(index, 1);
-        if(ingredients.length !== 1)
+        if(ingredients.length !== 1){
             setIngredients(deleteIngredient);
+        }
     }
 
     const submit = (evt) => {
         evt.preventDefault();
-        console.log(ingredients);
+        console.log("recipeName: "+recipeName);
+        console.log(image);
+        console.log("description: "+description);
+        console.log("ingredients: "+ingredients);
+        console.log("instructions: "+instructions);
     }
 
     return(props.trigger)?(
@@ -41,11 +67,31 @@ function AddRecipe(props){
                 <BsXLg className="exit" onClick={() => props.setTrigger(false)}/>
                 <div className="name-container">  
                     <label className="name-label">Name of Recipe</label>
-                    <input className="name-input" type="text" placeholder="Name of recipe"></input>
+                    <input 
+                        className="name-input" 
+                        type="text" 
+                        placeholder="Name of recipe"
+                        value={recipeName}
+                        onChange={handleRecipeNameChange}
+                        />
+                </div>
+                <div className="image-input-container">
+                    <label>Upload Recipe Image</label>
+                    <img src={image}/>
+                    <input 
+                        type="file"
+                        onChange={handleImageChange}
+                        />
                 </div>  
                 <div className="desc-container">
                     <label className="desc-label">Description</label>
-                    <textarea className="desc-input" type="text" placeholder="Description of your Recipe"></textarea>
+                    <textarea 
+                        className="desc-input" 
+                        type="text" 
+                        placeholder="Description of your Recipe"
+                        value={description}
+                        onChange={handleDescriptionChange}
+                        />
                 </div>
                 <div className="ingr-container">
                     <div className="ingr-label-container">
@@ -57,11 +103,11 @@ function AddRecipe(props){
                             return(
                                 <div className="ingredient" key={index}>
                                 <input 
-                                className="ingr-input"
-                                type="text"
-                                placeholder="Ingredient"
-                                onChange={(evt) => handleIngredientChange(evt, index)}
-                                value = {form.ingredient}
+                                    className="ingr-input"
+                                    type="text"
+                                    placeholder="Ingredient"
+                                    onChange={(evt) => handleIngredientChange(evt, index)}
+                                    value = {form.ingredient}
                                 />
                                 <button className="remove-btn" onClick={()=>removeIngredient(index)}>-</button>
                             </div>
@@ -88,7 +134,13 @@ function AddRecipe(props){
                 </div>
                 <div className="inst-container">
                     <label className="inst-label">Instructions</label>
-                    <textarea className="inst-input" type="text" placeholder="Instructions"></textarea>
+                    <textarea 
+                        className="inst-input" 
+                        type="text" 
+                        placeholder="Instructions"
+                        value={instructions}
+                        onChange={handleInstructionsChange}
+                        />
                 </div>
                 <button className="post-recipe-form-btn" onClick={submit}>Post Recipe<FaPaperPlane className="plane-icon"/></button>
             </motion.form>

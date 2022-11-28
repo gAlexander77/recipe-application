@@ -96,7 +96,7 @@ textarea {
 }
 
 .desc-input {
-    height: 120px;
+    height: 85px;
     width: 600px;
     padding-left: 5px;
     font-family: 'Inter', sans-serif;
@@ -156,7 +156,7 @@ textarea {
 }
 
 .inst-input {
-    height: 170px;
+    height: 120px;
     width: 600px;
     padding-left: 5px;
     font-family: 'Inter', sans-serif;
