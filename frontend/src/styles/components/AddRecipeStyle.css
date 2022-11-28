@@ -1,0 +1,163 @@
+.popup {
+    position: fixed;
+
+    z-index: 99;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgb(0, 0, 0, 0.8);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-inner {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    height: 700px;
+    width: 1200px;
+    overflow: auto;
+    overflow-x: auto;
+    
+    position: relative;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    resize: none;
+}
+
+.exit {
+    position: absolute;
+    cursor: pointer;
+    right: 10px;
+    top: 10px;
+}
+
+.post-recipe-form-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+
+    border: none;
+    border-radius: 10px;
+    padding: 5px 15px;
+    background-color: rgb(255, 119, 119);
+    color: white;
+}
+
+.post-recipe-form-btn:hover {
+    background-color: rgb(216, 86, 86);
+    cursor: pointer;
+}
+
+.plane-icon {
+    margin-left: 4px;
+}
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    
+    padding-top: 45px;
+    padding-left: 100px;
+}
+
+.name-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.name-input {
+    height: 24px;
+    width: 170px;
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
+}
+
+.desc-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.desc-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.desc-input {
+    height: 85px;
+    width: 600px;
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
+}
+
+.ingr-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.ingr-label-container {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.add-btn {
+    border: none;
+    border-radius: 10px;
+    margin-left: 4px;
+    padding: 1px 3px;
+    background-color: rgb(255, 119, 119);
+    color: white;
+}
+
+.ingr-input {
+    padding-right: 20px;
+    padding-left: 5px;
+    margin-bottom: 4px;
+    height: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.remove-btn {
+    position: relative;
+    left: -22px;
+    height: 20px;
+    border: none;
+    width: 20px;
+}
+
+.inst-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.inst-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.inst-input {
+    height: 120px;
+    width: 600px;
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
+}

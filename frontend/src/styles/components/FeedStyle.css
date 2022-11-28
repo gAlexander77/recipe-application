@@ -1,0 +1,138 @@
+.Feed {
+    max-width: 90vw;
+    width: 1400px;
+}
+
+.content {
+    grid-row: 2;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 100%;
+}
+
+.glass{
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 5px;
+    border:1px solid rgba(255, 255, 255, 0.18);
+    /*box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);*/
+    background-color: rgba(22, 22, 22, 0.3);
+}
+
+.Header{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    grid-area: 
+    "sort search-box";
+
+    width: 100%;
+    height: 40px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1;
+}
+
+.sort-by-container {
+    grid-row: 1;
+    grid-column: 1;
+    height: 30px;
+    justify-self: start;
+    align-self: center;
+    margin-left: 5%;
+    /*background-color: blue;*/
+}
+
+.filter {
+    height: 30px;
+    
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 119, 119);
+    color: white;
+
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+}
+
+.filter-text {
+    align-self: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.angle {
+    align-self: center;
+    margin-left: 4px;
+}
+
+.dropdown-box {
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.dropdown-row {
+    background-color: white;
+    color: rgb(73, 73, 73);
+    padding: 10px;
+}
+
+.dropdown-row:hover {
+    background-color: rgb(255, 119, 119);
+    color: white;
+    cursor: pointer;
+}
+
+.search-box-container {
+    grid-row: 1;
+    grid-column: 2;
+
+    height: 25px;
+    width: 200px;
+
+    border-radius: 12px;
+
+    justify-self: end;
+    align-self: center;
+    margin-right: 5%;
+    background-color: white;
+
+    display: flex;
+}
+
+.search-box {
+    all: unset;
+    height: 20px;
+    align-self:  center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    width: 100%;
+}
+
+.search-icon {
+    padding-left: 10px;
+    padding-right: 10px;
+    align-self: center;
+    color: grey;
+}
+
+.food-icon {
+    font-size: 15px;
+    align-self: center;
+    color: grey;
+}

@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body .Login{
+    background-color: white;
+}
+
+/*
+input {
+  background: none;
+  border: none;
+  color: white;
+}
+
+input:focus { 
+  outline: none;
+}
+*/
+
+.input-row {
+  border: rgb(187, 187, 187) 2px solid;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: rgb(255, 255, 255);
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.input-logo {
+  color: rgb(177, 177, 177);
+  padding-right: 5px;
+  position: relative;
+  top: 2px;
+}
+
+.inpt {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  color: black;
+  width: 150px;
+}
+
+.inpt:focus {
+  outline: none;
+}
+
+a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+    text-align: center;
+    font-family: Inter,sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    color: gray;
+  }
+
+.title { 
+    text-align: center;
+}
+
+.Login {
+  height: 100vh;
+  width: 100vw;  
+}
+
+.row {
+  width: 100%;
+}
+
+.box-size {
+  width: 450px;
+  max-width: 60vw;
+  height: 400px;
+  max-height: 40vh;
+  padding:40px;
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(209, 209, 209);
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.content-box {
+  width: 90%;
+  height: 90%;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-login-options {
+  margin: 1%;
+}
+
+.center { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-exit {
+  position: relative; 
+  right: -50%;
+  top: -7%;
+}
+
+.btn-hover {
+  width: 160px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 7px;
+  height: 45px;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 10px;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+  background-position: 100% 0;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+  outline: none;
+}
+
+.btn-hover.btn {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 119, 119),
+    rgb(255, 119, 119),
+    rgb(255, 92, 92),
+    rgb(255, 78, 78)
+  );
+  box-shadow: 0 2px 7px 0 rgba(45, 54, 65, 0.75);
+}
