@@ -1,0 +1,26 @@
+.error404-message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    margin-top: 10vh;
+}
+
+.error404-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 150px;
+    font-weight: 700;
+    color: white;
+    background-color: rgb(255, 119, 119);
+
+    padding: 10px 20px;
+    border-radius: 40px;
+}
+
+.error404-message {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    
+    margin-top: 10px;
+}
