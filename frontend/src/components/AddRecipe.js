@@ -16,8 +16,11 @@ function AddRecipe(props){
         console.log(recipeName);
     }
 
+    const [imagePreview, setImagePreview] = useState(null);
     const handleImageChange = (evt) => {
         setImage(evt.target.files[0]);
+        setImagePreview(URL.createObjectURL(evt.target.files[0]));
+        console.log(evt.target.files[0]);
     } 
 
     const handleDescriptionChange = (evt) => {
@@ -76,10 +79,12 @@ function AddRecipe(props){
                         />
                 </div>
                 <div className="image-input-container">
-                    <label>Upload Recipe Image</label>
-                    <img src={image}/>
+                    <label className="image-label">Upload Recipe Image</label>
+                    <img src={imagePreview} className="image-preview"/>
                     <input 
+                        className="image-input" 
                         type="file"
+                        accept="image/png, image/jpeg"
                         onChange={handleImageChange}
                         />
                 </div>  
