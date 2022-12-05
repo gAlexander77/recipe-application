@@ -3,7 +3,6 @@
 ### Attenedees
 * Gilbert Martinez
 * Jon Brooks
-* Andrew Heckman
 ### Discussed
 * Technology to be used in the project
 * Roles
@@ -11,7 +10,6 @@
 ### Attenedees
 * Gilbert Martinez
 * Jon Brooks
-* Andrew Heckman
 ### Discussed
 * Database table requirements
 * Roles
@@ -19,7 +17,6 @@
 ### Attenedees
 * Gilbert Martinez
 * Jon Brooks
-* Andrew Heckman
 ### Discussed
 * User Interface
 * Database request 
@@ -27,7 +24,6 @@
 ### Attenedees
 * Gilbert Martinez
 * Jon Brooks
-* Andrew Heckman
 ### Discussed
 * Functional Requirements
 * Non-functional Requirements
@@ -45,3 +41,27 @@
 ### Discussed
 * Merging branches
 * Remaining requirements
+## November 5th, 2022
+### Attenedees
+* Gilbert Martinez
+* Jon Brooks
+### Discussed
+* API Requests
+## November 12th, 2022
+### Attenedees
+* Gilbert Martinez
+* Jon Brooks
+### Discussed
+* Admin Dashboard
+## November 19th, 2022
+### Attenedees
+* Gilbert Martinez
+* Jon Brooks
+### Discussed
+* Initalizing Database Data
+## November 26th, 2022
+### Attenedees
+* Gilbert Martinez
+* Jon Brooks
+### Discussed
+* Requirements

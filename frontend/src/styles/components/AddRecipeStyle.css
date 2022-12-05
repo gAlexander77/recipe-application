@@ -81,6 +81,32 @@ textarea {
     font-family: 'Inter', sans-serif;
 }
 
+.image-input-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.image-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.image-preview {
+    height: 100px;
+    width: 100px;
+    
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+
+.image-input {
+    font-family: 'Inter', sans-serif;
+}
+
 .desc-container {
     display: flex;
     flex-direction: column;
