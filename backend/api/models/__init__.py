@@ -1,87 +1,43 @@
-from hashlib import md5
+from . import users, recipes, ratings, comments
 
-from . import users, recipes, ingredients
-from . import comments, ratings
-
-ok = lambda value: (value, None)
-error = lambda value: (None, value)
-md5sum = lambda text: md5(text.encode("utf-8")).digest().hex()
+INSERT_SQL = "INSERT INTO %s (%s) values (%s) returning %s"
+SELECT_SQL = "SELECT %s FROM %s%s"
+DELETE_SQL = "DELETE FROM %s WHERE id = ? returning %s"
 
 
-# parses a dictionary into SQLite3 parameters
-def parse_params(fields):
-
-    exists = dict(filter(lambda i: i[1] is not None, fields.items()))
-    sql = " and".join(f" where {k} = ?" for k in exists.keys())
-    
-    return tuple(exists.values()), sql
+def __sql_filter(filters):
+    sql = " AND ".join("%s = '%s'" % (k, v) for k,v in filters.items())
+    return " WHERE %s" % sql if sql else ''
 
 
-# wrapper function to abstract the action
-# of adding a row to an existing database
-# table
-def insert(db, table, fields): 
-    
-    cols, qs = ','.join(fields.keys()), ','.join(('?') * len(fields))
-
-    try:
-        row = db.execute(f"""insert into {table} ({cols}) values ({qs})
-            returning rowid""", tuple(fields.values())).fetchone()
-        db.commit()
-    except Exception as e:
-        return error(str(e))
-    
-    return ok(row["rowid"])
+def __prep_insert(fields):
+    ks = ','.join(fields.keys())
+    qs = ','.join('?' * len(fields))
+    return ks, tuple(fields.values()), qs
 
 
-# wrapper function to abstract the action
-# of deleting an existing row from a
-# table
-def delete(db, table, rowid, returning):
-    
-    try:
-        row = db.execute(f"""delete from {table} where rowid = ?
-            returning {returning}""", (rowid, )).fetchone()
-        if row is None:
-            return error("id does not match")
-    except Exception as e:
-        return error(str(e))
-
-    return ok(row[returning])
+# puts a new row into the table, using the fields dict as values
+def insert(db, table, fields, returning="id"):
+    ks, vs, qs = __prep_insert(fields)
+    row = db.execute(INSERT_SQL % (table, ks, qs, returning), vs).fetchone()
+    db.commit()
+    return row[returning]
 
 
-# wrapper function to get one row from the table based on some filter
-def select(db, table, fields):
+# gets all rows from the table, optionally select columns, and filter 
+def select(db, table, columns='*', filters={}):
+    sql_filter = __sql_filter(filters)
+    return db.execute(SELECT_SQL % (columns, table, sql_filter))
 
-    values, sql = parse_params(fields)
-        
-    try:
-        row = db.execute(f"select * from {table}{sql}", values).fetchone()
-    except Exception as e:
-        return error(str(e))
+def select_set(db, table, columns='*', filters={}):
+    return select(db, table, columns, filters).fetchall()
 
-    return ok(row) if row is not None else error("does not exist")
-
-
-# wrapper function to get one all rows from the table based on a filter
-def query(db, table, fields):
- 
-    values, sql = parse_params(fields)
-    
-    try:
-        rows = db.execute(f"select * from {table}{sql}", values).fetchall()
-    except Exception as e:
-        return error(str(e))
-
-    return ok(rows)
+def select_one(db, table, columns='*', filters={}):
+    return select(db, table, columns, filters).fetchone()
 
 
-# wrapper function to get all rows from a table (or view)
-def dump(db, table):
-
-    try:
-        rows = db.execute(f"select * from {table}").fetchall()
-    except Exception as e:
-        return error(str(e))
-    
-    return ok(rows)
+# deletes a row from the table by id
+def delete(db, table, id, returning="id"):
+    row = db.execute(DELETE_SQL % (table, returning), (id, )).fetchone()
+    db.commit()
+    return row[returning]

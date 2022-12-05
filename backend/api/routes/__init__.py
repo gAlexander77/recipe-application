@@ -1,24 +1,26 @@
-from flask import Blueprint, current_app
-import os
+from flask import Blueprint, jsonify
 
-def save_file(files, user):
-    
-    file = files.get("upload")
 
-    if file is None or file.filename == '':
-        return "default.jpg"
+def cors(response):
+    response.headers["Access-Control-Allow-Origin"] = '*'
+    return response
 
-    with current_app.app_context():
-        basedir = os.path.join(current_app.config["UPLOADS"], str(user))
-        if not os.path.isdir(basedir):
-            os.makedirs(basedir)
-        file.save(os.path.join(basedir, file.filename))
-    
-    return os.path.join(str(user), file.filename)
 
-from api.routes import users, account, recipes
+def send(data, ok=True):
+    return cors(jsonify({"ok": ok, "data": data}))
 
-views = Blueprint("api", __name__, url_prefix="/api")
 
-for route in [users, account, recipes]:
-    views.register_blueprint(route.views)
+def logged_in(session):
+    return "id" in session
+
+
+def must_log_in():
+    return send("must log in", ok=False)
+
+
+blueprint = Blueprint("api", __name__, url_prefix="/api")
+
+
+from api.routes import accounts, comments, ratings, recipes, users
+for route in [accounts, comments, ratings, recipes, users]:
+    blueprint.register_blueprint(route.blueprint)

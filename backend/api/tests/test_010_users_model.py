@@ -1,26 +1,24 @@
-from api.models import users
-from api import db
+from api import models, db
+import pytest
 
 
-def test_010_insert(app):
+def test_000_insert(app):
     with app.app_context():
-        userid, error = users.insert(db.load(), "hello", "world")
-    assert error is None and userid == 4
+        assert models.users.insert(db.load(), "user", "pass") == 2
 
 
-def test_020_delete(app):
+def test_010_delete(app):
     with app.app_context():
-        username, error = users.delete(db.load(), 1)
-    assert error is None and username == "admin"
+        assert models.users.delete(db.load(), '2') == "user"
 
 
-def test_030_select(app):
+def test_020_select_set(app):
     with app.app_context():
-        user, error = users.select(db.load(), 2)
-    assert error is None and user["username"] == "user1"
+        assert models.users.select_set(db.load(), columns="id") == [{"id": 1}]
 
 
-def test_031_select_by_username(app):
+def test_030_select_one(app):
     with app.app_context():
-        user, error = users.select_by_username(db.load(), "admin")
-    assert error is None and user["rowid"] == 1
+        assert models.users.select_one(db.load(), columns="id", filters={
+            "username":"admin"
+        }) == {"id": 1}
