@@ -42,11 +42,20 @@ def create_app():
     app.register_blueprint(routes.blueprint)
     app.teardown_appcontext(db.close)
     
-    @click.command("initdb")
+    @app.cli.command("initdb")
     def initdb():
         print("+ initializing database for you")
         os.remove(db_path)
         db.init(db_path, schema_path)
+
+
+    @app.cli.command("demodb")
+    @click.argument("demo_dir")
+    def demodb(demo_dir):
+        print("+ initializing and preloading database for you")
+        os.remove(db_path)
+        db.demo(db_path, schema_path, uploads_dir, demo_dir)
+
 
     @app.errorhandler(HTTPException)
     def http_exception(exception):

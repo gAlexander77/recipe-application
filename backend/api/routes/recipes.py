@@ -19,6 +19,7 @@ def index():
     )
 
     for recipe in recipes:
+        recipe["ingredients"] = recipe["ingredients"].strip().split('\n')
         recipe["rating"] = models.ratings.avg(database, recipe["id"])
 
     return routes.send(recipes)
@@ -35,6 +36,7 @@ def recipe(id):
         filters={"id": id}
     )
 
+    recipe["ingredients"] = recipe["ingredients"].strip().split('\n')
     recipe["rating"] = models.ratings.avg(database, recipe["id"])
 
     return routes.send(recipe)
