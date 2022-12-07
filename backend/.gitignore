@@ -1,4 +1,4 @@
-venv/
-uploads/
-db/*.sqlite3
-**/__pycache__/
+**/__pycache__
+db/*.db
+uploads
+venv

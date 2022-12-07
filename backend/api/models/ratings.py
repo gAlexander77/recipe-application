@@ -9,32 +9,12 @@ def insert(db, userid, recipeid, rating):
     })
 
 
-def delete(db, rowid):
-    return models.delete(db, "ratings", rowid, "recipeid")
+def delete(db, id):
+    return models.delete(db, "ratings", id, "rating")
 
 
-def select(db, rowid):
-    return models.select(db, "ratings", {"rowid": rowid})
-
-
-def from_recipe(db, recipeid):
-    return models.query(db, "recipe_ratings", {"recipeid": recipeid})
-
-
-def from_recipe_avg(db, recipeid):
-    
-    ratings, error = from_recipe(db, recipeid)
-    if error:
-        return models.error(error)
-
-    values = tuple(map(lambda row: row["rating"], ratings))
-
-    return None if len(values) == 0 else sum(values) / len(values)
-
-
-def from_user(db, userid):
-    return models.query(db, "user_ratings", {"userid": userid})
-
-
-def dump(db):
-    return models.dump(db, "ratings")
+def avg(db, recipeid):
+    row = models.select_one(db, "avg_ratings", columns="rating", filters={
+        "recipeid": recipeid
+    })
+    return row["rating"] if row is not None else 0

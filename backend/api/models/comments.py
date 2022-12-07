@@ -9,17 +9,13 @@ def insert(db, userid, recipeid, comment):
     })
 
 
-def delete(db, rowid):
-    return models.delete(db, "comments", rowid, "recipeid")
+def delete(db, id):
+    return models.delete(db, "comments", id, "comment")
 
 
-def select(db, rowid):
-    return models.select(db, "comments", {"rowid": rowid})
+def select_set(db, columns='*', filters={}):
+    return models.select_set(db, "full_comments", columns, filters)
 
 
-def from_recipe(db, recipeid):
-    return models.query(db, "recipe_comments", {"recipeid": recipeid})
-
-
-def from_user(db, userid):
-    return models.query(db, "user_comments", {"userid": userid})
+def select_one(db, columns='*', filters={}):
+    return models.select_one(db, "full_comments", columns, filters)

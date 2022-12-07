@@ -1,36 +1,70 @@
-from flask import Flask, send_from_directory
+from flask import Flask
+from werkzeug.exceptions import HTTPException
 
-from . import routes
-from . import db
+from api import uploads, routes, db
 
 import secrets
+import click
+import json
 import os
 
-
-PROC_ROOTDIR = os.getcwd()
+CONF_PATH = os.path.join(os.getcwd(), "etc/config.json")
 
 
 def create_app():
 
     app = Flask(__name__)
-
-    app.secret_key = secrets.token_bytes()
-    app.config.from_mapping(
-            DATABASE=os.path.join(PROC_ROOTDIR, "db"),
-            UPLOADS=os.path.join(PROC_ROOTDIR, "uploads"))
-
-    app.config["SQLITE"] = os.path.join(app.config["DATABASE"], "db.sqlite3")
-    app.config["SCHEMA"] = os.path.join(app.config["DATABASE"], "schema.sql")
+    app.config.from_file(CONF_PATH, load=json.load)
+    app.secret_key = secrets.token_hex()
+    db_path, schema_path, uploads_dir = (app.config["DB_PATH"], 
+                                         app.config["SCHEMA_PATH"],
+                                         app.config["UPLOADS_DIR"])
     
-    if not os.path.isdir(app.config["DATABASE"]):
-        os.mkdir(app.config["DATABASE"])
+    if not os.path.isfile(schema_path):
+        raise FileNotFoundError("schema file not found")
+
+    if app.config["SERVE_UPLOADS"]: 
+        print("+ serving uploads from flask")
+        app.register_blueprint(uploads.blueprint)
     
-    if not os.path.isdir(app.config["UPLOADS"]):
-        os.mkdir(app.config["UPLOADS"])
+    if not os.path.isdir(uploads_dir):
+        print(f"+ created uploads directory {uploads_dir}")
+        os.makedirs(uploads_dir)
 
-    app.cli.add_command(db.initdb)
+    if not os.path.isfile(db_path):
+        db_dir = os.path.dirname(db_path)
+        if not os.path.isdir(db_dir):
+            print("+ creating directory for database")
+            os.makedirs(db_dir)
+        print(f"+ initializing database {db_path}")
+        db.init(db_path, schema_path)
 
-    app.teardown_appcontext(db.free)
-    app.register_blueprint(routes.views)
+    app.register_blueprint(routes.blueprint)
+    app.teardown_appcontext(db.close)
+    
+    @app.cli.command("initdb")
+    def initdb():
+        print("+ initializing database for you")
+        os.remove(db_path)
+        db.init(db_path, schema_path)
+
+
+    @app.cli.command("demodb")
+    @click.argument("demo_dir")
+    def demodb(demo_dir):
+        print("+ initializing and preloading database for you")
+        os.remove(db_path)
+        db.demo(db_path, schema_path, uploads_dir, demo_dir)
+
+
+    @app.errorhandler(HTTPException)
+    def http_exception(exception):
+        response = exception.get_response()
+        response.data = json.dumps({
+            "ok": False, 
+            "data": f"{exception.code} - {exception.name}"
+        })
+        response.content_type = "application/json"
+        return routes.cors(response)
 
     return app

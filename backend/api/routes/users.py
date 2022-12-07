@@ -1,25 +1,32 @@
+from flask.cli import with_appcontext
 from flask import Blueprint, request
-from api.models import users
-from api.routes import json
-from api import db
+from api import routes, models, db
+
+import click
+
+blueprint = Blueprint("users", __name__, cli_group="users", url_prefix="/users")
 
 
-views = Blueprint("users", __name__, url_prefix="/users")
+@blueprint.cli.command("create")
+@click.argument("username")
+@click.argument("password")
+@with_appcontext
+def cli_create(username, password):
+    print(
+        "added new user:", 
+        models.users.insert(db.load(), username, password)
+    )
 
 
-@views.route("/create", methods=["POST"])
+@blueprint.route("/create", methods=["POST"])
 def create():
-    
-    username = request.form.get("username")
-    password = request.form.get("password")
-    if username is None or password is None:
-        return json.exception("username and password required")
-
-    userid, error = users.insert(db.load(), username, password)
-    return json.exception(error) if error else json.ok(userid)
+    return routes.send(models.users.insert(
+        db.load(), 
+        request.json["username"], 
+        request.json["password"]
+    ))
 
 
-@views.route("/delete/<int:rowid>", methods=["POST"])
-def delete(rowid):
-    username, error = users.delete(db.load(), rowid)
-    return json.exception(error) if error else json.ok(username)
+@blueprint.route("/delete/<int:id>", methods=["POST"])
+def delete(id):
+    return routes.send(models.users.delete(db.load(), id))
