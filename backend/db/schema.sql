@@ -1,91 +1,55 @@
-drop table if exists users;
-drop table if exists recipes;
-drop table if exists ratings;
-drop table if exists comments;
-drop table if exists ingredients;
-
-drop view if exists recipes_info;
-
-drop view if exists recipe_comments;
-drop view if exists recipe_ratings;
-drop view if exists user_comments;
-drop view if exists user_ratings;
-
-create table users (
-	rowid integer primary key autoincrement,
-	username text unique not null,
-	password text not null,
-	image text,
-	created integer not null default (strftime('%s'))
+create table if not exists users (
+	id integer primary key autoincrement,
+	username text unique,
+	password text,
+	created integer
 );
 
-create table recipes (
-	rowid integer primary key autoincrement,
-	userid integer not null,
-	name text not null,
-	description text not null,
-	instructions text not null,
+create table if not exists recipes (
+	id integer primary key autoincrement,
+	userid integer,
+	name text,
+	ingredients text,
+	description text,
+	instructions text,
 	image text,
-	created integer not null default (strftime('%s')),
-	unique(userid, name),
-	foreign key (userid) references users (rowid) on delete cascade
+	created integer,
+	foreign key (userid) references users (id)
 );
 
-create table ratings (
-	rowid integer primary key autoincrement,
-	userid integer not null,
-	recipeid integer not null,
-	rating real not null,
+create table if not exists ratings (
+	id integer primary key autoincrement,
+	userid integer,
+	recipeid integer,
+	rating real,
 	unique(userid, recipeid),
-	foreign key (userid) references users (rowid) on delete cascade,
-	foreign key (recipeid) references recipes (rowid) on delete cascade
+	foreign key (userid) references users (id),
+	foreign key (recipeid) references recipes (id)
 );
 
-create table comments (
-	rowid integer primary key autoincrement,
-	userid integer not null,
-	recipeid integer not null,
+create table if not exists comments (
+	id integer primary key autoincrement,
+	userid integer,
+	recipeid integer,
 	comment text,
-	created integer not null default (strftime('%s')),
-	foreign key (userid) references users (rowid) on delete cascade,
-	foreign key (recipeid) references recipes (rowid) on delete cascade
+	created integer,
+	foreign key (userid) references users (id),
+	foreign key (recipeid) references recipes (id)
 );
 
-create table ingredients (
-	rowid integer primary key autoincrement,
-	recipeid integer not null,
-	name text not null,
-	foreign key (recipeid) references recipes (rowid) on delete cascade
-);
-
-create view recipes_info as
-select name, username, description, instructions,
-recipes.userid as userid,
-recipes.rowid as rowid,
-recipes.image as image,
-recipes.created as created
+create view if not exists full_recipes as
+select recipes.id as id, users.id as userid,
+name, username, recipes.created as created, 
+ingredients, description, instructions, image
 from recipes
-join users on recipes.userid = users.rowid;
+left join users on recipes.userid = users.id;
 
-create view recipe_comments as
-select comment, username, recipeid, 
-comments.created as created
-from comments
-left join users on users.rowid = comments.userid;
+create view if not exists full_comments as
+select * from comments
+left join recipes on comments.recipeid = recipes.id
+left join users on comments.userid = users.id;
 
-create view user_comments as
-select comment, username, users.rowid as userid, recipeid,
-comments.created as created
-from comments
-left join users on users.rowid = comments.userid
-left join recipes on recipes.rowid = comments.recipeid;
-
-create view recipe_ratings as
-select rating, username, recipeid
+create view avg_ratings as
+select recipeid, avg(rating) as rating 
 from ratings
-left join users on users.rowid = ratings.userid;
-
-create view user_ratings as
-select rating, username, userid, recipeid
-from ratings
-left join users on users.rowid = ratings.userid;
+group by recipeid;

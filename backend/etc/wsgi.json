@@ -1,0 +1,11 @@
+{"uwsgi": {
+	"module": "api.wsgi:app",
+	"socket": "/tmp/recipedia.sock",
+	"master": true,
+	"workers": 2,
+	"chmod-socket": 777,
+	"virtualenv": "./venv/",
+	"vaccum": true,
+	"enable-threads": true,
+	"die-on-term": true
+}}

@@ -1,20 +1,23 @@
-from api import models
+import click
 
+from api.db import sha3, timestamp
+from api import models
 
 def insert(db, username, password):
     return models.insert(db, "users", {
-        "username": username,
-        "password": models.md5sum(password)
+        "username": username, 
+        "password": sha3(password),
+        "created": timestamp()
     })
 
 
-def delete(db, rowid):
-    return models.delete(db, "users", rowid, "username")
+def delete(db, id):
+    return models.delete(db, "users", id, "username")
 
 
-def select(db, rowid):
-    return models.select(db, "users", {"rowid": rowid})
+def select_set(db, columns='*', filters={}):
+    return models.select_set(db, "users", columns, filters)
 
 
-def select_by_username(db, username):
-    return models.select(db, "users", {"username": username})
+def select_one(db, columns='*', filters={}):
+    return models.select_one(db, "users", columns, filters)

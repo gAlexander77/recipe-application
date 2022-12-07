@@ -1,36 +1,33 @@
+from api import db, create_app
+
 import pytest
 import os
 
-from api import db, create_app, PROC_ROOTDIR
-
+TEST_DB = os.path.join(os.getcwd(), "db/tests.db")
 
 @pytest.fixture(scope="module")
 def app():
 
-    testdb_path = os.path.join(PROC_ROOTDIR, "db/test_db.sqlite3")
-
     app = create_app()
-    app.config["SQLITE"] = testdb_path
+    app.config["DB_PATH"] = TEST_DB
+
+    if os.path.isfile(TEST_DB):
+        os.remove(TEST_DB)
 
     with app.app_context():
-        db.init()
-        d = db.load()
-        with open("./api/tests/sample.sql", "rt") as file:
-            d.executescript(file.read())
-        d.close()
+        db.init(TEST_DB, app.config["SCHEMA_PATH"])
+        db.init(TEST_DB, os.path.join(os.getcwd(), "db/tests-samples.sql"))
 
-    yield app
-
-
-@pytest.fixture
-def client(app):
-    return app.test_client()
+    return app
 
 
 @pytest.fixture(scope="module")
-def admin(app):
-    client = app.test_client()
-    client.post("/api/account/login", data={
+def client(app):
+    return app.test_client()
+
+@pytest.fixture
+def admin(client):
+    client.post("api/accounts/login", json={
         "username": "admin",
         "password": "admin"
     })

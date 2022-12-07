@@ -1,33 +1,25 @@
-from api.models import recipes
+from api import models
 from api import db
 
 
-def test_010_insert(app):
+def test_000_insert(app):
     with app.app_context():
-        recipeid, error = recipes.insert(db.load(), 
-            1, "hello", "world", "goodbye", "all")
-    assert error is None and recipeid == 3
+        assert models.recipes.insert(db.load(), 1,
+            "admins recipe",
+            ["butter", "milk"], 
+            "hello world","this will not work",
+            "imagefile.jpg"
+        ) == 3
 
 
-def test_020_delete(app):
+def test_010_delete(app):
     with app.app_context():
-        name, error = recipes.delete(db.load(), 1)
-    assert error is None and name == "Sandwich"
+        assert models.recipes.delete(db.load(), 2) == "goodbye world"
 
 
-def test_030_select(app):
+def test_020_select_set(app):
     with app.app_context():
-        recipe, error = recipes.select(db.load(), 1)
-    assert error is None and recipe["name"] == "Sandwich"
-
-
-def test_040_from_user(app):
-    with app.app_context():
-        rows, error = recipes.from_user(db.load(), 1)
-    assert error is None and len(rows) == 2 and rows[0]["rowid"] == 1
-
-
-def test_050_dump(app):
-    with app.app_context():
-        rows, error = recipes.dump(db.load())
-    assert error is None and len(rows) == 3 and rows[0]["rowid"] == 1
+        assert models.recipes.select_set(db.load(), columns="name, username") == [
+            {"name": "hello world", "username": "admin"},
+            {"name": "admins recipe", "username": "admin"}
+        ]
