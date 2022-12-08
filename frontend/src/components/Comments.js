@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/components/CommentsStyle.css';
-
+import { useLocation} from "react-router-dom";
 import hostname from '../hostname';
 
 function Comments(){
-
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState();
+    const location = useLocation();
+    const recipeID = location.state;
 
     useEffect(()=>{
-        axios.get(hostname+'/comments').then(res => {
-        setComments(res.data)
-        }).catch(error => alert('API ERROR'));
-      }, []);
+        axios.get(hostname+'/api/comments/'+recipeID).then(res => {
+        setComments(res.data.data)    
+        console.log(res.data)
+        }).catch(error => console.log("error"));
+      }, [recipeID]);
 
     const inputHandler = (evt) => {
         let num = evt.target.value
