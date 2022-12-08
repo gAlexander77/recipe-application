@@ -10,11 +10,8 @@ function Comments(){
     const [comment, setComment] = useState();
 
     useEffect(()=>{
-        axios.get(hostname+'/api/comments/').then(res => {
-        	if(!res.data.ok)
-				alert(res.data.data);
-			alert(res.data.data)
-			//setComments(res.data.data)
+        axios.get(hostname+'/comments').then(res => {
+        setComments(res.data)
         }).catch(error => alert('API ERROR'));
       }, []);
 

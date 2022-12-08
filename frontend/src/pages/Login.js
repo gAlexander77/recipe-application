@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { FaUser,FaLock } from "react-icons/fa"
 import { BsXLg } from "react-icons/bs";
 
-import hostname from "../hostname"
-
 function Login () {
 
     const guestHandler = () => {
@@ -50,7 +48,7 @@ function Login () {
         }
 
         return (
-            <form className="box-size center" action={hostname+"/api/users/create"}>
+            <form className="box-size center">
                 <BsXLg className="form-exit" onClick={()=>setHasAccount(null)}/>
                 <div className="content-box center">
                     <div className="input-row">
@@ -107,7 +105,7 @@ function Login () {
         }
 
         return (
-            <form className="box-size center" method="POST" action={hostname+"/api/accounts/login"}>
+            <form className="box-size center">
                 <BsXLg className="form-exit" onClick={()=>setHasAccount(null)}/>
                 <div className="content-box center">
                     <div className="input-row">  
@@ -116,7 +114,6 @@ function Login () {
                             className="inpt" 
                             type="text" 
                             placeholder="Username" 
-							name="username"
                             id="username" 
                             value={data.username}
                             onChange={(evt)=>changeValueHandler(evt)}
@@ -128,15 +125,12 @@ function Login () {
                             className="inpt" 
                             type="password" 
                             placeholder="Password" 
-							name="password"
                             id="password" 
                             value={data.password}
                             onChange={(evt)=>changeValueHandler(evt)}
                             />
                     </div>
-                    <button className="btn-hover btn" onClick={() => {
-
-					}}>Login</button>
+                        <button className="btn-hover btn">Login</button>
                 </div>
             </form>
         );

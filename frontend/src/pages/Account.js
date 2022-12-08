@@ -17,9 +17,9 @@ function Account() {
 
     useEffect(()=>{ 
         setUserType(localStorage.getItem('userType'));
-        //if (userType !== 'user'){
-        //    navigate.current('/login');
-        //}
+        if (userType !== 'user'){
+            navigate.current('/login');
+        }
         if (username === 'admin'){
             navigate.current('/admin')
         }
@@ -50,10 +50,8 @@ function Account() {
         const [isDeleting, setIsDeleting] = useState(false);
         
         useEffect(()=>{
-            axios.get(hostname+'/api/accounts/', {withCredentials: true}).then(res => {
-            	if(!res.data.ok)
-					alert(res.data.data)
-				setRecipes(res.data.data.recipes)
+            axios.get(hostname+'/recipes').then(res => {
+            setRecipes(res.data)
             }).catch(error => alert('API ERROR'));
         }, []);
 
@@ -64,10 +62,9 @@ function Account() {
             }
 
             const RecipeImage = () => {
-				const src = hostname + '/' + image
                 if(isDeleting === true) {
                 return(
-                    <motion.img src={src} className="box"
+                    <motion.img src={image} className="box"
                             animate={{
                                 rotate: [0,2,0,-2,0],
                             }}
@@ -77,7 +74,7 @@ function Account() {
                             }}/>
                 );}
                 else
-                return(<img src={src} className="box"/>);
+                return(<img src={image} className="box"/>);
             };
 
             return (
@@ -129,7 +126,7 @@ function Account() {
                                     key = {index}
                                     id = {recipe.id}
                                     image={recipe.image} 
-                                    name={recipe.name} 
+                                    name={recipe.recipe_name} 
                                     />
                                 );
                             })}
@@ -147,8 +144,8 @@ function Account() {
         const [comments, setComments] = useState([])
     
         useEffect(()=>{
-            axios.get(hostname+'/api/comments/', {withCredentials: true}).then(res => {
-				setComments(res.data.data)
+            axios.get(hostname+'/comments').then(res => {
+            setComments(res.data)
             }).catch(error => alert('API ERROR'));
         }, []);
 
@@ -238,7 +235,7 @@ function Account() {
                         <MyRating
                         key={index}
                         id={rating.id}
-                        recipe={rating.name}
+                        recipe={rating.recipe_name}
                         username={rating.username}
                         rating={rating.rating}
                         />
@@ -261,6 +258,7 @@ function Account() {
                 <AccountInfo/>
                 <MyRecipes/>
                 <MyComments/>
+                <MyRatings/>
             </motion.div>
         </div>
     );

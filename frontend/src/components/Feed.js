@@ -16,8 +16,8 @@ function Feed(){
     
     /* Test Mock API */
     useEffect(()=>{
-        axios.get(hostname+'/api/recipes/').then(res => {
-        setRecipes(res.data.data)
+        axios.get(hostname+'/recipes').then(res => {
+        setRecipes(res.data)
         }).catch(error => alert('API ERROR'));
       }, []);
 
@@ -48,7 +48,7 @@ function Feed(){
         setSearch(evt.target.value.toLowerCase())
     }
     const filterRecipes = recipes.filter(recipe => 
-        recipe.name.toLowerCase().includes(search)    
+        recipe.recipe_name.toLowerCase().includes(search)    
     );
 
     function DropdownMenu(props){
@@ -92,8 +92,8 @@ function Feed(){
                     <RecipeCard
                      key = {index}
                      id = {recipe.id}
-                     image={hostname + '/' + recipe.image} 
-                     name={recipe.name} 
+                     image={recipe.image} 
+                     name={recipe.recipe_name} 
                      desc={recipe.description} 
                      rating={recipe.rating}
                     />
