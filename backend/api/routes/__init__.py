@@ -1,13 +1,10 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, redirect
 
 
-def cors(response):
-    response.headers["Access-Control-Allow-Origin"] = '*'
-    return response
-
-
-def send(data, ok=True):
-    return cors(jsonify({"ok": ok, "data": data}))
+def send(data, ok=True, location=None):
+    if location is not None:
+        return redirect(location)
+    return jsonify({"ok": ok, "data": data})
 
 
 def logged_in(session):

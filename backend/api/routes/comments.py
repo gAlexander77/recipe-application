@@ -12,7 +12,7 @@ def index():
 
     return routes.send(models.comments.select_set(
         db.load(), 
-        columns="id, comment",
+        columns="id, comment, name, username",
         filters={"userid": session["id"]}
     ))
 
@@ -21,7 +21,7 @@ def index():
 def recipe(recipeid):
     return routes.send(models.comments.select_set(
         db.load(),
-        columns="id, username, comment",
+        columns="id, username, full_recipes.username",
         filters={"recipeid": recipeid}
     ))
 

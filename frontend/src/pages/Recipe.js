@@ -24,8 +24,8 @@ function Recipe(){
     
     /* Test Mock API */
     useEffect(()=>{
-        axios.get(hostname+'/recipes/'+recipeID).then(res => {
-        setRecipe(res.data)
+        axios.get(hostname+'/api/recipes/'+recipeID).then(res => {
+        setRecipe(res.data.data)
         }).catch(error => alert('API ERROR'));
     }, []);
  

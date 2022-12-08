@@ -1,4 +1,5 @@
 {
+	"SESSION_COOKIE_HTTPONLY": false,
 	"DB_PATH": "db/recipedia.db",
 	"SCHEMA_PATH": "db/schema.sql",
 	"UPLOADS_DIR": "uploads/",

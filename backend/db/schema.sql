@@ -46,7 +46,7 @@ left join users on recipes.userid = users.id;
 
 create view if not exists full_comments as
 select * from comments
-left join recipes on comments.recipeid = recipes.id
+left join full_recipes on comments.recipeid = full_recipes.id
 left join users on comments.userid = users.id;
 
 create view avg_ratings as
