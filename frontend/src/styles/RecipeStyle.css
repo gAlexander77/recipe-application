@@ -108,4 +108,5 @@ body .Recipe {
 .inst-textbox {
     font-size: 18px;
     width: 750px;
+    white-space: pre-wrap;
 }
