@@ -30,7 +30,6 @@ function Recipe(){
         setIngredients(res.data.data.ingredients)
         }).catch(error => alert('API ERROR'));
     }, []);
- 
 
     const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec urna morbi enim in. Elementum quam justo dui, mattis proin sed dui quis. Nec tincidunt sagittis nibh volutpat, et. Scelerisque sit morbi purus fermentum.";
 

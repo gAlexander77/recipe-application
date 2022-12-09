@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import '../styles/LoginStyle.css'
 import { Link } from "react-router-dom";
 import { FaUser,FaLock } from "react-icons/fa"
 import { BsXLg } from "react-icons/bs";
+
+import hostname from '../hostname';
 
 function Login () {
 
@@ -14,13 +17,35 @@ function Login () {
 
     function SignUp() {
 
+        const [passwordVerified, setPasswordVerified] = useState(false);
+        
         const [data, setData] = useState({
             username: "",
             password: "",
             verifyPassword: ""
         });
         
-        const [passwordVerified, setPasswordVerified] = useState(false);
+        const postSignUp = () => {
+            console.log("Post Request")
+            axios.post(hostname+"api/users/create",{
+                username: data.username,
+                password: data.password
+            })
+            .then(res => {console.log(res);})
+            .catch(err => {console.log(err);})
+        }
+        
+        const createAccount = (evt) => {
+            evt.preventDefault();
+            if(passwordVerified === true && data.username.length >= 5) {
+                postSignUp();
+                console.log("Account Created")
+            }
+            else {
+                console.log("Account Not Created")
+            }          
+        }
+        
         useEffect(()=>{
             if(data.password==="" || data.verifyPassword==="")
                 setPasswordVerified(null);
@@ -85,7 +110,7 @@ function Login () {
                             />
                     </div>
                     <DoPasswordsMatch/>
-                    <button className="btn-hover btn">Create Account</button>
+                    <button className="btn-hover btn" onClick={createAccount}>Create Account</button>
                 </div>
             </form>
         );
@@ -102,6 +127,31 @@ function Login () {
             const newData={...data};
             newData[evt.target.id] = evt.target.value;
             setData(newData);
+        }
+
+        const postLogin = () => {
+            const userData = JSON.stringify({  
+                username: data.username,
+                password: data.password
+            });
+            const header = {
+                headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                }
+            };
+
+            console.log(userData)
+            const request = hostname+'/api/accounts/login'
+            console.log(request)
+            axios.post(request, userData, header)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+            console.log("post Request")
+        }
+
+        const login = (evt) => {
+            evt.preventDefault();
+            postLogin();
         }
 
         return (
@@ -130,7 +180,7 @@ function Login () {
                             onChange={(evt)=>changeValueHandler(evt)}
                             />
                     </div>
-                        <button className="btn-hover btn">Login</button>
+                        <button className="btn-hover btn" onClick={login}>Login</button>
                 </div>
             </form>
         );

@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { BsXLg } from "react-icons/bs";
 import { FaPaperPlane } from "react-icons/fa";
 import '../styles/components/AddRecipeStyle.css'; 
+import hostname from '../hostname';
 
 function AddRecipe(props){
     const [recipeName, setRecipeName] = useState('');
@@ -50,13 +52,23 @@ function AddRecipe(props){
         }
     }
 
+    const formData = {  
+        name: recipeName,
+        ingredients: ingredients,
+        description: description,
+        instructions: instructions,
+        image: image
+    };
+
+    const postRecipe = () => {
+        const request = hostname+'/api/recipes/create'
+        axios.post(request, formData)
+    }
+
     const submit = (evt) => {
         evt.preventDefault();
-        console.log("recipeName: "+recipeName);
-        console.log(image);
-        console.log("description: "+description);
-        console.log("ingredients: "+ingredients);
-        console.log("instructions: "+instructions);
+        console.log(formData);
+        postRecipe();
     }
 
     return(props.trigger)?(
