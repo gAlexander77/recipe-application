@@ -7,8 +7,16 @@ def send(data, ok=True, location=None):
     return jsonify({"ok": ok, "data": data})
 
 
+def log_in(user, session):
+    if user is None:
+        return None
+    session["id"] = user["id"]
+    session["logged_in"] = True
+    return session["id"]
+
+
 def logged_in(session):
-    return "id" in session
+    return session.get("id") and session.get("logged_in")
 
 
 def must_log_in():

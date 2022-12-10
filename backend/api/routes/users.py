@@ -22,11 +22,12 @@ def cli_create(username, password):
 def create():
     return routes.send(models.users.insert(
         db.load(), 
-        request.json["username"], 
-        request.json["password"]
-    ))
+        request.form["username"], 
+        request.form["password"]
+    ), location=request.headers["Origin"])
 
 
 @blueprint.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
-    return routes.send(models.users.delete(db.load(), id))
+    return routes.send(models.users.delete(db.load(), id),
+                       location=request.headers["Origin"])

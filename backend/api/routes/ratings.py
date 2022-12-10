@@ -11,6 +11,8 @@ def create():
     if not routes.logged_in(session):
         return routes.must_log_in()
 
+    print(request.json)
+
     return routes.send(models.ratings.insert(
         db.load(),
         session["id"], 

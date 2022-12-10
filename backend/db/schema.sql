@@ -45,7 +45,10 @@ from recipes
 left join users on recipes.userid = users.id;
 
 create view if not exists full_comments as
-select * from comments
+select comments.id as id, users.username as username,
+full_recipes.username as recipe_username, name, comment,
+comments.userid as userid, recipeid
+from comments
 left join full_recipes on comments.recipeid = full_recipes.id
 left join users on comments.userid = users.id;
 

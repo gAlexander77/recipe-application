@@ -31,6 +31,11 @@ def index():
     })
 
 
+@blueprint.route("/session")
+def info():
+    return routes.send(routes.logged_in(session))
+
+
 @blueprint.route("/login", methods=["POST"])
 def login():
 
@@ -38,14 +43,12 @@ def login():
         "username": request.form["username"],
         "password": db.sha3(request.form["password"])
     })
-    
-    id = None
-    if user is not None:
-        id = session["id"] = user["id"]
+
+    id = routes.log_in(user, session)
 
     return routes.send(
         id,
-        ok=False if user is None else True,
+        ok=False if id is None else True,
         location=request.headers["Origin"]
     )
 
