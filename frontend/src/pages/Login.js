@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import '../styles/LoginStyle.css'
+import React, {useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 import { FaUser,FaLock } from "react-icons/fa"
-import { BsXLg } from "react-icons/bs";
-
+import { BsXLg, BsCheckCircleFill} from "react-icons/bs";
+import '../styles/LoginStyle.css'
 import hostname from '../hostname';
 
 function Login () {
@@ -17,6 +16,22 @@ function Login () {
 
     function SignUp() {
 
+        const [errorMessage, setErrorMessage] = useState('');
+        const [errorPopUp, setErrorPopUp] = useState(false);
+
+        function ErrorPopUp(){
+            if (errorPopUp === true){            
+                return(
+                    <div className="error-popup-container">
+                        <p className="error-message">{errorMessage}</p>
+                    </div>
+                );
+            }
+            else{
+                return('');
+            }
+        }
+
         const [passwordVerified, setPasswordVerified] = useState(false);
         
         const [data, setData] = useState({
@@ -24,6 +39,7 @@ function Login () {
             password: "",
             verifyPassword: ""
         });
+
         
         const postSignUp = () => {
             console.log("Post Request")
@@ -37,12 +53,25 @@ function Login () {
         
         const createAccount = (evt) => {
             evt.preventDefault();
-            if(passwordVerified === true && data.username.length >= 5) {
+            if(passwordVerified === true && data.username.length >= 5 && data.password.length >= 5) {
                 postSignUp();
                 console.log("Account Created")
             }
             else {
                 console.log("Account Not Created")
+                if(data.username==="" || data.password==="" || data.verifyPassword === "")
+                {   
+                    setErrorPopUp(true);
+
+                    setErrorMessage("Try again, please complete the form!");
+                    setTimeout(() =>{setErrorPopUp(false)},5000)
+                }
+                else if(passwordVerified === false)
+                {
+                    setErrorPopUp(true);
+                    setErrorMessage("Try again, your passwords do not match!");
+                    setTimeout(() =>{setErrorPopUp(false)},5000)
+                }
             }          
         }
         
@@ -61,15 +90,20 @@ function Login () {
             setData(newData);
         }
 
-        function DoPasswordsMatch() {
-            if(passwordVerified===true)
+        function Check({type}){
+            if(passwordVerified===true || (type === 'password' && data.password.length>=5))
                 return(
-                    <div>Passwords Match</div>
+                    <BsCheckCircleFill className="check" style={{color: 'green'}}/>
                 );
-            else if(passwordVerified===false)
+            else if(( type=== 'verify' && passwordVerified===false) || (type === 'password' && data.password.length<5 && data.password.length > 0) )
                 return(
-                    <div>Passwords Do Not Match</div>
+                    <BsCheckCircleFill className="check" style={{color: 'red'}}/>
                 );
+            else{
+                return(
+                    <BsCheckCircleFill className="check" style={{color: 'white'}}/>
+                );
+            }
         }
 
         return (
@@ -97,7 +131,9 @@ function Login () {
                             value={data.password}
                             onChange={(evt)=>changeValueHandler(evt)}
                             />
-                        </div>
+                        <Check type={'password'}/>
+                    </div>
+                        
                     <div className="input-row">
                         <FaLock className="input-logo"/>
                         <input 
@@ -108,10 +144,11 @@ function Login () {
                             value={data.verifyPassword}
                             onChange={(evt)=>changeValueHandler(evt)}
                             />
+                        <Check type={'verify'}/>
                     </div>
-                    <DoPasswordsMatch/>
                     <button className="btn-hover btn" onClick={createAccount}>Create Account</button>
                 </div>
+                <ErrorPopUp/>
             </form>
         );
     }
@@ -123,7 +160,7 @@ function Login () {
             password: ""
         });
 
-        const changeValueHandler = (evt) => {
+        const changeValueHandler = (evt) => {    
             const newData={...data};
             newData[evt.target.id] = evt.target.value;
             setData(newData);
@@ -201,7 +238,7 @@ function Login () {
     if(hasAccount === null){    
         return(
             <div className="Login center">
-                <LoginOptions/> 
+                <LoginOptions/>
             </div>
         );
     }
@@ -217,6 +254,7 @@ function Login () {
             <div className="Login center">
                 <div>
                     <SignUp/>
+                    
                 </div>
             </div>
         );

@@ -43,7 +43,7 @@ input:focus {
   background-color: rgb(255, 255, 255);
   border: none;
   color: black;
-  width: 150px;
+  width: 130px;
 }
 
 .inpt:focus {
@@ -83,6 +83,7 @@ a {
   background-color: rgb(255, 255, 255);
   border: 2px solid rgb(209, 209, 209);
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  position: relative;
 }
 
 .content-box {
@@ -153,4 +154,29 @@ a {
     rgb(255, 78, 78)
   );
   box-shadow: 0 2px 7px 0 rgba(45, 54, 65, 0.75);
+}
+
+.Username{
+  width: 147px;
+}
+
+.check {
+  position: relative;
+  top: 2px;
+}
+
+.error-popup-container {
+  position: absolute;
+  top: 10%;
+  padding: 20px 40px;
+  border-radius: 12px;
+  border: 2px solid rgb(209, 209, 209);
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.error-message{
+  color: black;
+  font-family: Inter,sans-serif;
+  font-weight: bold;
+  font-size: 12px;
 }
