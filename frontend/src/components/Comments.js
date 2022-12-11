@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/components/CommentsStyle.css';
-import { useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import hostname from '../hostname';
 
 function Comments(){
@@ -9,6 +9,9 @@ function Comments(){
     const [comment, setComment] = useState();
     const location = useLocation();
     const recipeID = location.state;
+    
+    const userType = localStorage.getItem('userType');
+    const username = localStorage.getItem('username');
 
     useEffect(()=>{
         axios.get(hostname+'/api/comments/'+recipeID).then(res => {
@@ -22,13 +25,41 @@ function Comments(){
         setComment(num);
     }
 
-    const postComment = () => {
+    const addComment = () => {
         let myComment = {
-            username: "TestUsername",
+            username: username,
             comment: comment
         }
+        setComments([...comments,myComment]);
+        console.log(comments);
     }
 
+    const [errorMessage, setErrorMessage] = useState('');
+    const [hasError, setHasError] = useState(false);
+
+    const postComment = () => {
+        if(userType !== "user")
+        {
+            setErrorMessage('You must be logged in to comment!')
+            setHasError(true);
+            setTimeout(() =>{setHasError(false)},5000)
+            return;
+        }
+        addComment();
+    }
+
+    function ErrorPopUp(){
+        if(hasError === true){
+           return(
+                <div className="comment-error-container">
+                    <p className="comment-error-message">{errorMessage}</p>
+                </div>
+            );
+        }
+        else{
+            return('');
+        }
+    }
 
     function Comment({username,comment}){
         return(
@@ -42,9 +73,10 @@ function Comments(){
     return(
         <div className="Comments">
             <h1 className="comments-header">Comments</h1>
+            <ErrorPopUp/>
             <div className="comment-input-container">
                 <input className="comment-input" placeholder="Write a comment..." onChange={inputHandler}/>
-                <button disabled={!comment} className="comment-btn">Comment</button>
+                <button disabled={!comment} className="comment-btn" onClick={postComment}>Comment</button>
             </div>
             {comments.map((comment, index) =>{
                 return(
@@ -55,6 +87,7 @@ function Comments(){
                     />
                 );
             })}
+            
         </div>
     );
 }
