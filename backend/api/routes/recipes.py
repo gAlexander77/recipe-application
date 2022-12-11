@@ -49,6 +49,7 @@ def create():
         return routes.must_log_in()
 
     uploaded = request.files["upload"]
+
     _, ext = uploaded.filename.rsplit('.', 1)
     imagepath = os.path.join(
         app.config["UPLOADS_DIR"], 
@@ -61,7 +62,7 @@ def create():
         db.load(), 
         session["id"], 
         request.form["name"], 
-        request.form.getlist("ingredients"), 
+        request.form["ingredients"].split(','), 
         request.form["description"], 
         request.form["instructions"],
         imagepath

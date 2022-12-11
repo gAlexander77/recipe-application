@@ -14,6 +14,7 @@ create table if not exists recipes (
 	instructions text,
 	image text,
 	created integer,
+	unique(userid, name),
 	foreign key (userid) references users (id)
 );
 

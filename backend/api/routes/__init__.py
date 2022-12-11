@@ -11,13 +11,11 @@ def log_in(user, session):
     if user is None:
         return None
     session["id"] = user["id"]
-    session["logged_in"] = True
     return session["id"]
 
 
 def logged_in(session):
-    return session.get("id") and session.get("logged_in")
-
+    return "id" in session
 
 def must_log_in():
     return send("must log in", ok=False)

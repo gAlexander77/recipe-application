@@ -11,14 +11,17 @@ def create():
     if not routes.logged_in(session):
         return routes.must_log_in()
 
-    print(request.json)
+    database = db.load()
+    userid = session["id"]
+    recipeid = request.json["recipeid"]
+    rating = request.json["rating"]
+
+    if models.ratings.exists(database, userid, recipeid):
+        return routes.send(models.ratings.update(
+            database, userid, recipeid, rating))
 
     return routes.send(models.ratings.insert(
-        db.load(),
-        session["id"], 
-        request.json["recipeid"],
-        request.json["rating"]
-    ))
+        database, userid, recipeid, rating))
 
 
 @blueprint.route("/delete/<int:id>", methods=["POST"])
