@@ -12,7 +12,7 @@ def index():
 
     return routes.send(models.comments.select_set(
         db.load(), 
-        columns="id, comment",
+        columns="id, recipe_username as username, comment",
         filters={"userid": session["id"]}
     ))
 
@@ -29,15 +29,18 @@ def recipe(recipeid):
 @blueprint.route("/create", methods=["POST"])
 def create():
 
-    if not routes.logged_in(session):
-        routes.must_log_in()
+    origin = request.headers.get("Origin")
 
+    if not routes.logged_in(session):
+        return routes.send("not logged in", location=origin+"/login")
+
+    recipeid = request.form["recipeid"]
     return routes.send(models.comments.insert(
         db.load(),
         session["id"],
-        request.json["recipeid"], 
-        request.json["comment"]
-    ))
+        recipeid, 
+        request.form["comment"]
+    ), location=origin+f"/recipe?id={recipeid}")
 
 
 @blueprint.route("/delete/<int:id>", methods=["POST"])

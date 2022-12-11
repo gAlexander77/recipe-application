@@ -99,7 +99,10 @@ def demo(db_path, schema_path, uploads_dir, demo_dir):
             userids.append(models.users.insert(
                 database, username, password))
 
-        for recipe in parse_recipes("recipes.txt"):
+        recipes = list(parse_recipes("recipes.txt"))
+        random.shuffle(recipes)
+
+        for recipe in recipes:
             print(f"+ adding recipe: {recipe['name'][:20]} from recipes.txt")
             recipeids.append(models.recipes.insert(
                 database, random.choice(userids), 

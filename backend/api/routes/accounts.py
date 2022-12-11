@@ -31,21 +31,31 @@ def index():
     })
 
 
+@blueprint.route("/session")
+def info():
+    return routes.send(routes.logged_in(session))
+
+
 @blueprint.route("/login", methods=["POST"])
 def login():
 
     user = models.users.select_one(db.load(), columns="id", filters={
-        "username": request.json["username"],
-        "password": db.sha3(request.json["password"])
+        "username": request.form["username"],
+        "password": db.sha3(request.form["password"])
     })
-    
-    id = None
-    if user is not None:
-        id = session["id"] = user["id"]
 
-    return routes.send(id, ok=False if user is None else True)
+    id = routes.log_in(user, session)
+
+    return routes.send(
+        id,
+        ok=False if id is None else True,
+        location=request.headers["Origin"]
+    )
 
 
 @blueprint.route("/logout", methods=["POST"])
 def logout():
-    return routes.send(session.pop("id") if "id" in session else None)
+    return routes.send(
+        session.pop("id") if "id" in session else None,
+        location=request.headers["Origin"]
+    )

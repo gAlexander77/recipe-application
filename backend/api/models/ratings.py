@@ -9,6 +9,20 @@ def insert(db, userid, recipeid, rating):
     })
 
 
+def exists(db, userid, recipeid):
+    return models.select_one(db, "ratings", filters={
+        "userid": userid,
+        "recipeid": recipeid
+    }) is not None
+
+
+def update(db, userid, recipeid, rating):
+    return models.update(db, "ratings", "rating", rating, {
+        "userid": userid,
+        "recipeid": recipeid
+    })
+
+
 def delete(db, id):
     return models.delete(db, "ratings", id, "rating")
 
