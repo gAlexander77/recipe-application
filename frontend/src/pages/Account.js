@@ -13,7 +13,7 @@ function Account() {
 
     let navigate = useRef(useNavigate());
     const [userType, setUserType] = useState(localStorage.getItem('userType'));
-    const [username, setUsername] = useState('username');
+    const [username, setUsername] = useState(localStorage.getItem('username'));
 
     useEffect(()=>{ 
         setUserType(localStorage.getItem('userType'));

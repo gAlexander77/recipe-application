@@ -64,11 +64,39 @@ function AddRecipe(props){
         const request = hostname+'/api/recipes/create'
         axios.post(request, formData)
     }
-
+    const [cannotPost, setConnotPost] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('')
     const submit = (evt) => {
         evt.preventDefault();
+        setConnotPost(false);
         console.log(formData);
-        postRecipe();
+        for(var i = 0; i <= formData.instructions.length; i++) {
+            if(formData.instructions[i] === '')
+            {
+                setErrorMessage('Please fill out all ingredient inputs or remove any unneaded inputs')
+                setConnotPost(true);
+            }
+        }
+        if(formData.name === '' || formData.ingredients === '' || formData.description === '' || formData.instructions === '' || formData.image === null)
+        {
+            setErrorMessage('Please fill out all inputs in the form to post your recipe')
+            setConnotPost(true);
+        }
+        else if ( cannotPost === false)
+            postRecipe();
+    }
+
+    function PostError() {
+        if(cannotPost===true)
+        {
+            return(
+                <div className="post-error-container">
+                    <p className="post-error-message">{errorMessage}</p>
+                </div>
+            );
+        }
+        else
+            return('');
     }
 
     return(props.trigger)?(
@@ -160,6 +188,7 @@ function AddRecipe(props){
                         />
                 </div>
                 <button className="post-recipe-form-btn" onClick={submit}>Post Recipe<FaPaperPlane className="plane-icon"/></button>
+                <PostError/>
             </motion.form>
         </div>
     ) : "";   

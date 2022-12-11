@@ -1,5 +1,5 @@
-import React, {useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { FaUser,FaLock } from "react-icons/fa"
 import { BsXLg, BsCheckCircleFill} from "react-icons/bs";
@@ -7,6 +7,8 @@ import '../styles/LoginStyle.css'
 import hostname from '../hostname';
 
 function Login () {
+
+    let navigate = useRef(useNavigate());
 
     const guestHandler = () => {
         localStorage.setItem('userType', 'guest')
@@ -56,6 +58,9 @@ function Login () {
             if(passwordVerified === true && data.username.length >= 5 && data.password.length >= 5) {
                 postSignUp();
                 console.log("Account Created")
+                localStorage.setItem('userType', 'user');
+                localStorage.setItem('username', data.username);
+                navigate.current('/');
             }
             else {
                 console.log("Account Not Created")
