@@ -1,8 +1,9 @@
 from . import users, recipes, ratings, comments
 
 INSERT_SQL = "INSERT INTO %s (%s) values (%s) returning %s"
+UPDATE_SQL = "UPDATE %s SET %s = %s%s"
 SELECT_SQL = "SELECT %s FROM %s%s"
-DELETE_SQL = "DELETE FROM %s WHERE id = ? returning %s"
+DELETE_SQL = "DELETE FROM %s WHERE id = %s returning %s"
 
 
 def __sql_filter(filters):
@@ -24,6 +25,15 @@ def insert(db, table, fields, returning="id"):
     return row[returning]
 
 
+# updates a single field, im too tired to write logic for multiple...
+# filter is not optional, we dont want to update every single row
+def update(db, table, field, value, filters):
+    sql_filter = __sql_filter(filters)
+    row = db.execute(UPDATE_SQL % (table, field, value, sql_filter)).fetchone()
+    db.commit()
+    return row[field]
+
+
 # gets all rows from the table, optionally select columns, and filter 
 def select(db, table, columns='*', filters={}):
     sql_filter = __sql_filter(filters)
@@ -38,6 +48,6 @@ def select_one(db, table, columns='*', filters={}):
 
 # deletes a row from the table by id
 def delete(db, table, id, returning="id"):
-    row = db.execute(DELETE_SQL % (table, returning), (id, )).fetchone()
+    row = db.execute(DELETE_SQL % (table, id, returning)).fetchone()
     db.commit()
     return row[returning]

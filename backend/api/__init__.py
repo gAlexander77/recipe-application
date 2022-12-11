@@ -19,7 +19,7 @@ def create_app():
     db_path, schema_path, uploads_dir = (app.config["DB_PATH"], 
                                          app.config["SCHEMA_PATH"],
                                          app.config["UPLOADS_DIR"])
-    
+
     if not os.path.isfile(schema_path):
         raise FileNotFoundError("schema file not found")
 
@@ -65,6 +65,14 @@ def create_app():
             "data": f"{exception.code} - {exception.name}"
         })
         response.content_type = "application/json"
-        return routes.cors(response)
+        return response
+
+    @app.after_request
+    def after_request(response):
+        response.headers["Access-Control-Allow-Credentials"] = 'true'
+        response.headers["Access-Control-Allow-Origin"] = 'http://localhost:3000'
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+        response.headers["Access-Control-Allow-Methods"] =  "GET,PUT,POST,DELETE"
+        return response
 
     return app

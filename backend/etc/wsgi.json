@@ -1,6 +1,6 @@
 {"uwsgi": {
 	"module": "api.wsgi:app",
-	"socket": "/tmp/recipedia.sock",
+	"socket": "/tmp/recipedia.sock", 
 	"master": true,
 	"workers": 2,
 	"chmod-socket": 777,

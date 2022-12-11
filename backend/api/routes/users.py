@@ -1,5 +1,5 @@
 from flask.cli import with_appcontext
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 from api import routes, models, db
 
 import click
@@ -20,13 +20,16 @@ def cli_create(username, password):
 
 @blueprint.route("/create", methods=["POST"])
 def create():
-    return routes.send(models.users.insert(
+    userid = models.users.insert(
         db.load(), 
-        request.json["username"], 
-        request.json["password"]
-    ))
+        request.form["username"], 
+        request.form["password"]
+    ) 
+    session["id"] = userid
+    return routes.send(userid, location=request.headers["Origin"])
 
 
 @blueprint.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
-    return routes.send(models.users.delete(db.load(), id))
+    return routes.send(models.users.delete(db.load(), id),
+                       location=request.headers["Origin"])
