@@ -40,7 +40,7 @@ def create():
         session["id"],
         recipeid, 
         request.form["comment"]
-    ), location=origin+f"/recipe/{recipeid}")
+    ), location=origin+f"/recipe?id={recipeid}")
 
 
 @blueprint.route("/delete/<int:id>", methods=["POST"])
