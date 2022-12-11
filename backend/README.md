@@ -51,19 +51,25 @@ _note: pay attention to POST types, incorrect encoding will cause 500 errors_
     - url: `/api/accounts/`
 	- type: GET
 	- parameters: none
-	- returns: all current user info and recipes
+	- returns: `{user: <user info>, recipes: <user recipes>}`
 	- description: this is the API endpoint for the user's account page
+  - __Session__:
+  	- url: `/api/accounts/session`
+	- type: GET
+	- parameters: none
+	- returns `{ <is logged in> }`
+	- description: checks to see if the user has a valid session on the backend
   - __Login__:
     - url: `/api/accounts/login`
-    - type: POST (application/json)
+    - type: POST (x-www-form-urlencoded)
 	- parameters: `username: <username string>, password: <password string>`
-	- returns: user's ID
+	- returns: `{ <userid> }`
 	- description: authenticate a user and start a session for them.
   - __Logout__:
     - url: `/api/accounts/logout/<id>`
     - type: POST (x-www-form-urlencoded)
 	- parameters: none
-	- returns: user's username
+	- returns: `{ <username> }`
 	- description: ends a users session, supply the user ID in the URL
 
 - __Comments__: Get all by userID, Get all by recipeID, Create, Delete
@@ -71,24 +77,25 @@ _note: pay attention to POST types, incorrect encoding will cause 500 errors_
     - url: `/api/comments/`
 	- type: GET
 	- parameters: none
-	- returns: all comments from the current logged in user
+	- returns: `{ <user comments> }`
+	- description: this is used in conjunction with the `/api/accounts` route to generate the user page
   - __Recipe__:
     - url: `/api/comments/<id>`
 	- type: GET
 	- parameters: none
-	- returns: all comments from the recipe ID supplied in the URL
+	- returns: `{ <recipe comments> }`
 	- description: get all comments for the recipe on the recipe page
   - __Create__:
     - url: `/api/comments/create`
-	- type: POST (application/json)
+	- type: POST (x-www-form-urlencoded)
 	- parameters: `recipeid: <id>, comment: <comment string>`
-	- returns: id of newly created comment
+	- returns: `{ <commentid> }`
 	- description: create a new comment on a recipe post
   - __Delete__:
     - url: `/api/comments/delete/<id>`
 	- type: POST (x-www-form-urlencoded)
 	- parameters: none
-	- returns: text of deleted comment
+	- returns: `{ <comment> }`
 	- description: delete a comment from the database
 
 - __Ratings__: Create, Delete
@@ -96,8 +103,8 @@ _note: pay attention to POST types, incorrect encoding will cause 500 errors_
     - url: `/api/ratings/create`
 	- type: POST (application/json)
 	- parameters: `recipeid: <id>, rating: <rating (0-5)>`
-	- returns: id of new rating
-	- description: rate a recipe
+	- returns: id of rating updated
+	- description: rate a recipe, if the relationship already exists, it updates it instead
   - __Delete__:
     - url: `/api/ratings/delete/<id>`
 	- type: POST (x-www-form-urlencoded)
@@ -134,7 +141,7 @@ _note: pay attention to POST types, incorrect encoding will cause 500 errors_
 - __Users__: Create, Delete
   - __Create__:
     - url: `/api/users/create`
-	- type: POST (application/json)
+	- type: POST (x-www-form-urlencoded)
 	- parameters: `username: <username string>, password: <password string>`
 	- returns: id of newly created user
 	- description: endpoint to create a new user
