@@ -13,22 +13,23 @@ import hostname from '../hostname';
 function Recipe(){
     const location = useLocation();
     const recipeID = location.state;
+    console.log("ID:"+recipeID);
 
     const [recipe, setRecipe] = useState([])
-
+    const [ingredients, setIngredients ] = useState([]);
+    
     const [rateRecipePopUp, setRateRecipePopUp] = useState(false);
     const rateRecipePopUpHandler = () => {
         setRateRecipePopUp(true)
         console.log(rateRecipePopUp)
     }
     
-    /* Test Mock API */
     useEffect(()=>{
-        axios.get(hostname+'/recipes/'+recipeID).then(res => {
-        setRecipe(res.data)
+        axios.get(hostname+'/api/recipes/'+recipeID).then(res => {
+        setRecipe(res.data.data)
+        setIngredients(res.data.data.ingredients)
         }).catch(error => alert('API ERROR'));
     }, []);
- 
 
     const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec urna morbi enim in. Elementum quam justo dui, mattis proin sed dui quis. Nec tincidunt sagittis nibh volutpat, et. Scelerisque sit morbi purus fermentum.";
 
@@ -52,27 +53,27 @@ function Recipe(){
             >
                 <div className="info-container">
                     <div className="row-1">
-                    <h1 className="recipe-title">{recipe.recipe_name}</h1> 
+                    <h1 className="recipe-title">{recipe.name}</h1> 
                     <div className="rating-container">
                         <DisplayStars classname="rating-stars" rating={recipe.rating}/>
                         <button className="rate-recipe-btn" onClick={rateRecipePopUpHandler}>Rate Recipe</button>
                     </div>
                     </div>
-                    <img src={recipe.image} className="recipe-imagebox"/>                   
+                    <img src={hostname+"/"+recipe.image} className="recipe-imagebox"/>                   
                     <h1 className="desc-title">Description</h1>
                     <p className="desc-textbox">{recipe.description}</p>
                     <h1 className="ingr-title">Ingredients</h1>
                     <ul className="ingr-list">
-                        <li>Ingredient 1</li>
-                        <li>Ingredient 2</li>
-                        <li>Ingredient 3</li>
-                        <li>Ingredient 4</li>
-                        <li>Ingredient 5</li>
+                        {ingredients.map((ingredient, index) =>{
+                            return(
+                                <li key={index}>{ingredient}</li>
+                            );
+                        })}
                     </ul>
                     <h1 className="inst-title">Instructions</h1>
                     <p className="inst-textbox">{recipe.instructions}</p>
                 </div>
-                <Comments/>
+                <Comments recipeID={recipe.id}/>
             </motion.div>
             <RateRecipe recipeID={recipe.id} trigger={rateRecipePopUp} setTrigger={setRateRecipePopUp}/>
         </div>
