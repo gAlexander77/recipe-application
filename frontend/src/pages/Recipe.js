@@ -19,9 +19,34 @@ function Recipe(){
     const [ingredients, setIngredients ] = useState([]);
     
     const [rateRecipePopUp, setRateRecipePopUp] = useState(false);
+    const [errorPopUp, setErrorPopUp] = useState(false);
     const rateRecipePopUpHandler = () => {
-        setRateRecipePopUp(true)
-        console.log(rateRecipePopUp)
+        if(localStorage.getItem('userType') === 'user')
+        {
+            setRateRecipePopUp(true);
+            console.log(rateRecipePopUp);
+        }
+        else
+        {
+            setErrorPopUp(true);
+            setTimeout(() =>{setErrorPopUp(false);},7000);
+        }
+    }
+
+
+    function ErrorPopUp(){
+        if(errorPopUp === true)
+        {
+            return(
+                <div className="rating-error-popup-container">
+                    <p className="rating-error-message">You must be logged in to rate this recipe</p>
+                </div>
+            );
+        }
+        else
+        {
+            return('');
+        }
     }
     
     useEffect(()=>{
@@ -52,11 +77,12 @@ function Recipe(){
             animate={{ opacity: 1 }}
             >
                 <div className="info-container">
-                    <div className="row-1">
+                    <div className="row-1"><ErrorPopUp/>
                     <h1 className="recipe-title">{recipe.name}</h1> 
                     <div className="rating-container">
                         <DisplayStars classname="rating-stars" rating={recipe.rating}/>
                         <button className="rate-recipe-btn" onClick={rateRecipePopUpHandler}>Rate Recipe</button>
+                        
                     </div>
                     </div>
                     <img src={hostname+"/"+recipe.image} className="recipe-imagebox"/>                   

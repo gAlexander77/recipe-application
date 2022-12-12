@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import qs from 'qs';
 import { FaUser,FaLock } from "react-icons/fa"
 import { BsXLg, BsCheckCircleFill} from "react-icons/bs";
 import '../styles/LoginStyle.css'
@@ -45,7 +46,7 @@ function Login () {
         
         const postSignUp = () => {
             console.log("Post Request")
-            axios.post(hostname+"api/users/create",{
+            axios.post(hostname+"/api/users/create",{
                 username: data.username,
                 password: data.password
             })
@@ -160,6 +161,22 @@ function Login () {
 
     function SignIn() {
 
+        const [errorMessage, setErrorMessage] = useState('');
+        const [errorPopUp, setErrorPopUp] = useState(false);
+
+        function ErrorPopUp(){
+            if (errorPopUp === true){            
+                return(
+                    <div className="error-popup-container">
+                        <p className="error-message">{errorMessage}</p>
+                    </div>
+                );
+            }
+            else{
+                return('');
+            }
+        }
+
         const [data, setData] = useState({
             username: "",
             password: ""
@@ -172,20 +189,23 @@ function Login () {
         }
 
         const postLogin = () => {
-            const userData = JSON.stringify({  
+            const userData = qs.stringify({  
                 username: data.username,
                 password: data.password
             });
+            const formData = new FormData();
+            formData.append('username', data.username);
+            formData.append('password', data.password);
+            
             const header = {
                 headers: {
-                'Content-Type': 'application/json;charset=utf-8',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 }
             };
-
             console.log(userData)
             const request = hostname+'/api/accounts/login'
             console.log(request)
-            axios.post(request, userData, header)
+            axios.post(request, formData)
             .then(res => console.log(res))
             .catch(err => console.log(err));
             console.log("post Request")
@@ -193,7 +213,19 @@ function Login () {
 
         const login = (evt) => {
             evt.preventDefault();
+            localStorage.setItem('username',data.username)
+            localStorage.setItem('userType','user')
             postLogin();
+            if(data.username=="" || data.password=="")
+            {
+                setErrorMessage("Try again, please complete the form!")
+                setErrorPopUp(true);
+                setTimeout(() =>{setErrorPopUp(false)},5000)
+            }
+            else
+            {
+                navigate.current('/');    
+            }            
         }
 
         return (
@@ -224,6 +256,7 @@ function Login () {
                     </div>
                         <button className="btn-hover btn" onClick={login}>Login</button>
                 </div>
+                <ErrorPopUp/>
             </form>
         );
     }

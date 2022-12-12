@@ -1,18 +1,50 @@
-import React,{useState} from "react";
+import React,{ useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 import NavigationBar from '../components/NavigationBar';
 import '../styles/AdminStyle.css';
+import hostname from '../hostname';
 
 function Admin(){
 
     const [userType, setUserType] = useState(localStorage.getItem('userType'));
+    const [recipes, setRecipes] = useState([]);
+
+    const [notificationMessage, setNotificationMessage] = useState('');
+    const [notification, setNotification] = useState(false);
+
+    useEffect(()=>{
+        axios.get(hostname+'/api/recipes/').then(res => {
+        console.log(res.data.data)
+        setRecipes(res.data.data)
+        }).catch(error => alert('API ERROR'));
+      }, []);
+
+    function Notification(){
+        if(notification===true){
+            return(
+                <div className="notification-popup">  
+                    <div className="notification-container">
+                        <p className="notification-message">{notificationMessage}</p>
+                    </div>
+                </div>  
+            );
+        }
+        else
+        {
+            return('');
+        }
+    }
 
     function Recipes(){
         
         function Recipe({recipe, id}){
 
             const deleteRecipeHandler = () => {
-                console.log("Recipe "+id+" has been deleted")
+                setRecipes(recipes.filter(recipe=>recipe.id !== id));
+                setNotificationMessage(recipe+" was deleted");
+                setNotification(true);
+                setTimeout(() =>{setNotification(false);},2000)
             }
 
             return (
@@ -28,13 +60,15 @@ function Admin(){
         return(
             <div className="moderate-recipes-container">
                 <h1 className="moderate-recipes-header">Moderate Recipes</h1>
-                <Recipe recipe="Recipe 1" id={1}/>
-                <Recipe recipe="Recipe 2" id={2}/>
-                <Recipe recipe="Recipe 3" id={3}/>
-                <Recipe recipe="Recipe 4" id={4}/>
-                <Recipe recipe="Recipe 5" id={5}/>
-                <Recipe recipe="Recipe 6" id={6}/>
-                <Recipe recipe="Recipe 7" id={7}/>
+                {recipes.map((recipe, index) =>{
+                    return(
+                        <Recipe
+                        key = {index}
+                        recipe={recipe.name} 
+                        id = {recipe.id}
+                        />
+                    );
+                })}
             </div>
         );
     }
@@ -77,9 +111,11 @@ function Admin(){
             </div>
             <div className="admin-body"> 
                 <h1 className="admin-title">Admin Dashboard</h1>
+                <Notification/>
                 <Recipes/>
                 <Comments/>
-            </div>   
+            </div>
+             
         </div>
     );
 }

@@ -39,7 +39,8 @@ function AddRecipe(props){
         setIngredients(data);
     }
 
-    const addIngredient = () => {
+    const addIngredient = (evt) => {
+        evt.preventDefault();
         let newIngredient = '';
         setIngredients([...ingredients, newIngredient]);
     }
@@ -64,26 +65,42 @@ function AddRecipe(props){
         const request = hostname+'/api/recipes/create'
         axios.post(request, formData)
     }
-    const [cannotPost, setConnotPost] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('')
+    const [cannotPost, setCannotPost] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [posted, setPosted] = useState(false);
+    const [stop, setStop] = useState(false);
+
     const submit = (evt) => {
         evt.preventDefault();
-        setConnotPost(false);
+        setCannotPost(false);
+        setStop(false)
+        setPosted(false);
         console.log(formData);
-        for(var i = 0; i <= formData.instructions.length; i++) {
-            if(formData.instructions[i] === '')
-            {
-                setErrorMessage('Please fill out all ingredient inputs or remove any unneaded inputs')
-                setConnotPost(true);
-            }
-        }
         if(formData.name === '' || formData.ingredients === '' || formData.description === '' || formData.instructions === '' || formData.image === null)
         {
+            setStop(true);
             setErrorMessage('Please fill out all inputs in the form to post your recipe')
-            setConnotPost(true);
+            setCannotPost(true);
+            setTimeout(() =>{setCannotPost(false);},5000)
+            return;
         }
-        else if ( cannotPost === false)
+        for(var i = 0; i < formData.instructions.length; i++) {
+            if(formData.ingredients[i] === '')
+            {
+                setStop(true);
+                setErrorMessage('Please fill out all ingredient inputs or remove any unneaded inputs')
+                setCannotPost(true);
+                setTimeout(() =>{setCannotPost(false);},5000)
+                return;
+            }
+        }
+        if ( stop === false)
+        {
             postRecipe();
+            setPosted(true);
+            setTimeout(() =>{setPosted(false);},5000)
+            setTimeout(()=>{props.setTrigger(false);},5000)
+        }
     }
 
     function PostError() {
@@ -92,6 +109,19 @@ function AddRecipe(props){
             return(
                 <div className="post-error-container">
                     <p className="post-error-message">{errorMessage}</p>
+                </div>
+            );
+        }
+        else
+            return('');
+    }
+
+    function Posted() {
+        if(posted===true)
+        {
+            return(
+                <div className="post-error-container">
+                    <p className="post-error-message">Your post has been posted!</p>
                 </div>
             );
         }
@@ -189,6 +219,7 @@ function AddRecipe(props){
                 </div>
                 <button className="post-recipe-form-btn" onClick={submit}>Post Recipe<FaPaperPlane className="plane-icon"/></button>
                 <PostError/>
+                <Posted/>
             </motion.form>
         </div>
     ) : "";   
