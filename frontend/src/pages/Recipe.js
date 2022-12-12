@@ -39,7 +39,7 @@ function Recipe(){
         {
             return(
                 <div className="rating-error-popup-container">
-                    <p className="rating-error-message">You be logged in to rate this recipe</p>
+                    <p className="rating-error-message">You must be logged in to rate this recipe</p>
                 </div>
             );
         }
