@@ -103,13 +103,13 @@ _note: pay attention to POST types, incorrect encoding will cause 500 errors_
     - url: `/api/ratings/create`
 	- type: POST (application/json)
 	- parameters: `recipeid: <id>, rating: <rating (0-5)>`
-	- returns: id of rating updated
+	- returns: `{ <id of row affected> }`
 	- description: rate a recipe, if the relationship already exists, it updates it instead
   - __Delete__:
     - url: `/api/ratings/delete/<id>`
 	- type: POST (x-www-form-urlencoded)
 	- parameters: none
-	- returns: value of deleted rating
+	- returns: `{ <rating value deleted> }`
 	- description: unrate a recipe
 
 - __Recipes__: Get all, Get by ID, Create, Delete
@@ -128,14 +128,14 @@ _note: pay attention to POST types, incorrect encoding will cause 500 errors_
   - __Create__:
     - url: `/api/recipes/create`
 	- type: POST (multipart/form-data)
-	- parameters: `name: <recipe title>, ingredients: <array of ingredient strings>, description: <text description of recipe>, instructions: <text instructions>, image: <image for recipe>`
-	- returns: id of newly created recipe
+	- parameters: `name: <recipe title>, ingredients: <comma seperated ingredients string>, description: <text description of recipe>, instructions: <text instructions>, upload: <image file for recipe>`
+	- returns: `{ <recipeid> }`
 	- description: endpoint for recipe creation, make sure to use a multipart/form-data POST to upload the image
   - __Delete__:
     - url: `/api/recipes/delete/<id>`
 	- type: POST (x-www-form-urlencoded)
 	- parameters: none
-	- returns: title of deleted recipe
+	- returns: `{ <recipe name> }`
     - description: endpoint to remove a recipe from the database
 
 - __Users__: Create, Delete
@@ -143,11 +143,11 @@ _note: pay attention to POST types, incorrect encoding will cause 500 errors_
     - url: `/api/users/create`
 	- type: POST (x-www-form-urlencoded)
 	- parameters: `username: <username string>, password: <password string>`
-	- returns: id of newly created user
+	- returns: `{ <userid> }`
 	- description: endpoint to create a new user
   - __Delete__:
     - url: `/api/users/delete/<id>`
 	- type: POST (x-www-form-urlencoded)
 	- parameters: none
-	- returns: username of deleted user
+	- returns: `{ <username> }`
 	- description: endpoint to delete a user
