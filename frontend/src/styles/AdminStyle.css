@@ -140,3 +140,26 @@
     cursor: pointer;
     color: white;
 }
+
+.notification-popup {
+    position: fixed;
+
+    z-index: 99;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notification-container{
+    position: absolute;
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    border: 2px solid rgb(209, 209, 209);
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    font-family: 'Inter', sans-serif;
+}

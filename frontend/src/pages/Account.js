@@ -29,7 +29,8 @@ function Account() {
         localStorage.removeItem('userType');
         localStorage.removeItem('userID');
         localStorage.removeItem('username');
-        setUserType(localStorage.getItem('userType'));        
+        setUserType(localStorage.getItem('userType')); 
+        navigate.current('/login');       
     }
 
     function AccountInfo() {
@@ -50,10 +51,18 @@ function Account() {
         const [isDeleting, setIsDeleting] = useState(false);
         
         useEffect(()=>{
-            axios.get(hostname+'/recipes').then(res => {
-            setRecipes(res.data)
-            }).catch(error => alert('API ERROR'));
+            axios.get(hostname+'/api/recipes').then(res => {
+            setRecipes(res.data.data)
+            }).catch(error => console.log('API ERROR'));
         }, []);
+
+        /*
+        useEffect(()=>{
+            axios.get(hostname+'/api/recipes').then(res => {
+            setRecipes(res.data)
+            }).catch(error => console.log('API ERROR'));
+        }, []);
+        */
 
         function AccountRecipeCard({image, name, id}) {
 
@@ -125,8 +134,8 @@ function Account() {
                                     <AccountRecipeCard
                                     key = {index}
                                     id = {recipe.id}
-                                    image={recipe.image} 
-                                    name={recipe.recipe_name} 
+                                    image={hostname+"/"+recipe.image} 
+                                    name={recipe.name} 
                                     />
                                 );
                             })}
@@ -142,14 +151,23 @@ function Account() {
     function MyComments() {
 
         const [comments, setComments] = useState([])
-    
+        
+        
         useEffect(()=>{
             axios.get(hostname+'/comments').then(res => {
             setComments(res.data)
-            }).catch(error => alert('API ERROR'));
+            }).catch(error => console.log('API ERROR'));
         }, []);
-
         
+        
+        /*
+        useEffect(()=>{
+            axios.get(hostname+'/api/comments').then(res => {
+            setComments(res.data)
+            }).catch(error => console.log('API ERROR'));
+        }, []);
+        */
+
         function MyComment({id,username,comment}){
 
             const removeComment = (evt) => {
@@ -200,7 +218,7 @@ function Account() {
         useEffect(()=>{
             axios.get(hostname+'/ratings').then(res => {
             setRatings(res.data)
-            }).catch(error => alert('API ERROR'));
+            }).catch(error => console.log('API ERROR'));
         }, []);
 
         function MyRating({id,recipe,username,rating}){

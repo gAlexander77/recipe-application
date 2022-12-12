@@ -110,3 +110,19 @@ body .Recipe {
     width: 750px;
     white-space: pre-wrap;
 }
+
+.rating-error-popup-container {
+    position: absolute;
+    top: 100px;
+    right: 145px;
+    padding: 10px 10px;
+    border-radius: 12px;
+    border: 2px solid rgb(209, 209, 209);
+}
+
+.rating-error-message{
+    color: black;
+    font-family: Inter,sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+  }
